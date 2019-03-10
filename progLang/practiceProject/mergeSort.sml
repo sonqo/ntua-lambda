@@ -24,3 +24,6 @@ fun mergeSort [] = []
         in
             merge (mergeSort x, mergeSort y)
         end
+
+(* Using SML/NJ Library *)
+fun sort l = ListMergeSort.sort (op >) l
