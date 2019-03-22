@@ -18,3 +18,4 @@ fun parse file =
     in
    	    (N, M, readInts N [])
     end
+
