@@ -39,22 +39,22 @@ val array = parseFile "colors.txt"
 val (N, M) = readFile "colors.txt"
 
 (* A function that checks if an integer is in a list. *)
-fun isMember ([], el:int) = false 
-  | isMember (h::t, el) = 
+fun isMember ([], el) = false 
+  | isMember ((h::t), el) = 
       if h = el then 
         true
       else 
         isMember (t, el);
 
 (* A function that checks if the ribbon has all the colors needed. *)
-fun allColors ([], col:int) = false
-    | allColors (h::t, col) =
-        if isMember (h::t, col) then  
-            isMember (h::t, col - 1)
+fun allColors ([], col) = false
+    | allColors ((h::t), col) =
+        if isMember ((h::t), col) then  
+          isMember ((h::t), (col - 1))
         else 
-            false
+          false
 
-(* A function that splits a list to the Nth element *)
+(* A function that splits a list to the Mth element *)
 fun splitList 0 _ = []
   | splitList _ [] = []   
-  | splitList N (h::t) = h :: splitList (N - 1) t
+  | splitList M (h::t) = h :: splitList (M - 1) t
