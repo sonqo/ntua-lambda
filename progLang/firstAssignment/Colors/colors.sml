@@ -35,8 +35,8 @@ fun parseFile file =
         readInts N []
     end
 
-val (N, M) = readFile "colors.txt"
 val array = parseFile "colors.txt"
+val (N, M) = readFile "colors.txt"
 
 (* A function that checks if an integer is in a list. *)
 fun isMember ([], el:int) = false 
