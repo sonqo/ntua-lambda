@@ -84,9 +84,9 @@ int main(int argc, char *argv[]) {
 		for (j = 1; j <= M+1; j++){
 			ch = fgetc(fp);	
 			array[i][j] = ch;
-			if ((ch == '+') || (ch == '-')){
+			if ((ch == 'W')){
 				int time = 0;
-				//enqueue(i, j, ch, time);
+				enqueue(i, j, ch, time);
 			}
 		}
 	}
@@ -102,15 +102,55 @@ int main(int argc, char *argv[]) {
 		array[i][M+1] = 'X';
 	}	
 	
+	int global_time=0;
+	int time = front->time;
+	
+	while (front != NULL){
+		while (global_time == time){
+			int line = front->line;
+			int column = front->column;
+			char item = front->symbol;
+			/* Border Elements of Tested Item */
+			char item_east = array[line][column+1];
+			char item_west = array[line][column-1];
+			char item_north = array[line-1][column];
+			char item_south = array[line+1][column];
+			if (item == 'W'){
+				if ((item_east != 'W') && (item_east != 'X')){
+					array[line][column+1] = item;
+					enqueue(line, column+1, item, time+1);	
+				}
+				if ((item_west != 'W') && (item_west != 'X')){
+					array[line][column-1] = item;
+					enqueue(line, column-1, item, time+1);	
+				}
+				if ((item_north != 'W') && (item_north != 'X')){
+					array[line-1][column] = item;
+					enqueue(line-1, column, item, time+1);	
+				}
+				if ((item_south != 'W') && (item_south != 'X')){
+					array[line+1][column] = item;
+					enqueue(line+1, column, item, time+1);	
+				}
+			}
+			dequeue();
+			if (front != NULL){
+				time = front->time;
+			}
+			else{
+				global_time = -1;
+			}
+		}
+		global_time++;
+	}
+	
 	for (i = 0; i < N+2; i++){
 		for (j = 0; j < M+2; j++){
-			printf("%c", array[i][j]);
+			printf("%c ", array[i][j]);
 		}
 		printf("\n");
 	}
 	printf("\n");
-	
-	
 	
 	return 0;
 }

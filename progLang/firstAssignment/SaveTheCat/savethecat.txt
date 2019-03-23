@@ -2,4 +2,3 @@
 .A.XX.
 XX.X..
 .....X
-kappa
