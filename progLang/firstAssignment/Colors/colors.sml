@@ -58,5 +58,3 @@ fun allColors ([], col:int) = false
 fun splitList 0 _ = []
   | splitList _ [] = []   
   | splitList N (h::t) = h :: splitList (N - 1) t
-
-
