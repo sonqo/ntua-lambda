@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Queue */
+/* Struct Queue */
 struct node{
 	int line;
 	int column;
@@ -14,7 +14,7 @@ struct node{
 struct node *front = NULL;
 struct node *rear = NULL;
 
-/* Functions */
+/* Functions of Queue */
 void enqueue(int x, int y, char ch, int time){
 	struct node *nptr = malloc(sizeof(struct node));
 	nptr->line = x;
@@ -55,7 +55,7 @@ void display(){
 
 int main(int argc, char *argv[]) {
 	
-	/* Variables */
+	/* Variables Declaration */
 	int i, j, N, M, flag;
 	char ch;
 	
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 		
-	/* Border Creation */
+	/* Border Creation of X's */
 	for (i = 0; i < M+2; i++){
 		array[0][i] = 'X';
 		array[N+1][i] = 'X';
@@ -102,9 +102,20 @@ int main(int argc, char *argv[]) {
 		array[i][M+1] = 'X';
 	}	
 	
-	int global_time=0;
-	int time = front->time;
+    /* Printing for testing */
+	for (i = 0; i < N+2; i++){
+		for (j = 0; j < M+2; j++){
+			printf("%c ", array[i][j]);
+		}
+		printf("\n");
+	}
+	printf("\n");
 	
+	int global_time = 0;
+	int time = front->time;
+	int arjumand = 0;
+	
+	/* Floodfill Algorithm */
 	while (front != NULL){
 		while (global_time == time){
 			int line = front->line;
@@ -116,24 +127,41 @@ int main(int argc, char *argv[]) {
 			char item_north = array[line-1][column];
 			char item_south = array[line+1][column];
 			if (item == 'W'){
-				if ((item_east != 'W') && (item_east != 'X')){
+				if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
 					array[line][column+1] = item;
 					enqueue(line, column+1, item, time+1);	
 				}
-				if ((item_west != 'W') && (item_west != 'X')){
+				else if (item_east == 'A'){
+					array[line][column+1] = 'A';
+					arjumand = 1;
+				}
+				if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
 					array[line][column-1] = item;
 					enqueue(line, column-1, item, time+1);	
 				}
-				if ((item_north != 'W') && (item_north != 'X')){
+				else if (item_west == 'A'){
+					array[line][column-1] = 'A';
+					arjumand = 1;
+				}
+				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
 					array[line-1][column] = item;
 					enqueue(line-1, column, item, time+1);	
 				}
-				if ((item_south != 'W') && (item_south != 'X')){
+				else if (item_north == 'A'){
+					array[line-1][column] = 'A';
+					arjumand = 1;
+				}
+				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
 					array[line+1][column] = item;
 					enqueue(line+1, column, item, time+1);	
 				}
+				else if (item_south == 'A'){
+					array[line+1][column] = 'A';
+					arjumand = 1;
+				}
 			}
 			dequeue();
+			/* If queue is not empty, go to the next element */
 			if (front != NULL){
 				time = front->time;
 			}
@@ -142,7 +170,18 @@ int main(int argc, char *argv[]) {
 			}
 		}
 		global_time++;
+		if (arjumand == 1){
+			while (front != NULL){
+				dequeue();
+			}
+		}
 	}
+	
+	/* Print latest possible time for Arjumand */
+	if (global_time != 0){
+		printf("%d", global_time);
+	}
+	printf("\n");
 	
 	for (i = 0; i < N+2; i++){
 		for (j = 0; j < M+2; j++){
