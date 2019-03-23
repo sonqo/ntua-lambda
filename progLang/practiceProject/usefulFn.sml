@@ -27,7 +27,7 @@ fun member ([], el:int) = false
       else 
         member (t, el);
 
-(* A function that checks whether two lists are equal or not *)
+(* A Function that checks whether two lists are equal or not *)
 fun compare ([], []) = true
   | compare ([], (h::t):int list) = false
   | compare ((h::t):int list, []) = false
@@ -37,7 +37,7 @@ fun compare ([], []) = true
       else
         false;
 
-(* A function that checks if a list is palindrome or not *)
+(* A Function that checks if a list is palindrome or not *)
 fun palindrome [] = true
   | palindrome (h::t) = 
       let

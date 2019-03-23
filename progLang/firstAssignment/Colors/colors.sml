@@ -47,10 +47,16 @@ fun isMember ([], el:int) = false
         isMember (t, el);
 
 (* A function that checks if the ribbon has all the colors needed. *)
-fun allColors ([], el:int) = false
-    | allColors (h::t, el) =
-        if isMember (h::t, el) then  
-            isMember (h::t, el - 1)
+fun allColors ([], col:int) = false
+    | allColors (h::t, col) =
+        if isMember (h::t, col) then  
+            isMember (h::t, col - 1)
         else 
             false
+
+(* A function that splits a list to the Nth element *)
+fun splitList 0 _ = []
+  | splitList _ [] = []   
+  | splitList N (h::t) = h :: splitList (N - 1) t
+
 
