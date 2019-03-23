@@ -1,5 +1,5 @@
-(* Function for reading a file *) 
-fun parse file =   
+(* A function for reading a file *) 
+fun parseFile file =   
     let
         fun readInt input = 
 	    Option.valOf (TextIO.scanStream (Int.scan StringCvt.DEC) input)
@@ -16,6 +16,17 @@ fun parse file =
         fun readInts 0 acc = acc (* Replace with 'rev acc' for proper order. *)
         | readInts i acc = readInts (i - 1) (readInt inStream :: acc)
     in
-   	    (N, M, readInts N [])
+   	    (readInts N [])
     end
+
+val array = parse "colors.txt"
+
+(* A function that checks if an integer is in a list *)
+fun isMember ([], el:int) = false 
+  | isMember (h::t, el) = 
+      if h = el then 
+        true
+      else 
+        isMember (t, el);
+
 
