@@ -39,7 +39,6 @@ val ribbon = parseFile "colors.txt"
 
 (* A function that checks if an integer is in a list. *)
 fun isMember ([], el:int) = false 
-  | isMember ((h::t), 0) = true
   | isMember ((h::t), el) = 
       if h = el then 
         true
@@ -48,10 +47,10 @@ fun isMember ([], el:int) = false
 
 (* A function that checks if the ribbon has all the colors needed. *)
 fun allColors ([], col) = false
-  | allColors ((h::t), 0) = true
-  | allColors ((h::t), col:int) =
-      if isMember ((h::t), col) then  
-        isMember ((h::t), (col - 1))
+  | allColors (list, 0) = true
+  | allColors (list, col:int) =
+      if isMember (list, col) then  
+        allColors (list, (col - 1))
       else 
         false
 
