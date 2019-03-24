@@ -71,12 +71,10 @@ fun testSeq ([], M, I) = 0
       testSeq (t, M, I)
 
 (* Final function that returns the length of the least possible sequence of colors in the ribbon*)
-fun colors ([], M, I) = 0
-  | colors ((h::t), M, I) =
+fun leastSeq ([], M, I) = 0
+  | leastSeq ((h::t), M, I) =
     (* Making sure that the ribbon has all the colors down from M *)
     if (testSeq ((h::t), M, I) = 0) andalso (allColors ((h::t), M)) then 
-      colors ((h::t), M, I+1)
+      leastSeq ((h::t), M, I+1)
     else
       testSeq ((h::t), M, I);
-
-print(Int.toString (colors (ribbon, M, M)) ^ "\n")
