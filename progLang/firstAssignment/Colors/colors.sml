@@ -38,31 +38,44 @@ val (N, M) = readFile "colors.txt"
 val ribbon = parseFile "colors.txt"
 
 (* A function that checks if an integer is in a list. *)
-fun isMember ([], el) = false 
+fun isMember ([], el:int) = false 
+  | isMember ((h::t), 0) = true
   | isMember ((h::t), el) = 
       if h = el then 
         true
       else 
-        isMember (t, el);
+        isMember (t, el)
 
 (* A function that checks if the ribbon has all the colors needed. *)
 fun allColors ([], col) = false
-    | allColors ((h::t), col) =
-        if isMember ((h::t), col) then  
-          isMember ((h::t), (col - 1))
-        else 
-          false
+  | allColors ((h::t), 0) = true
+  | allColors ((h::t), col:int) =
+      if isMember ((h::t), col) then  
+        isMember ((h::t), (col - 1))
+      else 
+        false
 
 (* A function that splits a list to the Mth element *)
-fun splitList 0 _ = []
-  | splitList _ [] = []   
-  | splitList M (h::t) = h :: splitList (M - 1) t
+(* fun splitList 0 _ = []
+  | splitList _ []:int list = []   
+  | splitList M (h::t) = h :: splitList (M - 1) t *)
 
-(* Final assignment function *)
-fun colors [] M I = 0
-  | colors array 0 I = 0
-  | colors (h::t) M I = 
-    if allColors (splitList I array, M) then 
-      length (splitList I array)
+(* A function that checks sequences of ribbon with length I, given the number fof colors M *)
+(* fun testSeq [] M I = 0
+  | testSeq (h::t) 0 I:int = 0
+  | testSeq (h::t) M 0 = 0
+  | testSeq (h::t) M I = 
+    if allColors (splitList I h::t, M) then 
+      length (splitList I h::t)
     else
-      colors t M I
+      testSeq t M I *)
+
+(* Final function *)
+(* fun colors [] M I = 0
+  | colors array 0 I = 0
+  | colors array M 0 = 0
+  | colors array M I =
+    if testSeq array M I = 0 then
+      testSeq array M I+1
+    else
+      testSeq array M I *)
