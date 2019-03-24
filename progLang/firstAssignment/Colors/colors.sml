@@ -6,7 +6,6 @@ fun readFile file =
 
         (* Open input file. *)
         val inStream = TextIO.openIn file
-
         (* Read two integers: Length of ribbon(N) and number of colors(M) - Consume new line. *)
         val N = readInt inStream
         val M = readInt inStream
@@ -28,15 +27,15 @@ fun parseFile file =
         val M = readInt inStream
         val _ = TextIO.inputLine inStream
 
-        (* A function to read N integers from the open file. *)
+        (* A function to read N integers from the opened file. *)
         fun readInts 0 acc = acc 
           | readInts i acc = readInts (i - 1) (readInt inStream :: acc)
     in
         readInts N []
     end
 
-val array = parseFile "colors.txt"
 val (N, M) = readFile "colors.txt"
+val ribbon = parseFile "colors.txt"
 
 (* A function that checks if an integer is in a list. *)
 fun isMember ([], el) = false 
@@ -58,3 +57,12 @@ fun allColors ([], col) = false
 fun splitList 0 _ = []
   | splitList _ [] = []   
   | splitList M (h::t) = h :: splitList (M - 1) t
+
+(* Final assignment function *)
+fun colors [] M I = 0
+  | colors array 0 I = 0
+  | colors (h::t) M I = 
+    if allColors (splitList I array, M) then 
+      length (splitList I array)
+    else
+      colors t M I
