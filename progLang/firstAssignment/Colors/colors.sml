@@ -55,9 +55,11 @@ fun allColors ([], col) = false
         false
 
 (* A function that splits a list to the Mth element *)
-(* fun splitList 0 _ = []
-  | splitList _ []:int list = []   
-  | splitList M (h::t) = h :: splitList (M - 1) t *)
+fun splitList ((h::t):int list, 0) = []
+  | splitList (([], M)) = []   
+  | splitList ((h::t), M) = 
+    if length ((h::t)) < M then []
+    else h :: splitList (t, M-1)
 
 (* A function that checks sequences of ribbon with length I, given the number fof colors M *)
 (* fun testSeq [] M I = 0
