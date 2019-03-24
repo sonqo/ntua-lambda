@@ -61,15 +61,14 @@ fun splitList ((h::t):int list, 0) = []
     if length ((h::t)) < M then []
     else h :: splitList (t, M-1)
 
-(* A function that checks sequences of ribbon with length I, given the number fof colors M *)
-(* fun testSeq [] M I = 0
-  | testSeq (h::t) 0 I:int = 0
-  | testSeq (h::t) M 0 = 0
-  | testSeq (h::t) M I = 
-    if allColors (splitList I h::t, M) then 
-      length (splitList I h::t)
+(* A function that checks sequences of ribbon with length I, given the number of colors M *)
+fun testSeq ([], M, I) = 0
+  | testSeq ((h::t), M, 0) = 0
+  | testSeq ((h::t), M, I) = 
+    if allColors (splitList ((h::t), I), M) then 
+      length (splitList ((h::t), I))
     else
-      testSeq t M I *)
+      testSeq (t, M, I)
 
 (* Final function *)
 (* fun colors [] M I = 0
