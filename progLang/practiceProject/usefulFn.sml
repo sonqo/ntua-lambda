@@ -56,7 +56,3 @@ fun delete (x, []) = []
         delete (x, ys) 
       else 
         y :: delete (x, ys)
-
-val _ = print "I don't show my type";
-
-print("kappas")
