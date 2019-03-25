@@ -1,7 +1,6 @@
 fun colors file = 
   
   let
-    
     (* A function that reads the length of ribbon(N) and the number of colors(M) from file. *)
     fun readFile file =   
       let
@@ -85,7 +84,5 @@ fun colors file =
     val ribbon = parseFile file
 
   in
-
     print(Int.toString(leastSeq (ribbon, M, M)) ^ "\n")
-  
   end
