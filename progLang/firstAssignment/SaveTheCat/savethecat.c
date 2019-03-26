@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
 		for (j = 1; j <= M+1; j++){
 			ch = fgetc(fp);	
 			array[i][j] = ch;
-			if ((ch == 'W')){
+			if ((ch == 'W') || (ch == 'A')){
 				int time = 0;
 				enqueue(i, j, ch, time);
 			}
@@ -126,8 +126,26 @@ int main(int argc, char *argv[]) {
 			char item_west = array[line][column-1];
 			char item_north = array[line-1][column];
 			char item_south = array[line+1][column];
-			if (item == 'W'){
+			if (item == 'A'){
 				if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
+					array[line][column+1] = item;
+					enqueue(line, column+1, item, time+1);	
+				}
+				if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
+					array[line][column-1] = item;
+					enqueue(line, column-1, item, time+1);
+				}
+				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
+					array[line-1][column] = item;
+					enqueue(line-1, column, item, time+1);	
+				}
+				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
+					array[line+1][column] = item;
+					enqueue(line+1, column, item, time+1);	
+				}
+			}
+			if (item == 'W'){
+				if ((item_east != 'W') && (item_east != 'X')){
 					array[line][column+1] = item;
 					enqueue(line, column+1, item, time+1);	
 				}
@@ -135,7 +153,7 @@ int main(int argc, char *argv[]) {
 					array[line][column+1] = 'A';
 					arjumand = 1;
 				}
-				if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
+				if ((item_west != 'W') && (item_west != 'X')){
 					array[line][column-1] = item;
 					enqueue(line, column-1, item, time+1);	
 				}
@@ -143,7 +161,7 @@ int main(int argc, char *argv[]) {
 					array[line][column-1] = 'A';
 					arjumand = 1;
 				}
-				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
+				if ((item_north != 'W') && (item_north != 'X')){
 					array[line-1][column] = item;
 					enqueue(line-1, column, item, time+1);	
 				}
@@ -151,7 +169,7 @@ int main(int argc, char *argv[]) {
 					array[line-1][column] = 'A';
 					arjumand = 1;
 				}
-				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
+				if ((item_south != 'W') && (item_south != 'X')){
 					array[line+1][column] = item;
 					enqueue(line+1, column, item, time+1);	
 				}
@@ -161,6 +179,7 @@ int main(int argc, char *argv[]) {
 				}
 			}
 			dequeue();
+			
 			/* If queue is not empty, go to the next element */
 			if (front != NULL){
 				time = front->time;
@@ -169,6 +188,16 @@ int main(int argc, char *argv[]) {
 				global_time = -1;
 			}
 		}
+		
+		/* Printing for testing */
+		for (i = 0; i < N+2; i++){
+			for (j = 0; j < M+2; j++){
+				printf("%c ", array[i][j]);
+			}
+			printf("\n");
+		}
+		printf("\n");
+		
 		global_time++;
 		if (arjumand == 1){
 			while (front != NULL){
@@ -183,13 +212,13 @@ int main(int argc, char *argv[]) {
 	}
 	printf("\n");
 	
-	for (i = 0; i < N+2; i++){
-		for (j = 0; j < M+2; j++){
-			printf("%c ", array[i][j]);
-		}
-		printf("\n");
-	}
-	printf("\n");
+//	for (i = 0; i < N+2; i++){
+//		for (j = 0; j < M+2; j++){
+//			printf("%c ", array[i][j]);
+//		}
+//		printf("\n");
+//	}
+//	printf("\n");
 	
 	return 0;
 }
