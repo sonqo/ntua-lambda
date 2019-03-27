@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
-/* Struct Queue */
+/* Constructing Queue */
 struct node{
 	int line;
 	int column;
@@ -15,7 +16,7 @@ struct node{
 struct node *front = NULL;
 struct node *rear = NULL;
 
-/* Functions of Queue */
+/* Functions For Queue */
 void enqueue(int x, int y, char ch, int time, char* pos){
 	struct node *nptr = malloc(sizeof(struct node));
 	nptr->line = x;
@@ -57,6 +58,9 @@ void display(){
 	}
 }
 
+/* Constructing Stack */
+
+
 int main(int argc, char *argv[]) {
 	
 	/* Variables Declaration */
@@ -92,11 +96,11 @@ int main(int argc, char *argv[]) {
 			if (ch == 'W'){
 				int time = 0;
 				flag = 1;
-				enqueue(i, j, ch, time, "");
+				enqueue(i, j, ch, time, "", false);
 			}
 			if (ch == 'A'){
 				int time = 0;
-				enqueue(i, j, ch, time, "");
+				enqueue(i, j, ch, time, "", true);
 			}
 		}
 	}
@@ -137,73 +141,28 @@ int main(int argc, char *argv[]) {
 			int column = front->column;
 			char item = front->symbol;
 			char* pos = front->position;
+			bool visited = front->visited;
 			/* Cross Elements for the tested item */
 			char item_east = array[line][column+1];
 			char item_west = array[line][column-1];
 			char item_north = array[line-1][column];
 			char item_south = array[line+1][column];
-			if (item == 'A'){
-				if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
-					array[line][column+1] = item;
-					char* str = (char*) malloc(1 + strlen(pos)+ strlen(right));
-					strcpy(str, pos);
-      				strcat(str, right);
-					enqueue(line, column+1, item, time+1, str);	
-				}
-				if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
-					array[line][column-1] = item;
-					char* str = (char*) malloc(1 + strlen(pos)+ strlen(left));
-					strcpy(str, pos);
-      				strcat(str, left);
-					enqueue(line, column-1, item, time+1, str);
-				}
-				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
-					array[line-1][column] = item;
-					char* str = (char*) malloc(1 + strlen(pos)+ strlen(up));
-					strcpy(str, pos);
-      				strcat(str, up);
-					enqueue(line-1, column, item, time+1, str);	
-				}
-				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
-					array[line+1][column] = item;
-					char* str = (char*) malloc(1 + strlen(pos)+ strlen(down));
-					strcpy(str, pos);
-      				strcat(str, down);
-					enqueue(line+1, column, item, time+1, str);	
-				}
-			}
 			if (item == 'W'){
 				if ((item_east != 'W') && (item_east != 'X')){
 					array[line][column+1] = item;
-					enqueue(line, column+1, item, time+1, "");	
-				}
-				else if (item_east == 'A'){
-					array[line][column+1] = 'A';
-					//arjumand = 1;
-				}
+					enqueue(line, column+1, item, time+1, "", false);	
+				}			
 				if ((item_west != 'W') && (item_west != 'X')){
 					array[line][column-1] = item;
-					enqueue(line, column-1, item, time+1, "");	
-				}
-				else if (item_west == 'A'){
-					array[line][column-1] = 'A';
-					//arjumand = 1;
-				}
+					enqueue(line, column-1, item, time+1, "", false);	
+				}				
 				if ((item_north != 'W') && (item_north != 'X')){
 					array[line-1][column] = item;
-					enqueue(line-1, column, item, time+1, "");	
-				}
-				else if (item_north == 'A'){
-					array[line-1][column] = 'A';
-					//arjumand = 1;
+					enqueue(line-1, column, item, time+1, "", false);	
 				}
 				if ((item_south != 'W') && (item_south != 'X')){
 					array[line+1][column] = item;
-					enqueue(line+1, column, item, time+1, "");	
-				}
-				else if (item_south == 'A'){
-					array[line+1][column] = 'A';
-					//arjumand = 1;
+					enqueue(line+1, column, item, time+1, "", false);	
 				}
 			}
 			dequeue();
@@ -216,6 +175,7 @@ int main(int argc, char *argv[]) {
 				global_time = -1;
 			}
 		}
+
 		
 		/* Printing for testing */
 		for (i = 0; i < N+2; i++){
@@ -242,15 +202,15 @@ int main(int argc, char *argv[]) {
 		printf("stay\n");
 	} 
 	
-//	if (global_time != 0){
-//		printf("%d", global_time);
-//	}
-//	printf("\n");
+	if (global_time != 0){
+		printf("%d", global_time);
+	}
+	printf("\n");
 	
 	printf("\n");
 	
-	for (i = 1; i < N+1; i++){
-		for (j = 1; j < M+1; j++){
+	for (i = 0; i < N+2; i++){
+		for (j = 0; j < M+2; j++){
 			printf("%c ", array[i][j]);
 		}
 		printf("\n");
