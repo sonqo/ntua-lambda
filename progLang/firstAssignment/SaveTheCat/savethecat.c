@@ -4,21 +4,21 @@
 #include <stdbool.h>
 
 /* Constructing Queue */
-struct node{
+struct Queue{
 	int line;
 	int column;
 	char symbol;
 	int time;
 	char* position;
-	struct node *next;
+	struct Queue *next;
 };
 
-struct node *front = NULL;
-struct node *rear = NULL;
+struct Queue *front = NULL;
+struct Queue *rear = NULL;
 
 /* Functions For Queue */
 void enqueue(int x, int y, char ch, int time, char* pos){
-	struct node *nptr = malloc(sizeof(struct node));
+	struct Queue *nptr = malloc(sizeof(struct Queue));
 	nptr->line = x;
 	nptr->column = y;
 	nptr->symbol = ch;
@@ -40,7 +40,7 @@ void dequeue(){
     	printf("\n\n Queue is empty \n");
 	}
 	else{
-    	struct node *temp;
+    	struct Queue *temp;
     	temp = front;
     	front = front->next;
     	free(temp);
@@ -48,7 +48,7 @@ void dequeue(){
 }
 
 void display(){
-	struct node *temp;
+	struct Queue *temp;
 	temp = front;
 	while (temp != NULL){
     	printf("%c ", temp->symbol);
@@ -96,11 +96,11 @@ int main(int argc, char *argv[]) {
 			if (ch == 'W'){
 				int time = 0;
 				flag = 1;
-				enqueue(i, j, ch, time, "", false);
+				enqueue(i, j, ch, time, "");
 			}
 			if (ch == 'A'){
 				int time = 0;
-				enqueue(i, j, ch, time, "", true);
+				enqueue(i, j, ch, time, "");
 			}
 		}
 	}
@@ -141,7 +141,6 @@ int main(int argc, char *argv[]) {
 			int column = front->column;
 			char item = front->symbol;
 			char* pos = front->position;
-			bool visited = front->visited;
 			/* Cross Elements for the tested item */
 			char item_east = array[line][column+1];
 			char item_west = array[line][column-1];
@@ -150,19 +149,19 @@ int main(int argc, char *argv[]) {
 			if (item == 'W'){
 				if ((item_east != 'W') && (item_east != 'X')){
 					array[line][column+1] = item;
-					enqueue(line, column+1, item, time+1, "", false);	
+					enqueue(line, column+1, item, time+1, "");	
 				}			
 				if ((item_west != 'W') && (item_west != 'X')){
 					array[line][column-1] = item;
-					enqueue(line, column-1, item, time+1, "", false);	
+					enqueue(line, column-1, item, time+1, "");	
 				}				
 				if ((item_north != 'W') && (item_north != 'X')){
 					array[line-1][column] = item;
-					enqueue(line-1, column, item, time+1, "", false);	
+					enqueue(line-1, column, item, time+1, "");	
 				}
 				if ((item_south != 'W') && (item_south != 'X')){
 					array[line+1][column] = item;
-					enqueue(line+1, column, item, time+1, "", false);	
+					enqueue(line+1, column, item, time+1, "");	
 				}
 			}
 			dequeue();
