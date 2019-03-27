@@ -143,24 +143,31 @@ int main(int argc, char *argv[]) {
 			if (item == 'A'){
 				if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
 					array[line][column+1] = item;
-					//strcat(pos, "R");
-					
-					enqueue(line, column+1, item, time+1, pos);	
+					char* str = (char*) malloc(1 + strlen(pos)+ strlen(right));
+					strcpy(str, pos);
+      				strcat(str, right);
+					enqueue(line, column+1, item, time+1, str);	
 				}
 				if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
 					array[line][column-1] = item;
-					//strcat(pos, "W");
-					enqueue(line, column-1, item, time+1, pos);
+					char* str = (char*) malloc(1 + strlen(pos)+ strlen(left));
+					strcpy(str, pos);
+      				strcat(str, left);
+					enqueue(line, column-1, item, time+1, str);
 				}
 				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
 					array[line-1][column] = item;
-					//strcat(pos, "D");
-					enqueue(line-1, column, item, time+1, pos);	
+					char* str = (char*) malloc(1 + strlen(pos)+ strlen(up));
+					strcpy(str, pos);
+      				strcat(str, up);
+					enqueue(line-1, column, item, time+1, str);	
 				}
 				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
 					array[line+1][column] = item;
-					//strcat(pos, "U");
-					enqueue(line+1, column, item, time+1, pos);	
+					char* str = (char*) malloc(1 + strlen(pos)+ strlen(down));
+					strcpy(str, pos);
+      				strcat(str, down);
+					enqueue(line+1, column, item, time+1, str);	
 				}
 			}
 			if (item == 'W'){
