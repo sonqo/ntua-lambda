@@ -83,6 +83,7 @@ int main(int argc, char *argv[]) {
 	char array[N+2][M+2];	
 	
 	/* File reading and map filling */
+	flag = 0;
 	fp = fopen(argv[1], "r");
 	for (i = 1; i <= N+1; i++){
 		for (j = 1; j <= M+1; j++){
@@ -90,6 +91,7 @@ int main(int argc, char *argv[]) {
 			array[i][j] = ch;
 			if (ch == 'W'){
 				int time = 0;
+				flag = 1;
 				enqueue(i, j, ch, time, "");
 			}
 			if (ch == 'A'){
@@ -129,7 +131,7 @@ int main(int argc, char *argv[]) {
 	char* down = "D";
 		
 	/* Floodfill Algorithm */
-	while (front != NULL){
+	while ((front != NULL) && (flag != 0)){
 		while (global_time == time){
 			int line = front->line;
 			int column = front->column;
@@ -235,13 +237,20 @@ int main(int argc, char *argv[]) {
 	}
 	
 	/* Print latest possible time for Arjumand */
-	if (global_time != 0){
-		printf("%d", global_time);
-	}
+	if (flag == 0){
+		printf("infinity\n");
+		printf("stay\n");
+	} 
+	
+//	if (global_time != 0){
+//		printf("%d", global_time);
+//	}
+//	printf("\n");
+	
 	printf("\n");
 	
-	for (i = 0; i < N+2; i++){
-		for (j = 0; j < M+2; j++){
+	for (i = 1; i < N+1; i++){
+		for (j = 1; j < M+1; j++){
 			printf("%c ", array[i][j]);
 		}
 		printf("\n");
