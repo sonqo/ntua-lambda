@@ -119,15 +119,14 @@ int main(int argc, char *argv[]) {
 	}
 	printf("\n");
 	
-	int global_time = 1;
-	int time = front->time;
+	int global_time = 0;
 	int arjumand = 0;
+	int time = front->time;
 	
 	char* down = "D";
 	char* left = "L";
 	char* right = "R";
 	char* up = "U";
-
 		
 	/* Floodfill Algorithm */
 	while (front != NULL){
@@ -174,37 +173,49 @@ int main(int argc, char *argv[]) {
 				}
 			}
 			if (item == 'W'){
-				if ((item_east != 'W') && (item_east != 'X')){
+				if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
 					array[line][column+1] = item;
 					enqueue(line, column+1, item, time+1, "");	
 				}
 				else if (item_east == 'A'){
-					array[line][column+1] = 'W';
-					//arjumand = 1;
+					array[line][column+1] = item;
+					enqueue(line, column+1, item, time+1, "");
+					if (global_time > arjumand){
+						arjumand = global_time;
+					}
 				}
-				if ((item_west != 'W') && (item_west != 'X')){
+				if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
 					array[line][column-1] = item;
 					enqueue(line, column-1, item, time+1, "");	
 				}
 				else if (item_west == 'A'){
-					array[line][column-1] = 'W';
-					//arjumand = 1;
+					array[line][column-1] = item;
+					enqueue(line, column-1, item, time+1, "");
+					if (global_time > arjumand){
+						arjumand = global_time;
+					}
 				}
-				if ((item_north != 'W') && (item_north != 'X')){
+				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
 					array[line-1][column] = item;
 					enqueue(line-1, column, item, time+1, "");	
 				}
 				else if (item_north == 'A'){
-					array[line-1][column] = 'W';
-					//arjumand = 1;
+					array[line-1][column] = item;
+					enqueue(line-1, column, item, time+1, "");
+					if (global_time > arjumand){
+						arjumand = global_time;
+					}
 				}
-				if ((item_south != 'W') && (item_south != 'X')){
+				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
 					array[line+1][column] = item;
 					enqueue(line+1, column, item, time+1, "");	
 				}
 				else if (item_south == 'A'){
-					array[line+1][column] = 'W';
-					//arjumand = 1;
+					array[line+1][column] = item;
+					enqueue(line+1, column, item, time+1, "");
+					if (global_time > arjumand){
+						arjumand = global_time;
+					}
 				}
 			}
 			dequeue();
@@ -227,8 +238,6 @@ int main(int argc, char *argv[]) {
 		}
 		printf("\n");
 		
-		display();
-		
 		global_time++;
 	}
 	
@@ -245,6 +254,8 @@ int main(int argc, char *argv[]) {
 		printf("\n");
 	}
 	printf("\n");
+	
+	printf("%d ", arjumand-1);
 	
 	return 0;
 }
