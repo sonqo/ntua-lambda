@@ -1,24 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
-/* Constructing Queue */
-struct Queue{
+/* Struct Queue */
+struct node{
 	int line;
 	int column;
 	char symbol;
 	int time;
 	char* position;
-	struct Queue *next;
+	struct node *next;
 };
 
-struct Queue *front = NULL;
-struct Queue *rear = NULL;
+struct node *front = NULL;
+struct node *rear = NULL;
 
-/* Functions For Queue */
+/* Functions of Queue */
 void enqueue(int x, int y, char ch, int time, char* pos){
-	struct Queue *nptr = malloc(sizeof(struct Queue));
+	struct node *nptr = malloc(sizeof(struct node));
 	nptr->line = x;
 	nptr->column = y;
 	nptr->symbol = ch;
@@ -40,7 +39,7 @@ void dequeue(){
     	printf("\n\n Queue is empty \n");
 	}
 	else{
-    	struct Queue *temp;
+    	struct node *temp;
     	temp = front;
     	front = front->next;
     	free(temp);
@@ -48,7 +47,7 @@ void dequeue(){
 }
 
 void display(){
-	struct Queue *temp;
+	struct node *temp;
 	temp = front;
 	while (temp != NULL){
     	printf("%c ", temp->symbol);
@@ -57,9 +56,6 @@ void display(){
     	temp = temp->next;
 	}
 }
-
-/* Constructing Stack */
-
 
 int main(int argc, char *argv[]) {
 	
@@ -87,19 +83,17 @@ int main(int argc, char *argv[]) {
 	char array[N+2][M+2];	
 	
 	/* File reading and map filling */
-	flag = 0;
 	fp = fopen(argv[1], "r");
 	for (i = 1; i <= N+1; i++){
 		for (j = 1; j <= M+1; j++){
 			ch = fgetc(fp);	
 			array[i][j] = ch;
 			if (ch == 'W'){
-				int time = 0;
-				flag = 1;
+				int time = 1;
 				enqueue(i, j, ch, time, "");
 			}
 			if (ch == 'A'){
-				int time = 0;
+				int time = 1;
 				enqueue(i, j, ch, time, "");
 			}
 		}
@@ -125,17 +119,20 @@ int main(int argc, char *argv[]) {
 	}
 	printf("\n");
 	
-	int global_time = 0;
+	int global_time = 1;
 	int time = front->time;
 	int arjumand = 0;
 	
-	char* right = "R";
-	char* left = "L";
-	char* up = "U";
 	char* down = "D";
+	char* left = "L";
+	char* right = "R";
+	char* up = "U";
+
 		
 	/* Floodfill Algorithm */
-	while ((front != NULL) && (flag != 0)){
+	while (front != NULL){
+		printf("Time: ");
+		printf("%d\n", global_time);
 		while (global_time == time){
 			int line = front->line;
 			int column = front->column;
@@ -146,22 +143,68 @@ int main(int argc, char *argv[]) {
 			char item_west = array[line][column-1];
 			char item_north = array[line-1][column];
 			char item_south = array[line+1][column];
+			if (item == 'A'){
+				if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
+					array[line][column+1] = item;
+					char* str = (char*) malloc(1 + strlen(pos)+ strlen(right));
+					strcpy(str, pos);
+      				strcat(str, right);
+					enqueue(line, column+1, item, time+1, str);	
+				}
+				if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
+					array[line][column-1] = item;
+					char* str = (char*) malloc(1 + strlen(pos)+ strlen(left));
+					strcpy(str, pos);
+      				strcat(str, left);
+					enqueue(line, column-1, item, time+1, str);
+				}
+				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
+					array[line-1][column] = item;
+					char* str = (char*) malloc(1 + strlen(pos)+ strlen(up));
+					strcpy(str, pos);
+      				strcat(str, up);
+					enqueue(line-1, column, item, time+1, str);	
+				}
+				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
+					array[line+1][column] = item;
+					char* str = (char*) malloc(1 + strlen(pos)+ strlen(down));
+					strcpy(str, pos);
+      				strcat(str, down);
+					enqueue(line+1, column, item, time+1, str);	
+				}
+			}
 			if (item == 'W'){
 				if ((item_east != 'W') && (item_east != 'X')){
 					array[line][column+1] = item;
 					enqueue(line, column+1, item, time+1, "");	
-				}			
+				}
+				else if (item_east == 'A'){
+					array[line][column+1] = 'W';
+					//arjumand = 1;
+				}
 				if ((item_west != 'W') && (item_west != 'X')){
 					array[line][column-1] = item;
 					enqueue(line, column-1, item, time+1, "");	
-				}				
+				}
+				else if (item_west == 'A'){
+					array[line][column-1] = 'W';
+					//arjumand = 1;
+				}
 				if ((item_north != 'W') && (item_north != 'X')){
 					array[line-1][column] = item;
 					enqueue(line-1, column, item, time+1, "");	
 				}
+				else if (item_north == 'A'){
+					array[line-1][column] = 'W';
+					//arjumand = 1;
+				}
 				if ((item_south != 'W') && (item_south != 'X')){
 					array[line+1][column] = item;
 					enqueue(line+1, column, item, time+1, "");	
+				}
+				else if (item_south == 'A'){
+					array[line+1][column] = 'W';
+					//arjumand = 1;
 				}
 			}
 			dequeue();
@@ -174,7 +217,6 @@ int main(int argc, char *argv[]) {
 				global_time = -1;
 			}
 		}
-
 		
 		/* Printing for testing */
 		for (i = 0; i < N+2; i++){
@@ -188,24 +230,12 @@ int main(int argc, char *argv[]) {
 		display();
 		
 		global_time++;
-		if (arjumand == 1){
-			while (front != NULL){
-				dequeue();
-			}
-		}
 	}
 	
 	/* Print latest possible time for Arjumand */
-	if (flag == 0){
-		printf("infinity\n");
-		printf("stay\n");
-	} 
-	
 	if (global_time != 0){
 		printf("%d", global_time);
 	}
-	printf("\n");
-	
 	printf("\n");
 	
 	for (i = 0; i < N+2; i++){
