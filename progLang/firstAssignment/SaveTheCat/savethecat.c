@@ -78,6 +78,7 @@ int main(int argc, char *argv[]) {
 	}
 	fclose (fp);
 	char array[N+2][M+2];	
+	char* path[N+2][N+2];
 	
 	/* File reading and map filling */
 	fp = fopen(argv[1], "r");
@@ -124,6 +125,8 @@ int main(int argc, char *argv[]) {
 	char* left = "L";
 	char* right = "R";
 	char* up = "U";
+	
+	int lpath, cpath;
 		
 	/* Floodfill Algorithm */
 	while (front != NULL){
@@ -145,6 +148,7 @@ int main(int argc, char *argv[]) {
 					char* str = (char*) malloc(1 + strlen(pos)+ strlen(right));
 					strcpy(str, pos);
       				strcat(str, right);
+      				path[line][column+1] = str;
 					enqueue(line, column+1, item, time+1, str);	
 				}
 				if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
@@ -152,6 +156,7 @@ int main(int argc, char *argv[]) {
 					char* str = (char*) malloc(1 + strlen(pos)+ strlen(left));
 					strcpy(str, pos);
       				strcat(str, left);
+      				path[line][column-1] = str;
 					enqueue(line, column-1, item, time+1, str);
 				}
 				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
@@ -159,6 +164,7 @@ int main(int argc, char *argv[]) {
 					char* str = (char*) malloc(1 + strlen(pos)+ strlen(up));
 					strcpy(str, pos);
       				strcat(str, up);
+      				path[line-1][column] = str;
 					enqueue(line-1, column, item, time+1, str);	
 				}
 				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
@@ -166,6 +172,7 @@ int main(int argc, char *argv[]) {
 					char* str = (char*) malloc(1 + strlen(pos)+ strlen(down));
 					strcpy(str, pos);
       				strcat(str, down);
+      				path[line+1][column] = str;
 					enqueue(line+1, column, item, time+1, str);	
 				}
 			}
@@ -179,6 +186,8 @@ int main(int argc, char *argv[]) {
 					enqueue(line, column+1, item, time+1, "");
 					if (global_time > arjumand){
 						arjumand = global_time-1;
+						lpath = line;
+						cpath = column+1;
 					}
 				}
 				if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
@@ -190,6 +199,8 @@ int main(int argc, char *argv[]) {
 					enqueue(line, column-1, item, time+1, "");
 					if (global_time > arjumand){
 						arjumand = global_time-1;
+						lpath = line;
+						cpath = column-1;
 					}
 				}
 				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
@@ -201,6 +212,8 @@ int main(int argc, char *argv[]) {
 					enqueue(line-1, column, item, time+1, "");
 					if (global_time > arjumand){
 						arjumand = global_time-1;
+						lpath = line-1;
+						cpath = column;
 					}
 				}
 				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
@@ -212,6 +225,8 @@ int main(int argc, char *argv[]) {
 					enqueue(line+1, column, item, time+1, "");
 					if (global_time > arjumand){
 						arjumand = global_time-1;
+						lpath = line+1;
+						cpath = column;
 					}
 				}
 			}
@@ -253,6 +268,9 @@ int main(int argc, char *argv[]) {
 	else{
 		printf("%d ", arjumand);
 	}
+	
+	printf("\n");
+	printf("%s ", path[lpath][cpath]);
 	
 	return 0;
 }
