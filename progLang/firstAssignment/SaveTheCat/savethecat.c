@@ -178,7 +178,7 @@ int main(int argc, char *argv[]) {
 					array[line][column+1] = item;
 					enqueue(line, column+1, item, time+1, "");
 					if (global_time > arjumand){
-						arjumand = global_time;
+						arjumand = global_time-1;
 					}
 				}
 				if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
@@ -189,7 +189,7 @@ int main(int argc, char *argv[]) {
 					array[line][column-1] = item;
 					enqueue(line, column-1, item, time+1, "");
 					if (global_time > arjumand){
-						arjumand = global_time;
+						arjumand = global_time-1;
 					}
 				}
 				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
@@ -200,7 +200,7 @@ int main(int argc, char *argv[]) {
 					array[line-1][column] = item;
 					enqueue(line-1, column, item, time+1, "");
 					if (global_time > arjumand){
-						arjumand = global_time;
+						arjumand = global_time-1;
 					}
 				}
 				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
@@ -211,7 +211,7 @@ int main(int argc, char *argv[]) {
 					array[line+1][column] = item;
 					enqueue(line+1, column, item, time+1, "");
 					if (global_time > arjumand){
-						arjumand = global_time;
+						arjumand = global_time-1;
 					}
 				}
 			}
@@ -251,7 +251,7 @@ int main(int argc, char *argv[]) {
 		printf("infinity\n");
 	}
 	else{
-		printf("%d ", arjumand-1);
+		printf("%d ", arjumand);
 	}
 	
 	return 0;
