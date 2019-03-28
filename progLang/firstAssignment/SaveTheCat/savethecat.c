@@ -60,15 +60,12 @@ void display(){
 int main(int argc, char *argv[]) {
 	
 	/* Variables Declaration */
-	int i, j, N, M, flag;
+	int i, j, N = 0, M = 0, flag = 0;
 	char ch;
 	
 	FILE *fp = fopen(argv[1], "r");
 	
 	/* Lines and columns calculation */
-	flag = 0;
-	N = 0;
-	M = 0;
 	while (!feof(fp)){
 		ch = fgetc(fp);
 		if(ch == '\n'){
@@ -241,12 +238,6 @@ int main(int argc, char *argv[]) {
 		global_time++;
 	}
 	
-	/* Print latest possible time for Arjumand */
-	if (global_time != 0){
-		printf("%d", global_time);
-	}
-	printf("\n");
-	
 	for (i = 0; i < N+2; i++){
 		for (j = 0; j < M+2; j++){
 			printf("%c ", array[i][j]);
@@ -255,7 +246,13 @@ int main(int argc, char *argv[]) {
 	}
 	printf("\n");
 	
-	printf("%d ", arjumand-1);
+	/* Printing */
+	if (arjumand == 0){
+		printf("infinity\n");
+	}
+	else{
+		printf("%d ", arjumand-1);
+	}
 	
 	return 0;
 }
