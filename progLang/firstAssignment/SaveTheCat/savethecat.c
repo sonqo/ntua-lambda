@@ -271,7 +271,7 @@ int main(int argc, char *argv[]) {
                 global_time = -1;
             }
         }
-        
+
         global_time++;
     }
 
@@ -289,7 +289,12 @@ int main(int argc, char *argv[]) {
     /* In case Arjumand ought to be saved */
     else if (arjumand != 0){
         printf("%d\n", arjumand);
-        printf("%s", path[lpath][cpath]);
+        if (strcmp(path[lpath][cpath], "") == 0){
+            printf("stay");
+        }
+        else {
+            printf("%s", path[lpath][cpath]);
+        }
     }
 
     return 0;
