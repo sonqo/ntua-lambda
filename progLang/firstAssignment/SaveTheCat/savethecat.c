@@ -81,6 +81,8 @@ int main(int argc, char *argv[]) {
 	char* path[N+2][N+2];
 	char* ptime[100];
 	
+	int leastl, leastc;
+	
 	/* File reading and map filling */
 	fp = fopen(argv[1], "r");
 	for (i = 1; i <= N+1; i++){
@@ -93,7 +95,10 @@ int main(int argc, char *argv[]) {
 			}
 			if (ch == 'A'){
 				int time = 1;
+				path[i][j] = "";
 				enqueue(i, j, ch, time, "");
+				leastl = i;
+				leastc = j;
 			}
 		}
 	}
@@ -110,13 +115,13 @@ int main(int argc, char *argv[]) {
 	}	
 	
     /* Printing for testing */
-	for (i = 0; i < N+2; i++){
-		for (j = 0; j < M+2; j++){
-			printf("%c ", array[i][j]);
-		}
-		printf("\n");
-	}
-	printf("\n");
+//	for (i = 0; i < N+2; i++){
+//		for (j = 0; j < M+2; j++){
+//			printf("%c ", array[i][j]);
+//		}
+//		printf("\n");
+//	}
+//	printf("\n");
 	
 	int global_time = 0;
 	int arjumand = 0;
@@ -132,8 +137,8 @@ int main(int argc, char *argv[]) {
 		
 	/* Floodfill Algorithm */
 	while (front != NULL){
-		printf("Time: ");
-		printf("%d\n", global_time);
+//		printf("Time: ");
+//		printf("%d\n", global_time);
 		while (global_time == time){
 			int line = front->line;
 			int column = front->column;
@@ -151,7 +156,10 @@ int main(int argc, char *argv[]) {
 					strcpy(str, pos);
       				strcat(str, right);
       				path[line][column+1] = str;
-					enqueue(line, column+1, item, time+1, str);	
+					enqueue(line, column+1, item, time+1, str);
+					if ((column+1) < leastc){
+						leastc = column+1;
+					}	
 				}
 				if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
 					array[line][column-1] = item;
@@ -160,6 +168,9 @@ int main(int argc, char *argv[]) {
       				strcat(str, left);
       				path[line][column-1] = str;
 					enqueue(line, column-1, item, time+1, str);
+					if ((column-1) < leastc){
+						leastc = column-1;
+					}
 				}
 				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
 					array[line+1][column] = item;
@@ -167,7 +178,10 @@ int main(int argc, char *argv[]) {
 					strcpy(str, pos);
       				strcat(str, down);
       				path[line+1][column] = str;
-					enqueue(line+1, column, item, time+1, str);	
+					enqueue(line+1, column, item, time+1, str);
+					if ((line+1) < leastl){
+						leastl = line+1;
+					}	
 				}
 				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
 					array[line-1][column] = item;
@@ -175,7 +189,10 @@ int main(int argc, char *argv[]) {
 					strcpy(str, pos);
       				strcat(str, up);
       				path[line-1][column] = str;
-					enqueue(line-1, column, item, time+1, str);	
+					enqueue(line-1, column, item, time+1, str);
+					if ((line-1) < leastl){
+						leastl = line-1;
+					}	
 				}
 			}
 			if (item == 'W'){
@@ -195,8 +212,6 @@ int main(int argc, char *argv[]) {
 						arjumand = global_time-1;
 						lpath = line;
 						cpath = column-1;
-						printf("%d ", lpath);
-						printf("%d\n", cpath);
 					}
 				}
 				if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
@@ -215,8 +230,6 @@ int main(int argc, char *argv[]) {
 						arjumand = global_time-1;
 						lpath = line;
 						cpath = column+1;
-						printf("%d ", lpath);
-						printf("%d\n", cpath);
 					}
 				}
 				if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
@@ -235,8 +248,6 @@ int main(int argc, char *argv[]) {
 						arjumand = global_time-1;
 						lpath = line+1;
 						cpath = column;
-						printf("%d ", lpath);
-						printf("%d\n", cpath);
 					}
 				}
 				if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
@@ -255,8 +266,6 @@ int main(int argc, char *argv[]) {
 						arjumand = global_time-1;
 						lpath = line-1;
 						cpath = column;
-						printf("%d ", lpath);
-						printf("%d\n", cpath);
 					}
 				}
 			}
@@ -272,22 +281,31 @@ int main(int argc, char *argv[]) {
 		}
 		
 		/* Printing for testing */
-		for (i = 0; i < N+2; i++){
-			for (j = 0; j < M+2; j++){
-				printf("%c ", array[i][j]);
-			}
-			printf("\n");
-		}
-		printf("\n");
+//		for (i = 0; i < N+2; i++){
+//			for (j = 0; j < M+2; j++){
+//				printf("%c ", array[i][j]);
+//			}
+//			printf("\n");
+//		}
+//		printf("\n");
 		
 		global_time++;
 	}
 	
-	printf("%d ", arjumand);
-	printf("\n");
-	printf("%s\n", path[lpath][cpath]);
-	printf("%d ", lpath);
-	printf("%d\n", cpath);
+	/* Printing time and path */
+	if (arjumand == 0){
+		printf("infinity\n");
+		if (strcmp(path[leastl][leastc], "") == 0){
+			printf("stay");
+		}
+		else{
+			printf("%s", path[leastl][leastc]);
+		}
+	}
+	else if (arjumand != 0){
+		printf("%d\n", arjumand);
+			printf("%s", path[lpath][cpath]);
+	}
 	
 	return 0;
 }
