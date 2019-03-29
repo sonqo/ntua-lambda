@@ -113,14 +113,6 @@ int main(int argc, char *argv[]) {
         array[i][M+1] = 'X';
     }
 
-//	for (i = 0; i < N+2; i++){
-//		for (j = 0; j < M+2; j++){
-//			printf("%c ", array[i][j]);
-//		}
-//		printf("\n");
-//	}
-//	printf("\n");
-
     int global_time = 0;
     int arjumand = 0;
     int time = front->time;
@@ -135,8 +127,6 @@ int main(int argc, char *argv[]) {
 
     /* Floodfill Algorithm */
     while (front != NULL){
-//		printf("Time: ");
-//		printf("%d\n", global_time);
         while (global_time == time){
             int line = front->line;
             int column = front->column;
@@ -281,16 +271,7 @@ int main(int argc, char *argv[]) {
                 global_time = -1;
             }
         }
-
-        /* Printing for testing */
-//		for (i = 0; i < N+2; i++){
-//			for (j = 0; j < M+2; j++){
-//				printf("%c ", array[i][j]);
-//			}
-//			printf("\n");
-//		}
-//		printf("\n");
-
+        
         global_time++;
     }
 
