@@ -15,7 +15,7 @@ struct node{
 struct node *front = NULL;
 struct node *rear = NULL;
 
-/* Functions of Queue */
+/* Queue Functions */
 void enqueue(int x, int y, char ch, int time, char* pos){
     struct node *nptr = malloc(sizeof(struct node));
     nptr->line = x;
@@ -79,11 +79,11 @@ int main(int argc, char *argv[]) {
     fclose (fp);
     char array[N+2][M+2];
     char* path[N+2][N+2];
-    char* ptime[100];
 
+    /* Least possible path of Arjumand */
     int leastl, leastc;
 
-    /* File reading and map filling */
+    /* File reading and map padding */
     fp = fopen(argv[1], "r");
     for (i = 1; i <= N+1; i++){
         for (j = 1; j <= M+1; j++){
@@ -108,13 +108,11 @@ int main(int argc, char *argv[]) {
         array[0][i] = 'X';
         array[N+1][i] = 'X';
     }
-
     for (i = 0; i < N+2; i++){
         array[i][0] = 'X';
         array[i][M+1] = 'X';
     }
 
-    /* Printing for testing */
 //	for (i = 0; i < N+2; i++){
 //		for (j = 0; j < M+2; j++){
 //			printf("%c ", array[i][j]);
@@ -144,7 +142,7 @@ int main(int argc, char *argv[]) {
             int column = front->column;
             char item = front->symbol;
             char* pos = front->position;
-            /* Cross Elements for the tested item */
+            /* Cross elements for the tested item */
             char item_east = array[line][column+1];
             char item_west = array[line][column-1];
             char item_north = array[line+1][column];
@@ -157,6 +155,7 @@ int main(int argc, char *argv[]) {
                     strcat(str, right);
                     path[line][column+1] = str;
                     enqueue(line, column+1, item, time+1, str);
+                    /* Getting least possible path */
                     if ((column+1) < leastc){
                         leastc = column+1;
                     }
@@ -168,6 +167,7 @@ int main(int argc, char *argv[]) {
                     strcat(str, left);
                     path[line][column-1] = str;
                     enqueue(line, column-1, item, time+1, str);
+                    /* Getting least possible path */
                     if ((column-1) < leastc){
                         leastc = column-1;
                     }
@@ -179,6 +179,7 @@ int main(int argc, char *argv[]) {
                     strcat(str, down);
                     path[line+1][column] = str;
                     enqueue(line+1, column, item, time+1, str);
+                    /* Getting least possible path */
                     if ((line+1) < leastl){
                         leastl = line+1;
                     }
@@ -190,6 +191,7 @@ int main(int argc, char *argv[]) {
                     strcat(str, up);
                     path[line-1][column] = str;
                     enqueue(line-1, column, item, time+1, str);
+                    /* Getting least possible path */
                     if ((line-1) < leastl){
                         leastl = line-1;
                     }
@@ -293,6 +295,7 @@ int main(int argc, char *argv[]) {
     }
 
     /* Printing time and path */
+    /* In case Arjumand is not in danger */
     if (arjumand == 0){
         printf("infinity\n");
         if (strcmp(path[leastl][leastc], "") == 0){
@@ -302,6 +305,7 @@ int main(int argc, char *argv[]) {
             printf("%s", path[leastl][leastc]);
         }
     }
+    /* In case Arjumand ought to be saved */
     else if (arjumand != 0){
         printf("%d\n", arjumand);
         printf("%s", path[lpath][cpath]);
