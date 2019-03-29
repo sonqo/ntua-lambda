@@ -1,0 +1,3 @@
+C:/Users/Zeys/Desktop/ntuaLambda/progLang/firstAssignment/Colors/cmake-build-debug/CMakeFiles/Colors.dir
+C:/Users/Zeys/Desktop/ntuaLambda/progLang/firstAssignment/Colors/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Zeys/Desktop/ntuaLambda/progLang/firstAssignment/Colors/cmake-build-debug/CMakeFiles/rebuild_cache.dir

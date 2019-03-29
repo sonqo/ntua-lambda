@@ -22,11 +22,11 @@ int main(int argc, char *argv[]){
         fscanf(fp, "%d", &array[i]);
     }
     fclose(fp);
-    
+
     for (i = 0; i < N; i++){
         printf("%d ", array[i]);
     }
-    
-    
+
+
 
 }

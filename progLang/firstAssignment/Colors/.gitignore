@@ -1,3 +1,5 @@
 /.vscode
 *.exe
 /.dist
+/CMakeLists.txt
+/cmake-build-debug
