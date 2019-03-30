@@ -140,6 +140,7 @@ int main(int argc, char *argv[]) {
             if (item == 'A'){
                 if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
                     array[line][column+1] = item;
+                    /* Comparison of strings - StackOverflow */
                     char* str = (char*) malloc(1 + strlen(pos)+ strlen(right));
                     strcpy(str, pos);
                     strcat(str, right);
@@ -152,6 +153,7 @@ int main(int argc, char *argv[]) {
                 }
                 if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
                     array[line][column-1] = item;
+                    /* Comparison of strings - StackOverflow */
                     char* str = (char*) malloc(1 + strlen(pos)+ strlen(left));
                     strcpy(str, pos);
                     strcat(str, left);
@@ -164,6 +166,7 @@ int main(int argc, char *argv[]) {
                 }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
                     array[line+1][column] = item;
+                    /* Comparison of strings - StackOverflow */
                     char* str = (char*) malloc(1 + strlen(pos)+ strlen(up));
                     strcpy(str, pos);
                     strcat(str, down);
@@ -176,6 +179,7 @@ int main(int argc, char *argv[]) {
                 }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
                     array[line-1][column] = item;
+                    /* Comparison of strings - StackOverflow */
                     char* str = (char*) malloc(1 + strlen(pos)+ strlen(down));
                     strcpy(str, pos);
                     strcat(str, up);
@@ -278,6 +282,8 @@ int main(int argc, char *argv[]) {
 
         global_time++;
     }
+
+    display();
 
     /* Printing time and path */
     /* In case Arjumand is not in danger */
