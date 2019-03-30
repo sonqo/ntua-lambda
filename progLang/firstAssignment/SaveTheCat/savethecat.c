@@ -195,6 +195,7 @@ int main(int argc, char *argv[]) {
                 else if (item_west == 'A'){
                     array[line][column-1] = item;
                     enqueue(line, column-1, item, time+1, "");
+                    /* Getting least possible path of the latest time */
                     if (global_time-1 == arjumand){
                         if ((column-1) < cpath){;
                             cpath = column-1;
@@ -213,6 +214,7 @@ int main(int argc, char *argv[]) {
                 else if (item_east == 'A'){
                     array[line][column+1] = item;
                     enqueue(line, column+1, item, time+1, "");
+                    /* Getting least possible path of the latest time */
                     if (global_time-1 == arjumand){
                         if ((column+1) < cpath){
                             cpath = column+1;
@@ -231,6 +233,7 @@ int main(int argc, char *argv[]) {
                 else if (item_north == 'A'){
                     array[line+1][column] = item;
                     enqueue(line+1, column, item, time+1, "");
+                    /* Getting least possible path of the latest time */
                     if (global_time-1 == arjumand){
                         if ((line+1) < lpath){
                             lpath = line+1;
@@ -249,6 +252,7 @@ int main(int argc, char *argv[]) {
                 else if (item_south == 'A'){
                     array[line-1][column] = item;
                     enqueue(line-1, column, item, time+1, "");
+                    /* Getting least possible path of the latest time */
                     if (global_time-1 == arjumand){
                         if ((line-1) < lpath){
                             lpath = line-1;
