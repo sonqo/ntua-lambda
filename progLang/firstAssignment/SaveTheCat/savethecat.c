@@ -146,11 +146,6 @@ int main(int argc, char *argv[]) {
                     strcat(str, right);
                     path[line][column+1] = str;
                     enqueue(line, column+1, item, time+1, str);
-                    /* Getting least possible path */
-                    if ((column+1) <= leastc){
-                        leastl = line;
-                        leastc = column+1;
-                    }
                 }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
                     array[line+1][column] = item;
@@ -160,24 +155,21 @@ int main(int argc, char *argv[]) {
                     strcat(str, down);
                     path[line+1][column] = str;
                     enqueue(line+1, column, item, time+1, str);
-                    /* Getting least possible path */
-                    if ((line+1) <= leastl){
-                        leastl = line+1;
-                        leastc = column;
-                    }
                 }
-                if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
-                    array[line][column-1] = item;
+                if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')) {
+                    array[line][column - 1] = item;
                     /* Concatenation of strings - https://bit.ly/2zVGJZS */
-                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(left));
+                    char *str = (char *) malloc(1 + strlen(pos) + strlen(left));
                     strcpy(str, pos);
                     strcat(str, left);
-                    path[line][column-1] = str;
-                    enqueue(line, column-1, item, time+1, str);
+                    path[line][column - 1] = str;
+                    enqueue(line, column - 1, item, time + 1, str);
                     /* Getting least possible path */
-                    if ((column-1) <= leastc){
-                        leastl = line;
-                        leastc = column-1;
+                    if ((column-1) < leastc){
+                        if (line == leastl){
+                            leastc = column-1;
+                            leastl = line;
+                        }
                     }
                 }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
@@ -300,7 +292,7 @@ int main(int argc, char *argv[]) {
             printf("%s", path[leastl][leastc]);
         }
     }
-    /* In case Arjumand ought to be saved */
+        /* In case Arjumand ought to be saved */
     else if (arjumand != 0){
         printf("%d\n", arjumand);
         if (strcmp(path[lpath][cpath], "") == 0){
