@@ -34,39 +34,65 @@ int main(int argc, char *argv[]){
     }
     fclose(fp);
 
+    for (i = 0; i < N; i++){
+        printf("%d ", ribbon[i]);
+    }
+    printf("\n");
+
     // Initializing counter of colors to 0's
     for (i = 0; i < M+1; i++){
         colors[i] = 0;
     }
 
+    for (i = 0; i < M+1; i++){
+        printf("%d ", colors[i]);
+    }
+    printf("\n");
+
     // Start/finish pointers of ribbon and counter of the least possible length
     int strt_pos = 0;
     int fnsh_pos = -1;
     int c = 0;
+    int global_colors = N+1;
 
     // First found
     int ff = 0;
 
-    while (c > M){
-        colors[ribbon[strt_pos]] = 1;
-        while (ff == 0){
-            if (colors[ribbon[strt_pos+1]] == 1){
-                strt_pos++;
-            }
-            else {
-                ff = 1;
-            }
-        fnsh_pos = strt_pos + 1;
-        colors[ribbon[fnsh_pos]] = 1;
-        while (sum_array(colors, M+1) != M){
-            fnsh_pos++;
-            if (colors[ribbon[fnsh_pos]] == 0){
-                colors[ribbon[fnsh_pos]] = 1;
-            }
-        }
-        }
-
+    while ((strt_pos != N) && (global_colors != M)){
+      colors[ribbon[strt_pos]] = 1;
+      while (ff == 0) {
+          if (colors[ribbon[strt_pos + 1]] == 1) {
+              strt_pos++;
+          } else {
+              ff = 1;
+          }
+      }
+      printf("%d ", strt_pos);
+      fnsh_pos = strt_pos + 1;
+      colors[ribbon[fnsh_pos]] = 1;
+      while (sum_array(colors, M + 1) != M) {
+          fnsh_pos++;
+          if (colors[ribbon[fnsh_pos]] == 0) {
+              colors[ribbon[fnsh_pos]] = 1;
+          }
+      }
+      printf("%d ", fnsh_pos);
+      c = fnsh_pos - strt_pos + 1;
+      if (c < global_colors) {
+          global_colors = c;
+      }
+      printf("%d", global_colors);
+      strt_pos++;
+      fnsh_pos = -1;
+      ff = 0;
+      for (i = 0; i < M+1; i++){
+          colors[i] = 0;
+      }
+      printf("\n");
     }
+
+    printf("Least possible sequence length is: ");
+    printf("%d", global_colors);
 
     return 0;
 }
