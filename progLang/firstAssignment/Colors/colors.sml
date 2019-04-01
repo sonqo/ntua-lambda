@@ -86,3 +86,15 @@ fun colors file =
   in
     print(Int.toString(leastSeq (ribbon, M, M)) ^ "\n")
   end
+
+(* A funtion that returns the head of a list *)
+fun head ([]) = raise Empty
+  | head ([h:int]) = h
+  | head ((h::t)) = h
+
+(* A function that skips consecutive integers of a list and starts counting from the last one *)
+fun excessColors ([]) = []
+  | excessColors ([h]) = [h] 
+  | excessColors ((h::t)) = 
+    if head (t) = h then excessColors (t)
+    else (h::t)
