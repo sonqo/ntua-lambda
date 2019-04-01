@@ -55,6 +55,18 @@ fun colors file =
         else 
           false
 
+    (* A funtion that returns the head of a list *)
+    fun head ([]) = raise Empty
+      | head ([h:int]) = h
+      | head ((h::t)) = h
+
+    (* A function that skips consecutive integers of a list and starts counting from the last one *)
+    fun excessColors ([]) = []
+      | excessColors ([h]) = [h] 
+      | excessColors ((h::t)) = 
+        if head (t) = h then excessColors (t)
+        else (h::t)
+
     (* A function that splits a list to the Mth element *)
     fun splitList ((h::t):int list, 0) = []
       | splitList (([], M)) = []   
@@ -66,7 +78,7 @@ fun colors file =
     fun testSeq ([], M, I) = 0
       | testSeq ((h::t), M, 0) = 0
       | testSeq ((h::t), M, I) = 
-        if allColors (splitList ((h::t), I), M) then 
+        if allColors (splitList (excessColors ((h::t)), I), M) then 
           length (splitList ((h::t), I))
         else
           testSeq (t, M, I)
@@ -86,15 +98,3 @@ fun colors file =
   in
     print(Int.toString(leastSeq (ribbon, M, M)) ^ "\n")
   end
-
-(* A funtion that returns the head of a list *)
-fun head ([]) = raise Empty
-  | head ([h:int]) = h
-  | head ((h::t)) = h
-
-(* A function that skips consecutive integers of a list and starts counting from the last one *)
-fun excessColors ([]) = []
-  | excessColors ([h]) = [h] 
-  | excessColors ((h::t)) = 
-    if head (t) = h then excessColors (t)
-    else (h::t)
