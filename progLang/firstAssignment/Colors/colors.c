@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
     fscanf(fp, "%d", &M);
 
     int ribbon[N];
-    int colors[M];
+    int colors[M]; // Counter of colors
 
     // Reading ribbon
     for (i = 0; i < N; i++){
@@ -51,6 +51,7 @@ int main(int argc, char *argv[]){
 
     while ((strt_pos != N) && (fnsh_pos != N) && (global_colors != M)){
       colors[ribbon[strt_pos]] = 1;
+      // Skipping consecutive colors
       while (ff == 0) {
           if (colors[ribbon[strt_pos + 1]] == 1) {
               strt_pos++;
@@ -62,6 +63,7 @@ int main(int argc, char *argv[]){
       colors[ribbon[fnsh_pos]] = 1;
       while (sum_array(colors, M + 1) != M) {
           fnsh_pos++;
+          // In case a length equal to M is found, break => Least possible sequence
           if (fnsh_pos == N){
               flag = 1;
               break;
@@ -70,19 +72,27 @@ int main(int argc, char *argv[]){
               colors[ribbon[fnsh_pos]] = 1;
           }
       }
+      // Calculating length
       if (flag == 0){
           c = fnsh_pos - strt_pos + 1;
       }
+      // If the length found is lower than previous ones, replace
       if ((c < global_colors) && (flag != 1)){
           global_colors = c;
       }
       strt_pos++;
       ff = 0;
+      // Initializing counter of colors to 0's before next run
       for (i = 0; i < M+1; i++){
           colors[i] = 0;
       }
     }
 
+    // In case not all colors exist in the ribbon
+    if (global_colors == N+1){
+        global_colors = 0;
+    }
+    // Printing least possible length of ribbon
     printf("%d", global_colors);
 
     return 0;
