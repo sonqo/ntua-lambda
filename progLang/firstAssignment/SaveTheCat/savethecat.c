@@ -100,6 +100,9 @@ int main(int argc, char *argv[]) {
                 leastl = i;
                 leastc = j;
             }
+            if (ch == '.'){
+                path[i][j] = "Z";
+            }
         }
     }
 
@@ -144,9 +147,17 @@ int main(int argc, char *argv[]) {
                     char* str = (char*) malloc(1 + strlen(pos)+ strlen(right));
                     strcpy(str, pos);
                     strcat(str, right);
-                    path[line][column+1] = str;
+                    path[line][column + 1] = str;
                     enqueue(line, column+1, item, time+1, str);
                 }
+//                else if (item_east == 'A'){
+//                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(right));
+//                    strcpy(str, pos);
+//                    strcat(str, right);
+//                    if (strcmp(path[line][column+1], str) > 0){
+//                        path[line][column+1] = str;
+//                    }
+//                }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
                     array[line+1][column] = item;
                     /* Concatenation of strings - https://bit.ly/2zVGJZS */
@@ -156,6 +167,14 @@ int main(int argc, char *argv[]) {
                     path[line+1][column] = str;
                     enqueue(line+1, column, item, time+1, str);
                 }
+//                else if (item_north == 'A'){
+//                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(down));
+//                    strcpy(str, pos);
+//                    strcat(str, down);
+//                    if (strcmp(path[line+1][column], str) > 0){
+//                        path[line+1][column] = str;
+//                    }
+//                }
                 if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')) {
                     array[line][column - 1] = item;
                     /* Concatenation of strings - https://bit.ly/2zVGJZS */
@@ -165,28 +184,45 @@ int main(int argc, char *argv[]) {
                     path[line][column - 1] = str;
                     enqueue(line, column - 1, item, time + 1, str);
                     /* Getting least possible path */
-                    if ((column-1) < leastc){
-                        if (line == leastl){
-                            leastc = column-1;
-                            leastl = line;
-                        }
+                    if ((line < leastl) || (column-1 < leastc)){
+                        leastl = line;
+                        leastc = column-1;
                     }
                 }
+//                else if (item_west == 'A'){
+//                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(left));
+//                    strcpy(str, pos);
+//                    strcat(str, left);
+//                    if (strcmp(path[line][column-1], str) > 0){
+//                        path[line][column-1] = str;
+//                    }
+//                }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
                     array[line-1][column] = item;
                     /* Concatenation of strings - https://bit.ly/2zVGJZS */
-                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(down));
+                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(up));
                     strcpy(str, pos);
                     strcat(str, up);
-                    path[line-1][column] = str;
+                    path[line - 1][column] = str;
                     enqueue(line-1, column, item, time+1, str);
                     /* Getting least possible path */
-                    if ((line-1) <= leastl){
-                        leastl = line-1;
+                    if ((column < leastc) || (line-1 < leastl)){
+                        leastl = line - 1;
                         leastc = column;
+                        printf("%d ", leastl);
+                        printf("%d\n", leastc);
                     }
                 }
+//                else if (item_south == 'A'){
+//                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(up));
+//                    strcpy(str, pos);
+//                    strcat(str, up);
+//                    if (strcmp(path[line-1][column], str) > 0){
+//                        path[line-1][column] = str;
+//                    }
+//                }
             }
+
             if (item == 'W'){
                 if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
                     array[line][column-1] = item;
@@ -276,6 +312,14 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        for (i = 0; i < N+2; i++){
+            for (j = 0; j < M+2; j++){
+                printf("%c ", array[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n");
+
         global_time++;
     }
 
@@ -289,7 +333,7 @@ int main(int argc, char *argv[]) {
             printf("stay");
         }
         else{
-            printf("%s", path[leastl][leastc]);
+            printf("%s\n", path[leastl][leastc]);
         }
     }
         /* In case Arjumand ought to be saved */
@@ -299,7 +343,7 @@ int main(int argc, char *argv[]) {
             printf("stay");
         }
         else {
-            printf("%s", path[lpath][cpath]);
+            printf("%s\n", path[lpath][cpath]);
         }
     }
 
