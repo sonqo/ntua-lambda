@@ -130,6 +130,8 @@ int main(int argc, char *argv[]) {
 
     /* Floodfill Algorithm */
     while (front != NULL){
+        printf("Time:");
+        printf("%d\n", global_time);
         while (global_time == time){
             int line = front->line;
             int column = front->column;
@@ -154,8 +156,9 @@ int main(int argc, char *argv[]) {
 //                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(right));
 //                    strcpy(str, pos);
 //                    strcat(str, right);
-//                    if (strcmp(path[line][column+1], str) > 0){
+//                    if (strcmp(str, path[line][column+1]) < 0){
 //                        path[line][column+1] = str;
+//                        enqueue(line, column+1, item, time+1, str);
 //                    }
 //                }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
@@ -171,8 +174,9 @@ int main(int argc, char *argv[]) {
 //                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(down));
 //                    strcpy(str, pos);
 //                    strcat(str, down);
-//                    if (strcmp(path[line+1][column], str) > 0){
+//                    if (strcmp(str, path[line+1][column]) < 0){
 //                        path[line+1][column] = str;
+//                        enqueue(line+1, column, item, time+1, str);
 //                    }
 //                }
                 if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')) {
@@ -193,8 +197,9 @@ int main(int argc, char *argv[]) {
 //                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(left));
 //                    strcpy(str, pos);
 //                    strcat(str, left);
-//                    if (strcmp(path[line][column-1], str) > 0){
+//                    if (strcmp(str, path[line][column-1]) < 0){
 //                        path[line][column-1] = str;
+//                        enqueue(line, column-1, item, time+1, str);
 //                    }
 //                }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
@@ -209,20 +214,19 @@ int main(int argc, char *argv[]) {
                     if ((column < leastc) || (line-1 < leastl)){
                         leastl = line - 1;
                         leastc = column;
-                        printf("%d ", leastl);
-                        printf("%d\n", leastc);
                     }
                 }
-//                else if (item_south == 'A'){
-//                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(up));
-//                    strcpy(str, pos);
-//                    strcat(str, up);
-//                    if (strcmp(path[line-1][column], str) > 0){
-//                        path[line-1][column] = str;
-//                    }
-//                }
+                else if (item_south == 'A'){
+                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(up));
+                    strcpy(str, pos);
+                    strcat(str, up);
+                    // Choosing least possible path for the same map position
+                    if ((strcmp(str, path[line-1][column]) < 0) && (strlen(path[line-1][column]) > strlen(str))){
+                        path[line-1][column] = str;
+                        enqueue(line-1, column, item, time+1, str);
+                    }
+                }
             }
-
             if (item == 'W'){
                 if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
                     array[line][column-1] = item;
@@ -311,16 +315,6 @@ int main(int argc, char *argv[]) {
                 global_time = -1;
             }
         }
-
-        for (i = 0; i < N+2; i++){
-            for (j = 0; j < M+2; j++){
-                printf("%c ", array[i][j]);
-            }
-            printf("\n");
-        }
-        printf("\n");
-
-        global_time++;
     }
 
     display();
@@ -336,7 +330,7 @@ int main(int argc, char *argv[]) {
             printf("%s\n", path[leastl][leastc]);
         }
     }
-        /* In case Arjumand ought to be saved */
+    /* In case Arjumand ought to be saved */
     else if (arjumand != 0){
         printf("%d\n", arjumand);
         if (strcmp(path[lpath][cpath], "") == 0){
