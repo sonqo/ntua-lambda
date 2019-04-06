@@ -39,7 +39,7 @@ fun colors file =
 
     (* A function that locates the finish pointer when all colors are met *)
     fun locateFnsh (ribbon, color, N, M, finish, sum) = 
-    while !sum <> M andalso !finish <> N-1 do (
+      while !sum <> M andalso !finish <> N-1 do (
         finish := !finish + 1;
         if Array.sub (color, Array.sub (ribbon, !finish)) = 0 then ( 
             sum := !sum + 1;
@@ -51,29 +51,29 @@ fun colors file =
 
     (* A function that locates the start pointer excluding excessive colors *)
     fun locateStrt (ribbon, color, start) = 
-    while Array.sub (color, Array.sub (ribbon, !start)) <> 1 do (
+      while Array.sub (color, Array.sub (ribbon, !start)) <> 1 do (
         Array.update (color, Array.sub (ribbon, !start), Array.sub (color, Array.sub (ribbon, !start)) - 1);
         start := !start + 1
     )
 
     (* Final function that calculates the least possible length *)
     fun leastSeq (ribbon, color, N, M, start, finish, sum, c, global_c) = 
-        while !finish <> N-1 do (
-            locateFnsh (ribbon, color, N, M, finish, sum);
-            locateStrt (ribbon, color, start);
+      while !finish <> N-1 do (
+        locateFnsh (ribbon, color, N, M, finish, sum);
+        locateStrt (ribbon, color, start);
         
         c := !finish - !start + 1;
 
         if !c < !global_c  andalso !sum = M then
-            global_c := !c
+          global_c := !c
         else
-            global_c := !global_c
+          global_c := !global_c
         ;
         
         Array.update (color, Array.sub (ribbon, !start), Array.sub (color, Array.sub (ribbon, !start)) - 1);
         start := !start + 1;
         sum := !sum - 1
-        )
+      )
 
     (* Reading length of ribbon(N), number of colors(M) and the ribbon *)
     val (N, M) = readFile file
