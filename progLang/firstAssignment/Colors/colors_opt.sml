@@ -32,82 +32,72 @@ fun colors file =
 
         (* A function to read N integers from the opened file. *)
         fun readInts 0 acc = acc 
-          | readInts i acc = readInts (i - 1) (readInt inStream :: acc)
+            | readInts i acc = readInts (i - 1) (readInt inStream :: acc)
       in
         readInts N []
       end
 
-    (* A funtion that returns the head of a list *)
-    fun head ([]) = raise Empty
-      | head ([h:int]) = h
-      | head ((h::t)) = h
-
-    (* A function that skips consecutive integers of a list and starts counting from the last one *)
-    fun excessColors ([]) = []
-      | excessColors ([h]) = [h] 
-      | excessColors ((h::t)) = 
-        if head (t) = h then excessColors (t)
-        else (h::t)
-
-    (* A function that checks if an integer is in a list. *)
-    fun isMember ([], el:int) = false 
-      | isMember ((h::t), el) = 
-        if h = el then 
-            true
-        else 
-            isMember (t, el)
-
-    (* A function that checks if the ribbon has all the colors needed *)
-    fun allColors ([], col) = false
-      | allColors (list, 0) = true
-      | allColors (list, col:int) =
-        if isMember (list, col) then  
-            allColors (list, (col - 1))
-        else 
-            false
-
-    (* A function that splits a list to the Mth element *)
-    fun splitList ((h::t):int list, 0) = []
-      | splitList (([], M)) = []   
-      | splitList ((h::t), M) = 
-        if length ((h::t)) < M then []
-        else h :: splitList (t, M-1)
-
-    (* A function that returns the least possible sequence of ribbon with all the colors needed *)
-    fun testSeq ([], M, I) = 0
-      | testSeq ((h::t), M, 0) = 0
-      | testSeq ((h::t), M, I) = 
-        if (allColors ((h::t), M)) then
-            if (allColors (excessColors (splitList ((h::t), I)), M)) then 
-                length (excessColors (splitList ((h::t), I)))
-            else
-                testSeq ((h::t), M, I+1)
+    (* A function that locates the finish pointer when all colors are met *)
+    fun locateFnsh (ribbon, color, N, M, finish, sum) = 
+    while !sum <> M andalso !finish <> N-1 do (
+        finish := !finish + 1;
+        if Array.sub (color, Array.sub (ribbon, !finish)) = 0 then ( 
+            sum := !sum + 1;
+            Array.update (color, Array.sub (ribbon, !finish), Array.sub (color, Array.sub (ribbon, !finish)) + 1)
+        )
         else
-            0
+            Array.update (color, Array.sub (ribbon, !finish), Array.sub (color, Array.sub (ribbon, !finish)) + 1)
+    )
 
-    (* A function that returns all possible length of the ribbon with all the colors included *)
-    fun allSequence ([], N, M) = []
-      | allSequence ((h::t), N, M) = 
-        if testSeq((h::t), M, M) <> 0 then 
-            testSeq((h::t), M, M)::allSequence(t, M, M)
-        (* If a part with length of M is found, stop *)
-        else if testSeq((h::t), M, M) = M then
-            [testSeq((h::t), M, M)]
-        else 
-            allSequence(t,M,M)
+    (* A function that locates the start pointer excluding excessive colors *)
+    fun locateStrt (ribbon, color, start) = 
+    while Array.sub (color, Array.sub (ribbon, !start)) <> 1 do (
+        Array.update (color, Array.sub (ribbon, !start), Array.sub (color, Array.sub (ribbon, !start)) - 1);
+        start := !start + 1
+    )
 
-    (* A function that returns the minimum element of a list *)
-    fun minElement ([]) = 0
-      | minElement ([h]) = h
-      | minElement ((h::t)) =
-        let 
-          val x = minElement (t)
-        in
-          if h < x then h else x
-        end
-    
+    (* Final function that calculates the least possible length *)
+    fun leastSeq (ribbon, color, N, M, start, finish, sum, c, global_c) = 
+        while !finish <> N-1 do (
+            locateFnsh (ribbon, color, N, M, finish, sum);
+            locateStrt (ribbon, color, start);
+        
+        c := !finish - !start + 1;
+
+        if !c < !global_c  andalso !sum = M then
+            global_c := !c
+        else
+            global_c := !global_c
+        ;
+        
+        Array.update (color, Array.sub (ribbon, !start), Array.sub (color, Array.sub (ribbon, !start)) - 1);
+        start := !start + 1;
+        sum := !sum - 1
+        )
+
+    (* Reading length of ribbon(N), number of colors(M) and the ribbon *)
     val (N, M) = readFile file
-    val ribbon = parseFile file
+    val ribbon_temp = parseFile file
+    val ribbon = Array.fromList ribbon_temp
+
+    (* Initializing start and finish pointers *)
+    val start = ref 0
+    val finish = ref 0
+
+    (* Initializing counter of colors *)
+    val color = Array.array (M+1, 0);
+
+    (* Least possible length counters - Temp & final respectively *)
+    val c = ref 0
+    val global_c = ref (N + 1) 
+
+    (* All colors found counter *)
+    val sum = ref 1
   in
-    print(Int.toString(minElement (allSequence(ribbon, N, M))) ^ "\n")
+    Array.update (color, Array.sub (ribbon, !start), 1);
+    leastSeq(ribbon, color, N, M, start, finish, sum, c, global_c);
+    if !global_c = N+1 then
+        print("0\n")
+    else
+        print (Int.toString (!global_c) ^ "\n")
   end

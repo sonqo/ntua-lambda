@@ -1,4 +1,4 @@
-fun colors file = 
+fun colors file =
   let
     (* A function that reads the length of ribbon(N) and the number of colors(M) from file. *)
     fun readFile file =   
@@ -37,23 +37,6 @@ fun colors file =
         readInts N []
       end
 
-    (* A function that checks if an integer is in a list. *)
-    fun isMember ([], el:int) = false 
-      | isMember ((h::t), el) = 
-        if h = el then 
-          true
-        else 
-          isMember (t, el)
-
-    (* A function that checks if the ribbon has all the colors needed. *)
-    fun allColors ([], col) = false
-      | allColors (list, 0) = true
-      | allColors (list, col:int) =
-        if isMember (list, col) then  
-          allColors (list, (col - 1))
-        else 
-          false
-
     (* A funtion that returns the head of a list *)
     fun head ([]) = raise Empty
       | head ([h:int]) = h
@@ -66,6 +49,23 @@ fun colors file =
         if head (t) = h then excessColors (t)
         else (h::t)
 
+    (* A function that checks if an integer is in a list. *)
+    fun isMember ([], el:int) = false 
+      | isMember ((h::t), el) = 
+        if h = el then 
+            true
+        else 
+            isMember (t, el)
+
+    (* A function that checks if the ribbon has all the colors needed *)
+    fun allColors ([], col) = false
+      | allColors (list, 0) = true
+      | allColors (list, col:int) =
+        if isMember (list, col) then  
+            allColors (list, (col - 1))
+        else 
+            false
+
     (* A function that splits a list to the Mth element *)
     fun splitList ((h::t):int list, 0) = []
       | splitList (([], M)) = []   
@@ -73,27 +73,41 @@ fun colors file =
         if length ((h::t)) < M then []
         else h :: splitList (t, M-1)
 
-    (* A function that checks sequences of ribbon with length I, given the number of colors M *)
+    (* A function that returns the least possible sequence of ribbon with all the colors needed *)
     fun testSeq ([], M, I) = 0
       | testSeq ((h::t), M, 0) = 0
       | testSeq ((h::t), M, I) = 
-        if allColors (splitList (excessColors ((h::t)), I), M) then 
-          length (splitList ((h::t), I))
+        if (allColors ((h::t), M)) then
+            if (allColors (excessColors (splitList ((h::t), I)), M)) then 
+                length (excessColors (splitList ((h::t), I)))
+            else
+                testSeq ((h::t), M, I+1)
         else
-          testSeq (t, M, I)
+            0
 
-    (* Final function that returns the length of the least possible sequence of colors in the ribbon*)
-    fun leastSeq ([], M, I) = 0
-      | leastSeq ((h::t), M, I) =
-        (* Making sure that the ribbon has all the colors down from M *)
-        if (testSeq ((h::t), M, I) = 0) andalso (allColors ((h::t), M)) then 
-          leastSeq ((h::t), M, I+1)
-        else
-          testSeq ((h::t), M, I);
+    (* A function that returns all possible length of the ribbon with all the colors included *)
+    fun allSequence ([], N, M) = []
+      | allSequence ((h::t), N, M) = 
+        if testSeq((h::t), M, M) <> 0 then 
+            testSeq((h::t), M, M)::allSequence(t, M, M)
+        (* If a part with length of M is found, stop *)
+        else if testSeq((h::t), M, M) = M then
+            [testSeq((h::t), M, M)]
+        else 
+            allSequence(t,M,M)
+
+    (* A function that returns the minimum element of a list *)
+    fun minElement ([]) = 0
+      | minElement ([h]) = h
+      | minElement ((h::t)) =
+        let 
+          val x = minElement (t)
+        in
+          if h < x then h else x
+        end
     
     val (N, M) = readFile file
     val ribbon = parseFile file
-    
   in
-    print(Int.toString(leastSeq (ribbon, M, M)) ^ "\n")
+    print(Int.toString(minElement (allSequence(ribbon, N, M))) ^ "\n")
   end
