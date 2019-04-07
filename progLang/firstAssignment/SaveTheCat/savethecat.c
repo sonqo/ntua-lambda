@@ -157,9 +157,11 @@ int main(int argc, char *argv[]) {
                     path[line][column - 1] = str;
                     enqueue(line, column - 1, item, time + 1, str);
                     /* Getting least possible path */
-                    if ((line < leastl) || (column-1 < leastc)){
+                    if ((line <= leastl)){
                         leastl = line;
                         leastc = column-1;
+                        printf("%d ", leastl);
+                        printf("%d\n", leastc);
                     }
                 }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
@@ -174,6 +176,8 @@ int main(int argc, char *argv[]) {
                     if ((column < leastc) || (line-1 < leastl)){
                         leastl = line - 1;
                         leastc = column;
+                        printf("%d ", leastl);
+                        printf("%d\n", leastc);
                     }
                 }
             }
