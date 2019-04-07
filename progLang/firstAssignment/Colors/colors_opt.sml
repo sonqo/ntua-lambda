@@ -96,6 +96,8 @@ fun colors file =
   in
     Array.update (color, Array.sub (ribbon, !start), 1);
     leastSeq(ribbon, color, N, M, start, finish, sum, c, global_c);
+    
+    (* Printing least possible length *)
     if !global_c = N+1 then
         print("0\n")
     else
