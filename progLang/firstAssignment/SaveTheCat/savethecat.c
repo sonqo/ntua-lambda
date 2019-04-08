@@ -284,7 +284,7 @@ int main(int argc, char *argv[]) {
             printf("%s\n", path[leastl][leastc]);
         }
     }
-    /* In case Arjumand ought to be saved */
+        /* In case Arjumand ought to be saved */
     else if (arjumand != 0){
         printf("%d\n", arjumand);
         if (strcmp(path[lpath][cpath], "") == 0){
