@@ -139,6 +139,16 @@ int main(int argc, char *argv[]) {
                     path[line][column + 1] = str;
                     enqueue(line, column+1, item, time+1, str);
                 }
+                // Choosing least possible path for the same map position
+                else if (item_east == 'A'){
+                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(right));
+                    strcpy(str, pos);
+                    strcat(str, right);
+                    if (strcmp(str, path[line][column+1]) < 0){
+                        path[line][column+1] = str;
+                        enqueue(line, column+1, item, time+1, str);
+                    }
+                }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
                     array[line+1][column] = item;
                     /* Concatenation of strings - https://bit.ly/2zVGJZS */
@@ -147,6 +157,16 @@ int main(int argc, char *argv[]) {
                     strcat(str, down);
                     path[line+1][column] = str;
                     enqueue(line+1, column, item, time+1, str);
+                }
+                // Choosing least possible path for the same map position
+                else if (item_north == 'A'){
+                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(down));
+                    strcpy(str, pos);
+                    strcat(str, down);
+                    if (strcmp(str, path[line+1][column]) < 0){
+                        path[line+1][column] = str;
+                        enqueue(line+1, column, item, time+1, str);
+                    }
                 }
                 if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')) {
                     array[line][column - 1] = item;
@@ -162,6 +182,16 @@ int main(int argc, char *argv[]) {
                         leastc = column-1;
                     }
                 }
+                // Choosing least possible path for the same map position
+                else if (item_west == 'A'){
+                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(left));
+                    strcpy(str, pos);
+                    strcat(str, left);
+                    if (strcmp(str, path[line][column-1]) < 0){
+                        path[line][column-1] = str;
+                        enqueue(line, column-1, item, time+1, str);
+                    }
+                }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
                     array[line-1][column] = item;
                     /* Concatenation of strings - https://bit.ly/2zVGJZS */
@@ -174,6 +204,16 @@ int main(int argc, char *argv[]) {
                     if ((column < leastc) || (line-1 < leastl)){
                         leastl = line - 1;
                         leastc = column;
+                    }
+                }
+                // Choosing least possible path for the same map position
+                else if (item_south == 'A'){
+                    char* str = (char*) malloc(1 + strlen(pos)+ strlen(up));
+                    strcpy(str, pos);
+                    strcat(str, up);
+                    if ((strcmp(str, path[line-1][column]) < 0) && (strlen(path[line-1][column]) > strlen(str))){
+                        path[line-1][column] = str;
+                        enqueue(line-1, column, item, time+1, str);
                     }
                 }
             }
@@ -280,7 +320,7 @@ int main(int argc, char *argv[]) {
             printf("%s\n", path[leastl][leastc]);
         }
     }
-        /* In case Arjumand ought to be saved */
+    /* In case Arjumand ought to be saved */
     else if (arjumand != 0){
         printf("%d\n", arjumand);
         if (strcmp(path[lpath][cpath], "") == 0){
