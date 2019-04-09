@@ -160,8 +160,6 @@ int main(int argc, char *argv[]) {
                     if ((line <= leastl)){
                         leastl = line;
                         leastc = column-1;
-                        printf("%d ", leastl);
-                        printf("%d\n", leastc);
                     }
                 }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
@@ -176,8 +174,6 @@ int main(int argc, char *argv[]) {
                     if ((column < leastc) || (line-1 < leastl)){
                         leastl = line - 1;
                         leastc = column;
-                        printf("%d ", leastl);
-                        printf("%d\n", leastc);
                     }
                 }
             }
