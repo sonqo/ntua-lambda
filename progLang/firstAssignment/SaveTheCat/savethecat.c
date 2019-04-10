@@ -103,7 +103,8 @@ int main(int argc, char *argv[]) {
         array[i][M+1] = 'X';
     }
 
-    int global_time = 0, arjumand = 0;
+    int arjumand = 0;
+    int global_time = 0;
     int time = front->time;
 
     int lpath = N, cpath = M;
@@ -279,6 +280,7 @@ int main(int argc, char *argv[]) {
                     strcpy(str, pos);
                     strcat(str, "D");
                     enqueue(line + 1, column, item, time + 1, str);
+                    /* Getting least possible path */
                     if (arjumand != 0){
                         if ((line+1 == lpath) && (column == cpath)) {
                             path = str;
@@ -299,6 +301,7 @@ int main(int argc, char *argv[]) {
                     strcpy(str, pos);
                     strcat(str, "L");
                     enqueue(line, column - 1, item, time + 1, str);
+                    /* Getting least possible path */
                     if (arjumand != 0){
                         if ((line == lpath) && (column-1 == cpath)) {
                             path = str;
@@ -319,6 +322,7 @@ int main(int argc, char *argv[]) {
                     strcpy(str, pos);
                     strcat(str, "R");
                     enqueue(line, column + 1, item, time + 1, str);
+                    /* Getting least possible path */
                     if (arjumand != 0){
                         if ((line == lpath) && (column + 1 == cpath)) {
                             path = str;
@@ -339,6 +343,7 @@ int main(int argc, char *argv[]) {
                     strcpy(str, pos);
                     strcat(str, "U");
                     enqueue(line - 1, column, item, time + 1, str);
+                    /* Getting least possible path */
                     if (arjumand != 0){
                         if ((line-1 == lpath) && (column == cpath)) {
                             path = str;
@@ -355,6 +360,7 @@ int main(int argc, char *argv[]) {
             }
             dequeue();
 
+            /* If queue is not empty, go to the next element */
             if (front != NULL) {
                 time = front->time;
             } else {
@@ -364,6 +370,7 @@ int main(int argc, char *argv[]) {
         global_time++;
     }
 
+    /* In case Arjumand is safe */
     if (arjumand == 0){
         printf("infinity\n");
         if (strcmp(road, "") == 0){
@@ -373,6 +380,7 @@ int main(int argc, char *argv[]) {
             printf("%s", road);
         }
     }
+    /* In case Arjumand ought to be saved */
     else{
         printf("%d\n", arjumand);
         if (strcmp(path, "") == 0){
