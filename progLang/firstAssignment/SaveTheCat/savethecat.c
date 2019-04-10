@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
 
     int lpath = N, cpath = M;
 
-    /* Floodfill Algorithm */
+    /* Floodfilling A's and W's */
     while (front != NULL){
         while (global_time == time){
             int line = front->line, column = front->column;
@@ -264,6 +264,7 @@ int main(int argc, char *argv[]) {
     char* path = "";
     char* road = "";
 
+    /* Floodfilling A's for path finding  */
     while ((front != NULL) && (flag != 1)) {
         while (global_time == time) {
             int line = front->line, column = front->column;
@@ -390,6 +391,5 @@ int main(int argc, char *argv[]) {
             printf("%s", path);
         }
     }
-
     return 0;
 }
