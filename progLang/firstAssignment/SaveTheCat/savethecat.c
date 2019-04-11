@@ -104,8 +104,7 @@ int main(int argc, char *argv[]) {
     }
 
     int arjumand = 0;
-    int global_time = 0;
-    int time = front->time;
+    int global_time = 0, time = front->time;
 
     int lpath = N, cpath = M;
 
@@ -135,7 +134,7 @@ int main(int argc, char *argv[]) {
                     strcat(str, "D");
                     enqueue(line+1, column, item, time+1, str);
                 }
-                if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')) {
+                if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
                     array[line][column - 1] = item;
                     /* Concatenation of strings - https://bit.ly/2zVGJZS */
                     char *str = (char *) malloc(1 + strlen(pos) + strlen("L"));
@@ -265,15 +264,15 @@ int main(int argc, char *argv[]) {
     char* road = "";
 
     /* Floodfilling A's for path finding  */
-    while ((front != NULL) && (flag != 1)) {
-        while (global_time == time) {
+    while ((front != NULL) && (flag != 1)){
+        while (global_time == time){
             int line = front->line, column = front->column;
             char item = front->symbol;
             char *pos = front->position;
             /* Cross elements for the tested item */
             char item_east = array[line][column + 1], item_west = array[line][column - 1];
             char item_north = array[line + 1][column], item_south = array[line - 1][column];
-            if (item == 'a') {
+            if (item == 'a'){
                 if ((item_north != 'X') && (item_north != 'a')){
                     array[line + 1][column] = item;
                     /* Concatenation of strings - https://bit.ly/2zVGJZS */
@@ -283,13 +282,13 @@ int main(int argc, char *argv[]) {
                     enqueue(line + 1, column, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
-                        if ((line+1 == lpath) && (column == cpath)) {
+                        if ((line+1 == lpath) && (column == cpath)){
                             path = str;
                             flag = 1;
                         }
                     }
-                    if (arjumand == 0) {
-                        if ((line+1 == leastl) && (column == leastc)) {
+                    if (arjumand == 0){
+                        if ((line+1 == leastl) && (column == leastc)){
                             road = str;
                             flag = 1;
                         }
@@ -304,13 +303,13 @@ int main(int argc, char *argv[]) {
                     enqueue(line, column - 1, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
-                        if ((line == lpath) && (column-1 == cpath)) {
+                        if ((line == lpath) && (column-1 == cpath)){
                             path = str;
                             flag = 1;
                         }
                     }
-                    if (arjumand == 0) {
-                        if ((line == leastl) && (column-1 == leastc)) {
+                    if (arjumand == 0){
+                        if ((line == leastl) && (column-1 == leastc)){
                             road = str;
                             flag = 1;
                         }
@@ -325,13 +324,13 @@ int main(int argc, char *argv[]) {
                     enqueue(line, column + 1, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
-                        if ((line == lpath) && (column + 1 == cpath)) {
+                        if ((line == lpath) && (column + 1 == cpath)){
                             path = str;
                             flag = 1;
                         }
                     }
                     if (arjumand == 0){
-                        if ((line == leastl) && (column+1 == leastc)) {
+                        if ((line == leastl) && (column+1 == leastc)){
                             road = str;
                             flag = 1;
                         }
@@ -346,13 +345,13 @@ int main(int argc, char *argv[]) {
                     enqueue(line - 1, column, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
-                        if ((line-1 == lpath) && (column == cpath)) {
+                        if ((line-1 == lpath) && (column == cpath)){
                             path = str;
                              flag = 1;
                         }
                     }
-                    if (arjumand == 0) {
-                        if ((line-1 == leastl) && (column == leastc)) {
+                    if (arjumand == 0){
+                        if ((line-1 == leastl) && (column == leastc)){
                             road = str;
                             flag = 1;
                         }
@@ -362,9 +361,10 @@ int main(int argc, char *argv[]) {
             dequeue();
 
             /* If queue is not empty, go to the next element */
-            if (front != NULL) {
+            if (front != NULL){
                 time = front->time;
-            } else {
+            }
+            else{
                 global_time = -1;
             }
         }
