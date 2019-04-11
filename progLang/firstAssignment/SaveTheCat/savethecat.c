@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
     int lpath = N, cpath = M;
 
     /* Floodfilling A's and W's */
-    while ((front != NULL) && (arjumand != 1)){
+    while (front != NULL){
         while (global_time == time){
             int line = front->line, column = front->column;
             char item = front->symbol;
