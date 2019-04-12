@@ -1,6 +1,6 @@
 from collections import deque
 
-# Class of water and cat elements
+# Class of cat(A) water(W) and elements
 class itemSymbol:
     def __init__(self, line, column, symbol, time, pos):
         self.line = line
