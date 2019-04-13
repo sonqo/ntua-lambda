@@ -11,22 +11,31 @@ def floodFill(element):
     itemWest = array[line][column - 1]; itemEast = array[line][column + 1]
     itemNorth = array[line - 1][column]; itemSouth = array[line + 1][column]
 
-    if itemWest is '.':
-        array[line][column-1] = symbol
-        item = itemSymbol(line, column-1, symbol, time+1, position + 'L')
-        queue.append(item)
-    if itemEast is '.':
-        array[line][column+1] = symbol
-        item = itemSymbol(line, column+1, symbol, time+1, position + 'R')
-        queue.append(item)
-    if itemNorth is '.':
-        array[line-1][column] = symbol
-        item = itemSymbol(line-1, column, symbol, time + 1, position + 'U')
-        queue.append(item)
-    if itemSouth is '.':
-        array[line+1][column] = symbol
-        item = itemSymbol(line+1, column, symbol, time + 1, position + 'D')
-        queue.append(item)
+    if symbol is 'W':
+        if itemWest is not 'X' and itemWest is not 'W':
+            if itemWest is 'A':
+                arjumand = 1
+            array[line][column-1] = symbol
+            item = itemSymbol(line, column-1, symbol, time+1, position + 'L')
+            queue.append(item)
+        if itemEast is not 'X' and itemEast is not 'W':
+            if itemEast is 'A':
+                arjumand = 1
+            array[line][column+1] = symbol
+            item = itemSymbol(line, column+1, symbol, time+1, position + 'R')
+            queue.append(item)
+        if itemNorth is not 'X' and itemNorth is not 'W':
+            if itemNorth is 'A':
+                arjumand = 1
+            array[line-1][column] = symbol
+            item = itemSymbol(line-1, column, symbol, time+1, position + 'U')
+            queue.append(item)
+        if itemSouth is not 'X' and itemSouth is not 'W':
+            if itemSouth is 'A':
+                arjumand = 1
+            array[line+1][column] = symbol
+            item = itemSymbol(line+1, column, symbol, time+1, position + 'D')
+            queue.append(item)
 
 # Class of cat(A) water(W) elements
 class itemSymbol:
@@ -55,11 +64,6 @@ M = len(array[0]) - 2
 array.insert(0, ['X' for i in range (M+2)])
 array.insert(N+1, ['X' for i in range (M+2)])
 
-# Printing map
-for i in range(0, N+2):
-        print(*array[i], sep = ' ')
-print("\n")
-
 # Enqueing water and cat elements
 time = 1
 for i in range (1, N+1):
@@ -70,14 +74,24 @@ for i in range (1, N+1):
             queue.append(ch)
 
 element = queue.popleft()
-
-floodFill(element)
-
-# Printing map
-for i in range(0, N+2):
-        print(*array[i], sep = ' ')
-print("\n")
+time = element.time; global_time = 0
+arjumand = 0
 
 while queue:
-    element = queue.popleft()
-    floodFill(element)
+    print("Time: " + str(global_time))
+    while global_time is time:
+        floodFill(element)
+        if queue:
+            element = queue.popleft()
+            time = element.time
+        else:
+            global_time = -1
+    global_time += 1
+    for i in range(0, N + 2):
+        print(*array[i], sep=' ')
+    print("\n")
+
+if arjumand is 0:
+    print("infinity")
+else:
+    print(arjumand)
