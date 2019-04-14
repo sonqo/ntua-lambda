@@ -58,6 +58,49 @@ def floodFill(element):
                 ch = itemSymbol(line, item, 'W', time+1, "")
                 queue.append(ch)
 
+def pathFinding(element):
+    """ A function that returns the path of Arjumand."""
+    line = element.line; column = element.column; symbol = element.symbol; time = element.time; position = element.position
+
+    global arjumand; global lpath; global cpath; global path
+
+    if array[line+1][column] is not 'X' and array[line+1][column] is not 'a':
+        array[line+1][column] = 'a'
+        ch = itemSymbol(line+1, column, 'a', time+1, position + 'D')
+        queue.append(ch)
+        if arjumand is not 0:
+            print(line+1, column)
+            if line+1 == lpath and column == cpath:
+                print("hello")
+                path = position + 'D'
+    if array[line][column-1] is not 'X' and array[line][column-1] is not 'a':
+        array[line][column-1] = 'a'
+        ch = itemSymbol(line, column-1, 'a', time + 1, position + 'L')
+        queue.append(ch)
+        if arjumand is not 0:
+            print(line, column-1)
+            if line == lpath and column-1 == cpath:
+                print("hello")
+                path = position + 'L'
+    if array[line][column+1] is not 'X' and array[line][column+1] is not 'a':
+        array[line][column+1] = 'a'
+        ch = itemSymbol(line, column+1, 'a', time + 1, position + 'R')
+        queue.append(ch)
+        if arjumand is not 0:
+            print(line, column+1)
+            if line == lpath and column+1 == cpath:
+                print("hello")
+                path = position + 'R'
+    if array[line-1][column] is not 'X' and array[line-1][column] is not 'a':
+        array[line-1][column] = 'a'
+        ch = itemSymbol(line-1, column, 'a', time + 1, position + 'U')
+        queue.append(ch)
+        if arjumand is not 0:
+            print(line-1, column)
+            if line-1 == lpath and column == cpath:
+                print("hello")
+                path = position + 'U'
+
 # Class of cat(A) water(W) elements
 class itemSymbol:
     def __init__(self, line, column, symbol, time, position):
@@ -112,11 +155,26 @@ while queue:
         else:
             global_time = -1
     global_time += 1
-    print(global_time)
 
     for i in range(0, N + 2):
         print(*array[i], sep = ' ')
     print("\n")
+
+ch = itemSymbol(start_line, start_column, 'a', 0, "")
+queue.append(ch)
+
+while queue:
+    element = queue.popleft()
+    time = element.time
+    while global_time is time:
+        pathFinding(element)
+        if queue:
+            element = queue.popleft()
+            time = element.time
+        else:
+            global_time = -1
+    global_time += 1
+
 
 if arjumand is 0:
     print("infinity")
