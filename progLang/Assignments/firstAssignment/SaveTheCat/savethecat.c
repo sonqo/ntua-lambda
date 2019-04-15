@@ -2,28 +2,26 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Struct Queue */
+char* stringConcat(char* position, char* destination){
+// A function that concatinates two strings given and returns the result - https://bit.ly/2zVGJZS
+
+    char* str = (char*) malloc(1 + strlen(position)+ strlen(destination));
+    strcpy(str, position);
+    strcat(str, destination);
+    return str;
+}
+
 struct node{
-    int line;
-    int column;
-    char symbol;
-    int time;
-    char* position;
+    int line; int column; char symbol; int time; char* position;
     struct node *next;
 };
 
 struct node *front = NULL;
 struct node *rear = NULL;
 
-/* Queue Functions */
 void enqueue(int x, int y, char ch, int time, char* pos){
     struct node *nptr = malloc(sizeof(struct node));
-    nptr->line = x;
-    nptr->column = y;
-    nptr->symbol = ch;
-    nptr->time = time;
-    nptr->position = pos;
-    nptr->next = NULL;
+    nptr->line = x; nptr->column = y; nptr->symbol = ch; nptr->time = time; nptr->position = pos; nptr->next = NULL;
     if (rear == NULL){
         front = nptr;
         rear = nptr;
@@ -48,7 +46,6 @@ void dequeue(){
 
 int main(int argc, char *argv[]) {
 
-    /* Variables Declaration */
     int i, j, N = 0, M = 0, flag = 0;
     char ch;
 
@@ -68,9 +65,8 @@ int main(int argc, char *argv[]) {
     fclose (fp);
     char array[N+2][M+2];
 
-    /* Least possible path of Arjumand */
-    int leastl = 0, leastc = 0;
-    int start_line=0, start_column = 0;
+    int leastl = 0, leastc = 0; // Keeping coordinates of the best possible cell on the map
+    int start_line=0, start_column = 0; // Starting coordinates of Arjumand
 
     /* File reading and map padding */
     fp = fopen(argv[1], "r");
@@ -85,28 +81,26 @@ int main(int argc, char *argv[]) {
             if (ch == 'A'){
                 int time = 1;
                 enqueue(i, j, ch, time, "");
-                leastl = i;
-                leastc = j;
-                start_line = i;
-                start_column = j;
+                leastl = i; leastc = j;
+                start_line = i; start_column = j;
             }
         }
     }
 
     /* Border creation of X's */
     for (i = 0; i < M+2; i++){
-        array[0][i] = 'X';
-        array[N+1][i] = 'X';
+        array[0][i] = 'X'; array[N+1][i] = 'X';
     }
     for (i = 0; i < N+2; i++){
-        array[i][0] = 'X';
-        array[i][M+1] = 'X';
+        array[i][0] = 'X'; array[i][M+1] = 'X';
     }
 
-    int arjumand = 0;
+    int arjumand = 0; // Keeping the longest possible time for rescue
     int global_time = 0, time = front->time;
 
     int lpath = N, cpath = M;
+
+    char* str;
 
     /* Floodfilling A's and W's */
     while (front != NULL){
@@ -120,26 +114,17 @@ int main(int argc, char *argv[]) {
             if (item == 'A'){
                 if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
                     array[line][column+1] = item;
-                    /* Concatenation of strings - https://bit.ly/2zVGJZS */
-                    char* str = (char*) malloc(1 + strlen(pos)+ strlen("R"));
-                    strcpy(str, pos);
-                    strcat(str, "R");
+                    str = stringConcat(pos, "R");
                     enqueue(line, column+1, item, time+1, str);
                 }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
                     array[line+1][column] = item;
-                    /* Concatenation of strings - https://bit.ly/2zVGJZS */
-                    char* str = (char*) malloc(1 + strlen(pos)+ strlen("D"));
-                    strcpy(str, pos);
-                    strcat(str, "D");
+                    str = stringConcat(pos, "D");
                     enqueue(line+1, column, item, time+1, str);
                 }
                 if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
                     array[line][column - 1] = item;
-                    /* Concatenation of strings - https://bit.ly/2zVGJZS */
-                    char *str = (char *) malloc(1 + strlen(pos) + strlen("L"));
-                    strcpy(str, pos);
-                    strcat(str, "L");
+                    str = stringConcat(pos, "L");
                     enqueue(line, column - 1, item, time + 1, str);
                     /* Getting least possible path */
                     if ((line <= leastl)){
@@ -151,11 +136,7 @@ int main(int argc, char *argv[]) {
                 }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
                     array[line-1][column] = item;
-                    /* Concatenation of strings - https://bit.ly/2zVGJZS */
-                    char* str = (char*) malloc(1 + strlen(pos)+ strlen("U"));
-                    strcpy(str, pos);
-                    strcat(str, "U");
-                    //path[line - 1][column] = str;
+                    str = stringConcat(pos, "U");
                     enqueue(line-1, column, item, time+1, str);
                     /* Getting least possible path */
                     if ((column < leastc) || (line-1 < leastl)){
@@ -275,10 +256,7 @@ int main(int argc, char *argv[]) {
             if (item == 'a'){
                 if ((item_north != 'X') && (item_north != 'a')){
                     array[line + 1][column] = item;
-                    /* Concatenation of strings - https://bit.ly/2zVGJZS */
-                    char *str = (char *) malloc(1 + strlen(pos) + strlen("D"));
-                    strcpy(str, pos);
-                    strcat(str, "D");
+                    str = stringConcat(pos, "D");
                     enqueue(line + 1, column, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
@@ -296,10 +274,7 @@ int main(int argc, char *argv[]) {
                 }
                 if ((item_west != 'X') && (item_west != 'a')){
                     array[line][column - 1] = item;
-                    /* Concatenation of strings - https://bit.ly/2zVGJZS */
-                    char *str = (char *) malloc(1 + strlen(pos) + strlen("L"));
-                    strcpy(str, pos);
-                    strcat(str, "L");
+                    str = stringConcat(pos, "L");
                     enqueue(line, column - 1, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
@@ -317,10 +292,7 @@ int main(int argc, char *argv[]) {
                 }
                 if ((item_east != 'X') && (item_east != 'a')){
                     array[line][column + 1] = item;
-                    /* Concatenation of strings - https://bit.ly/2zVGJZS */
-                    char *str = (char *) malloc(1 + strlen(pos) + strlen("R"));
-                    strcpy(str, pos);
-                    strcat(str, "R");
+                    str = stringConcat(pos, "R");
                     enqueue(line, column + 1, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
@@ -338,10 +310,7 @@ int main(int argc, char *argv[]) {
                 }
                 if ((item_south != 'X') && (item_south != 'a')){
                     array[line - 1][column] = item;
-                    /* Concatenation of strings - https://bit.ly/2zVGJZS */
-                    char *str = (char *) malloc(1 + strlen(pos) + strlen("U"));
-                    strcpy(str, pos);
-                    strcat(str, "U");
+                    str = stringConcat(pos, "U");
                     enqueue(line - 1, column, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
