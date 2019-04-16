@@ -3,7 +3,7 @@
 #include <string.h>
 
 char* stringConcat(char* position, char* destination){
-// A function that concatinates two strings given and returns the result - https://bit.ly/2zVGJZS
+// A function that concatenates two strings given and returns the result - https://bit.ly/2zVGJZS
 
     char* str = (char*) malloc(1 + strlen(position)+ strlen(destination));
     strcpy(str, position);
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 
     int lpath = N, cpath = M;
 
-    char* str;
+    char* str; // Temp variable for string concatenation
 
     /* Floodfilling A's and W's */
     while (front != NULL){
