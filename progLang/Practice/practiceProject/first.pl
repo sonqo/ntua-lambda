@@ -24,3 +24,8 @@ solution(Config, [Move|Moves]) :-
  move(Config, Move, NextConfig),
  safe(NextConfig),
  solution(NextConfig, Moves).
+
+% Finding the last element of a list
+
+last_elem(X, [X]).
+last_elem(X, [_|L]) :- last_elem(X, L).
