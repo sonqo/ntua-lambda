@@ -15,17 +15,7 @@ move([X, X, Goat, Cabbage], wolf, [Y ,Y, Goat, Cabbage]) :-
 guarded_or_separated(X, X, X).
 guarded_or_separated(_, Y, Z) :- Y \= Z.
 
-safe([Man, Wolf, Goat, Cabbage]) :- 
-    guarded_or_separated(Man, Wolf, Goat), 
-    guarded_or_separated(Man, Goat, Cabbage).
+safe([Man, Wolf, Goat, Cabbage]) :- guarded_or_separated(Man, Wolf, Goat), guarded_or_separated(Man, Goat, Cabbage).
 
 solution([e,e,e,e], []).
-solution(Config, [Move|Moves]) :-
- move(Config, Move, NextConfig),
- safe(NextConfig),
- solution(NextConfig, Moves).
-
-% Finding the last element of a list
-
-last_elem(X, [X]).
-last_elem(X, [_|L]) :- last_elem(X, L).
+solution(Config, [Move|Moves]) :- move(Config, Move, NextConfig), safe(NextConfig), solution(NextConfig, Moves).
