@@ -11,23 +11,25 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class MyFrame extends JFrame implements ActionListener{
-	Canvas canvas = new Canvas();
+
+	Canvas canvas = new Canvas(); // Canvas is where circles and squares are drawn
 	MyThread timer;
 
-	public Canvas getCanvas() {
+	public Canvas getCanvas(){
 		return canvas;
 	}
 
-	public void setCanvas(Canvas canvas) {
+	public void setCanvas(Canvas canvas){
 		this.canvas = canvas;
 	}
-	public static void main(String[] args) {
-		new MyFrame();
 
+	public static void main(String[] args){
+		new MyFrame();
 	}
 
-	public MyFrame() throws HeadlessException {
-		super("This is my frame");
+	public MyFrame() throws HeadlessException{
+
+		super("This is my frame"); // Window name
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		getContentPane().add(canvas);
@@ -41,7 +43,7 @@ public class MyFrame extends JFrame implements ActionListener{
 		panel.add(new JLabel("Select shape: "));
 		
 		
-		String [] options = {"circle", "square"};
+		String [] options = {"Circle", "Square"};
 
 		JRadioButton circleButton = new JRadioButton(options[0]);
 		circleButton.setActionCommand(options[0]);
@@ -70,14 +72,18 @@ public class MyFrame extends JFrame implements ActionListener{
 		pack();
 	}
 	
-	public void actionPerformed(ActionEvent ev) {
+	public void actionPerformed(ActionEvent ev){
+
 		if (ev.getSource() instanceof JRadioButton){
-			if (ev.getActionCommand().equals("circle"))
+			if (ev.getActionCommand().equals("circle")) {
 				canvas.setCircle(true);
-			else canvas.setCircle(false);
-			canvas.repaint();
+			}
+			else {
+				canvas.setCircle(false);
+				canvas.repaint();
+			}
 		}
-	else if(ev.getSource() instanceof JTextField){
+		else if(ev.getSource() instanceof JTextField){
 			try{
 				timer.setSleepingTime(Integer.parseInt(((JTextField)ev.getSource()).getText()));
 			}catch(NumberFormatException ex){
