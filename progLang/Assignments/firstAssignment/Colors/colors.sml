@@ -80,10 +80,10 @@ fun colors file =
         if (allColors ((h::t), M)) then
             if (allColors (excessColors (splitList ((h::t), I)), M)) then 
                 length (excessColors (splitList ((h::t), I)))
-            else
-                testSeq ((h::t), M, I+1)
-        else
-            0
+            else 
+              testSeq ((h::t), M, I+1)
+        else 
+          0
 
     (* A function that returns all possible length of the ribbon with all the colors included *)
     fun allSequence ([], N, M) = []
@@ -106,8 +106,10 @@ fun colors file =
           if h < x then h else x
         end
     
-    val (N, M) = readFile file
+    (* Reading N, M and ribbon *)
+    val (N, M) = readFile file 
     val ribbon = parseFile file
   in
+    (* Printing least possible sequence *)
     print(Int.toString(minElement (allSequence(ribbon, N, M))) ^ "\n")
   end
