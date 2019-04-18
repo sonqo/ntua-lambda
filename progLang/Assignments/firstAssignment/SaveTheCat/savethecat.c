@@ -3,7 +3,7 @@
 #include <string.h>
 
 char* stringConcat(char* position, char* destination){
-// A function that concatenates two strings given and returns the result - https://bit.ly/2zVGJZS
+/* A function that concatenates two strings given and returns the result - https://bit.ly/2zVGJZS */
 
     char* str = (char*) malloc(1 + strlen(position)+ strlen(destination));
     strcpy(str, position);
@@ -19,7 +19,22 @@ struct node{
 struct node *front = NULL;
 struct node *rear = NULL;
 
-void enqueue(int x, int y, char ch, int time, char* pos){
+void enqueueElem(int x, int y, char ch, int time){
+    /* Not keeping path of elements */
+    struct node *nptr = malloc(sizeof(struct node));
+    nptr->line = x; nptr->column = y; nptr->symbol = ch; nptr->time = time; nptr->next = NULL;
+    if (rear == NULL){
+        front = nptr;
+        rear = nptr;
+    }
+    else{
+        rear->next = nptr;
+        rear = rear->next;
+    }
+}
+
+void enqueueCat(int x, int y, char ch, int time, char* pos){
+    /* Keeping path of cat elemets */
     struct node *nptr = malloc(sizeof(struct node));
     nptr->line = x; nptr->column = y; nptr->symbol = ch; nptr->time = time; nptr->position = pos; nptr->next = NULL;
     if (rear == NULL){
@@ -76,11 +91,11 @@ int main(int argc, char *argv[]) {
             array[i][j] = ch;
             if (ch == 'W'){
                 int time = 1;
-                enqueue(i, j, ch, time, "");
+                enqueueElem(i, j, ch, time);
             }
             if (ch == 'A'){
                 int time = 1;
-                enqueue(i, j, ch, time, "");
+                enqueueElem(i, j, ch, time);
                 leastl = i; leastc = j;
                 start_line = i; start_column = j;
             }
@@ -98,34 +113,28 @@ int main(int argc, char *argv[]) {
     int arjumand = 0; // Keeping the longest possible time for rescue
     int global_time = 0, time = front->time;
 
-    int lpath = N, cpath = M;
-
-    char* str; // Temp variable for string concatenation
+    int lpath = N, cpath = M; // Keeping coordinates of the path Arjumand ought to follow in order to be saved
 
     /* Floodfilling A's and W's */
     while (front != NULL){
         while (global_time == time){
             int line = front->line, column = front->column;
             char item = front->symbol;
-            char* pos = front->position;
             /* Cross elements for the tested item */
             char item_east = array[line][column+1], item_west = array[line][column-1];
             char item_north = array[line+1][column], item_south = array[line-1][column];
             if (item == 'A'){
                 if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
                     array[line][column+1] = item;
-                    str = stringConcat(pos, "R");
-                    enqueue(line, column+1, item, time+1, str);
+                    enqueueElem(line, column+1, item, time+1);
                 }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
                     array[line+1][column] = item;
-                    str = stringConcat(pos, "D");
-                    enqueue(line+1, column, item, time+1, str);
+                    enqueueElem(line+1, column, item, time+1);
                 }
                 if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
                     array[line][column - 1] = item;
-                    str = stringConcat(pos, "L");
-                    enqueue(line, column - 1, item, time + 1, str);
+                    enqueueElem(line, column - 1, item, time + 1);
                     /* Getting least possible path */
                     if ((line <= leastl)){
                         if (column-1 < leastc){
@@ -136,8 +145,7 @@ int main(int argc, char *argv[]) {
                 }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
                     array[line-1][column] = item;
-                    str = stringConcat(pos, "U");
-                    enqueue(line-1, column, item, time+1, str);
+                    enqueueElem(line-1, column, item, time+1);
                     /* Getting least possible path */
                     if ((column < leastc) || (line-1 < leastl)){
                         leastl = line - 1;
@@ -148,11 +156,11 @@ int main(int argc, char *argv[]) {
             if (item == 'W'){
                 if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
                     array[line][column-1] = item;
-                    enqueue(line, column-1, item, time+1, "");
+                    enqueueElem(line, column-1, item, time+1);
                 }
                 else if (item_west == 'A'){
                     array[line][column-1] = item;
-                    enqueue(line, column-1, item, time+1, "");
+                    enqueueElem(line, column-1, item, time+1);
                     /* Getting least possible path of the latest time */
                     if (global_time-1 == arjumand){
                         if ((column-1) < cpath){;
@@ -167,11 +175,11 @@ int main(int argc, char *argv[]) {
                 }
                 if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
                     array[line][column+1] = item;
-                    enqueue(line, column+1, item, time+1, "");
+                    enqueueElem(line, column+1, item, time+1);
                 }
                 else if (item_east == 'A'){
                     array[line][column+1] = item;
-                    enqueue(line, column+1, item, time+1, "");
+                    enqueueElem(line, column+1, item, time+1);
                     /* Getting least possible path of the latest time */
                     if (global_time-1 == arjumand){
                         if ((column+1) < cpath){
@@ -186,11 +194,11 @@ int main(int argc, char *argv[]) {
                 }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
                     array[line+1][column] = item;
-                    enqueue(line+1, column, item, time+1, "");
+                    enqueueElem(line+1, column, item, time+1);
                 }
                 else if (item_north == 'A'){
                     array[line+1][column] = item;
-                    enqueue(line+1, column, item, time+1, "");
+                    enqueueElem(line+1, column, item, time+1);
                     /* Getting least possible path of the latest time */
                     if (global_time-1 == arjumand){
                         if ((line+1) < lpath){
@@ -205,11 +213,11 @@ int main(int argc, char *argv[]) {
                 }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
                     array[line-1][column] = item;
-                    enqueue(line-1, column, item, time+1, "");
+                    enqueueElem(line-1, column, item, time+1);
                 }
                 else if (item_south == 'A'){
                     array[line-1][column] = item;
-                    enqueue(line-1, column, item, time+1, "");
+                    enqueueElem(line-1, column, item, time+1);
                     /* Getting least possible path of the latest time */
                     if (global_time-1 == arjumand){
                         if ((line-1) < lpath){
@@ -238,11 +246,14 @@ int main(int argc, char *argv[]) {
 
     front = NULL, rear = NULL;
 
-    array[start_line][start_column] = 'a', enqueue(start_line, start_column, 'a', 1, "");
+    // Enqueuing starting position of Arjumand
+    array[start_line][start_column] = 'a', enqueueCat(start_line, start_column, 'a', 1, "");
 
-    flag = 0;
-    char* path = "";
-    char* road = "";
+    flag = 0; // When least possible path is found
+    char* str; // Temp variable for string concatenation
+
+    char* path = ""; // Safest path when Arjumand is in danger
+    char* road = ""; // Best road when Arjumans is not in danger
 
     /* Floodfilling A's for path finding  */
     while ((front != NULL) && (flag != 1)){
@@ -257,7 +268,7 @@ int main(int argc, char *argv[]) {
                 if ((item_north != 'X') && (item_north != 'a')){
                     array[line + 1][column] = item;
                     str = stringConcat(pos, "D");
-                    enqueue(line + 1, column, item, time + 1, str);
+                    enqueueCat(line + 1, column, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
                         if ((line+1 == lpath) && (column == cpath)){
@@ -275,7 +286,7 @@ int main(int argc, char *argv[]) {
                 if ((item_west != 'X') && (item_west != 'a')){
                     array[line][column - 1] = item;
                     str = stringConcat(pos, "L");
-                    enqueue(line, column - 1, item, time + 1, str);
+                    enqueueCat(line, column - 1, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
                         if ((line == lpath) && (column-1 == cpath)){
@@ -293,7 +304,7 @@ int main(int argc, char *argv[]) {
                 if ((item_east != 'X') && (item_east != 'a')){
                     array[line][column + 1] = item;
                     str = stringConcat(pos, "R");
-                    enqueue(line, column + 1, item, time + 1, str);
+                    enqueueCat(line, column + 1, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
                         if ((line == lpath) && (column + 1 == cpath)){
@@ -311,7 +322,7 @@ int main(int argc, char *argv[]) {
                 if ((item_south != 'X') && (item_south != 'a')){
                     array[line - 1][column] = item;
                     str = stringConcat(pos, "U");
-                    enqueue(line - 1, column, item, time + 1, str);
+                    enqueueCat(line - 1, column, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
                         if ((line-1 == lpath) && (column == cpath)){
