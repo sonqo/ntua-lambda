@@ -24,17 +24,17 @@ public class Canvas extends JLabel implements MouseListener{
 
 	public void paint(Graphics g){
 		g.setColor(Color.blue);
-		if (x < 0) {
+		if (x < 0){
 			reset();
 		}
-		if (circle) {
+		if (circle){
 			g.drawOval(x - rad, y - rad, 2 * rad, 2 * rad);
 		}
-		else {
+		else{
 			g.drawRect(x - rad, y - rad, 2 * rad, 2 * rad);
 		}
 	}
-	
+
 	public void reset(){
 		x = getWidth() / 2;
 		y = getHeight() / 2;

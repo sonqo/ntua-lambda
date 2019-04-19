@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class MyFrame extends JFrame {
 
-    /* Βθττον ψρεατιον */
+    /* Button creation */
     JButton Load = new JButton("Load");
     JButton Save = new JButton("Save");
 

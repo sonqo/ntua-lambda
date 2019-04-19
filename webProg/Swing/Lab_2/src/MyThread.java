@@ -1,7 +1,7 @@
 public class MyThread extends Thread {
 
 	public final Canvas canvas;
-	
+
 	private int sleepingTime = 4000;
 
 	public MyThread(Canvas canvas){
@@ -13,7 +13,7 @@ public class MyThread extends Thread {
 
 		while (true){
 			try {
-				System.out.println("Going to sleep for "+sleepingTime);
+				System.out.println("Going to sleep for " + sleepingTime);
 				sleep(sleepingTime);
 			}
 			catch (InterruptedException e){
@@ -25,7 +25,7 @@ public class MyThread extends Thread {
 			canvas.repaint();
 		}
 	}
-	
+
 	public int getSleepingTime(){
 		return sleepingTime;
 	}
