@@ -3,7 +3,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.JLabel;
 
 public class Canvas extends JLabel implements MouseListener{
@@ -19,7 +18,7 @@ public class Canvas extends JLabel implements MouseListener{
 
 	public Canvas(){
 		setPreferredSize(new Dimension(500,500));
-		addMouseListener(this); // Adding mouse to THIS canvas
+		addMouseListener(this); // Adding mouse listener to THIS canvas
 	}
 
 	public void paint(Graphics g){

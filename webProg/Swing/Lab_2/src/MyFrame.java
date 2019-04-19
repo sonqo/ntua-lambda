@@ -38,10 +38,9 @@ public class MyFrame extends JFrame implements ActionListener{
 		timer.start();
 
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 		panel.add(new JLabel("Select shape: "));
-
 
 		String [] options = {"Circle", "Square"};
 
