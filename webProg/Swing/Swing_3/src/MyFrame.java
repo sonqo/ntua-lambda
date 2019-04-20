@@ -32,14 +32,28 @@ public class MyFrame extends JFrame implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyChar() == 'R'){ // Change backround color according to mouse click
-            getContentPane().setBackground(Color.red);
+        if (e.getKeyChar() == 'R'){
+            canvas.setRed(); // Change every cirle to red
+            repaint();
         }
         if (e.getKeyChar() == 'B'){
-            getContentPane().setBackground(Color.black);
+            canvas.setBlue(); // Change every circle to blue
+            repaint();
         }
-        if (e.getKeyChar() == 'G'){
-            getContentPane().setBackground(Color.gray);
+        if (e.getKeyChar() == 'D'){
+            canvas.delShape();
+        }
+        if (e.getKeyChar() == '1'){
+            canvas.setRad(15); // Rad alternation of all circles according to number pressed
+            repaint();
+        }
+        if (e.getKeyChar() == '2'){
+            canvas.setRad(30);
+            repaint();
+        }
+        if (e.getKeyChar() == '3'){
+            canvas.setRad(45);
+            repaint();
         }
     }
 
