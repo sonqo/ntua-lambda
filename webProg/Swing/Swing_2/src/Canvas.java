@@ -2,45 +2,56 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class Canvas extends JLabel{
+public class Canvas extends JLabel {
 
-    private int x = -1;
-    private int y = -1;
-    private int rad = 50;
+    List<Shape> shapes = new ArrayList<Shape>();
 
-    private boolean pressed = false;
+    MyFrame frame;
 
-    public void setPressed(boolean pressed){
-        this.pressed = true;
+    public Canvas(MyFrame sfram) {
+        super();
+        frame = sfram;
+        this.setPreferredSize(new Dimension(500,500));
     }
 
-    List <Shapes> queue = new ArrayList <Shapes>();
-
-    Random number = new Random();
-
-    public Canvas(){
-        setPreferredSize(new Dimension(500, 500));
-    }
-
-    public void paint(Graphics g){
-
-        g.setColor(Color.red);
-
-        if (x < 0){
-            reset();
+    @Override
+    public void paint(Graphics g) {
+        Shape temp;
+        for (int i = 0; i < shapes.size(); i++){
+            temp = shapes.get(i);
+            if (temp.blue){
+                g.setColor(Color.blue);
+            }
+            else{
+                g.setColor(Color.red);
+            }
+            g.drawOval(temp.x, temp.y, temp.r, temp.r);
         }
-        if (pressed) {
-            x = number.nextInt(500);
-            y = number.nextInt(500);
-            g.drawOval(x - rad, y - rad, 2 * rad, 2 * rad);
+    }
+
+    int sum = 0;
+    public void newShape() {
+        // Only five circles are to be shown, the least recent is deleted
+        if (shapes.size() == 5){
+            shapes.remove(shapes.size() - 5);
         }
-
+        Shape next = new Shape(this);
+        // Increasing interval every next cycle
+        for (int j = 0; j < sum; j++){
+            next.incInterval();
+        }
+        sum += 1;
+        shapes.add(next);
+        next.start();
+        this.repaint();
     }
 
-    public void reset(){
-        x = getWidth() / 2;
-        y = getHeight() / 2;
+    public void delShape() {
+        if (shapes.size() != 0){
+            shapes.remove(shapes.size() - 1);
+            this.repaint();
+        }
     }
+
 }
