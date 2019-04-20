@@ -9,6 +9,8 @@ public class Canvas extends JLabel implements MouseListener {
 
     int x, y, r  = 15; // Deafault rad
 
+    boolean red = false, blue = true; // Default color
+
     List<Shape> shapes = new ArrayList<Shape>();
 
     public Canvas() {
@@ -16,18 +18,32 @@ public class Canvas extends JLabel implements MouseListener {
         addMouseListener(this);
     }
 
+    public void setRed(){
+        this.red = true;
+        this.blue = false;
+    }
+
+    public void setBlue(){
+        this.red = false;
+        this.blue = true;
+    }
+
+    public void setRad(int i){
+        this.r = i;
+    }
+
     @Override
     public void paint(Graphics g) {
         Shape temp;
         for (int i = 0; i < shapes.size(); i++){
             temp = shapes.get(i);
-            if (temp.color == Color.green){
-                g.setColor(Color.green);
+            if (red){
+                g.setColor(Color.red);
             }
-            else {
+            else{
                 g.setColor(Color.blue);
             }
-            g.drawOval(temp.x- temp.r, temp.y - temp.r, 2* temp.r, 2 * temp.r);
+            g.drawOval(temp.x- r, temp.y - r, 2* r, 2 * r);
         }
     }
 
@@ -41,7 +57,7 @@ public class Canvas extends JLabel implements MouseListener {
 
     public void delShape() {
         if (shapes.size() != 0){
-            shapes.remove(0);
+            shapes.remove(shapes.size() - 1);
             this.repaint();
         }
     }

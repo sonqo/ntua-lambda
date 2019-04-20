@@ -3,7 +3,7 @@ import static java.awt.Color.*;
 
 public class Shape extends Thread {
 
-    int x, y, r = 15;
+    int r, x, y;
     Canvas canvas;
     int interval = 1000;
 
@@ -25,8 +25,6 @@ public class Shape extends Thread {
         setDaemon(true);
     }
 
-    public Color color;
-
     public void run(){
         while(true){
             try {
@@ -34,15 +32,7 @@ public class Shape extends Thread {
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            this.r += 20;
-            if (this.r == 55){
-                this.color = green; // Turn to color green before "explosion"
-                canvas.repaint();
-            }
-            if (this.r == 75){
-                canvas.delShape(); // Delete cicrle when specific rad is reached
-                canvas.repaint();
-            }
+            this.x += 25; // Move every different circle to the right by 20 pixels
             canvas.repaint();
         }
     }
