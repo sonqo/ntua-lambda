@@ -2,80 +2,65 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Canvas extends JLabel implements MouseListener{
+public class Canvas extends JLabel implements MouseListener {
 
-    private int x = -1;
-    private int y = -1;
-    private int rad = 50;
+    int x, y, r  = 15; // Deafault rad
 
-    private boolean circle = true;
-    private boolean square = false;
+    int total = 5;
+    int interval = 1000;
 
-    private boolean blue = false;
-    private boolean red = false;
-    private boolean green = false;
+    List<Shape> shapes = new ArrayList<Shape>();
 
-    public void setRed(boolean red){
-        this.red = red;
-    }
-
-    public void setBlue(boolean blue){
-        this.blue = blue;
-    }
-
-    public void setGreen(boolean green){
-        this.green = green;
-    }
-
-    public Canvas(){
-        setPreferredSize(new Dimension(500, 500));
+    public Canvas() {
+        this.setPreferredSize(new Dimension(500,500));
         addMouseListener(this);
     }
 
-    public void setCircle(boolean circle){
-        this.circle = circle;
+    public void incTotal(){ // Duplicate total number of circles
+        this.total *= 2;
     }
 
-    public void setSquare(boolean square){
-        this.square = square;
-    }
-
-    public void paint(Graphics g){
-
-        g.setColor(Color.red); // Default color is red
-
-        if (blue){
-            g.setColor(Color.blue);
-        }
-        if (red){
-            g.setColor(Color.red);
-        }
-        if (green){
-            g.setColor(Color.green);
-        }
-
-        if (x < 0){
-            reset();
-        }
-        if (circle){
-            g.drawOval(x - rad, y - rad, 2 * rad, 2* rad);
-        }
-        if (square){
-            g.drawRect(x - rad, y - rad, 2 * rad, 2 * rad);
-        }
-    }
-
-    public void reset(){
-        x = getWidth() / 2;
-        y = getHeight() / 2;
+    public void incTime(){
+        interval *= 2;
     }
 
     @Override
-    public void mouseClicked(MouseEvent ev) {
-        x = ev.getX();
-        y = ev.getY();
-        repaint();
+    public void paint(Graphics g) {
+        Shape temp;
+        for (int i = 0; i < shapes.size(); i++){
+            temp = shapes.get(i);
+            g.setColor(temp.color);
+            g.drawOval(temp.x- r, temp.y - r, 2 * r, 2 * r);
+        }
+    }
+
+    public void newShape(int x, int y) {
+        if (shapes.size() == total){ // If total cirlces greater than (initial) 5, delete least recent
+            delShape();
+        }
+        Shape next = new Shape(this);
+        next.interval = interval; // Pass wanted interval to the new element
+        next.setX(x); next.setY(y); next.setRad(r);
+        shapes.add(next);
+        next.start();
+        this.repaint();
+    }
+
+    public void delShape() {
+        if (shapes.size() != 0){
+            shapes.remove(0); // Delete least recent circle
+            this.repaint();
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        x = e.getX();
+        y = e.getY();
+        newShape(x, y);
     }
 
     @Override
