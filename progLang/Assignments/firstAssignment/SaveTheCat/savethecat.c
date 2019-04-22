@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
     char array[N+2][M+2];
 
     int leastl = 0, leastc = 0; // Keeping coordinates of the best possible cell on the map
-    int start_line=0, start_column = 0; // Starting coordinates of Arjumand
+    int start_line = 0, start_column = 0; // Starting coordinates of Arjumand
 
     /* File reading and map padding */
     fp = fopen(argv[1], "r");
@@ -127,17 +127,25 @@ int main(int argc, char *argv[]) {
                 if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
                     array[line][column+1] = item;
                     enqueueElem(line, column+1, item, time+1);
+                    if ((line < leastl)){
+                        leastl = line;
+                        leastc = column+1;
+                    }
                 }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
                     array[line+1][column] = item;
                     enqueueElem(line+1, column, item, time+1);
+                    if ((line < leastl)){
+                        leastl = line+1;
+                        leastc = column;
+                    }
                 }
                 if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
-                    array[line][column - 1] = item;
-                    enqueueElem(line, column - 1, item, time + 1);
+                    array[line][column-1] = item;
+                    enqueueElem(line, column-1, item, time+1);
                     /* Getting least possible path */
                     if ((line <= leastl)){
-                        if (column-1 < leastc){
+                        if (column-1 <= leastc){
                             leastl = line;
                             leastc = column-1;
                         }
@@ -147,9 +155,11 @@ int main(int argc, char *argv[]) {
                     array[line-1][column] = item;
                     enqueueElem(line-1, column, item, time+1);
                     /* Getting least possible path */
-                    if ((column < leastc) || (line-1 < leastl)){
-                        leastl = line - 1;
-                        leastc = column;
+                    if (line-1 <= leastl){
+                        if (column <= leastc){
+                            leastl = line-1;
+                            leastc = column;
+                        }
                     }
                 }
             }
@@ -163,7 +173,8 @@ int main(int argc, char *argv[]) {
                     enqueueElem(line, column-1, item, time+1);
                     /* Getting least possible path of the latest time */
                     if (global_time-1 == arjumand){
-                        if ((column-1) < cpath){;
+                        if ((column-1) < cpath){
+                            lpath = line;
                             cpath = column-1;
                         }
                     }
@@ -183,6 +194,7 @@ int main(int argc, char *argv[]) {
                     /* Getting least possible path of the latest time */
                     if (global_time-1 == arjumand){
                         if ((column+1) < cpath){
+                            lpath = line;
                             cpath = column+1;
                         }
                     }
@@ -203,6 +215,7 @@ int main(int argc, char *argv[]) {
                     if (global_time-1 == arjumand){
                         if ((line+1) < lpath){
                             lpath = line+1;
+                            cpath = column;
                         }
                     }
                     else if (global_time > arjumand){
@@ -222,6 +235,7 @@ int main(int argc, char *argv[]) {
                     if (global_time-1 == arjumand){
                         if ((line-1) < lpath){
                             lpath = line-1;
+                            cpath = column;
                         }
                     }
                     else if (global_time > arjumand){
@@ -266,9 +280,9 @@ int main(int argc, char *argv[]) {
             char item_north = array[line + 1][column], item_south = array[line - 1][column];
             if (item == 'a'){
                 if ((item_north != 'X') && (item_north != 'a')){
-                    array[line + 1][column] = item;
+                    array[line+1][column] = item;
                     str = stringConcat(pos, "D");
-                    enqueueCat(line + 1, column, item, time + 1, str);
+                    enqueueCat(line+1, column, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
                         if ((line+1 == lpath) && (column == cpath)){
@@ -284,7 +298,7 @@ int main(int argc, char *argv[]) {
                     }
                 }
                 if ((item_west != 'X') && (item_west != 'a')){
-                    array[line][column - 1] = item;
+                    array[line][column-1] = item;
                     str = stringConcat(pos, "L");
                     enqueueCat(line, column - 1, item, time + 1, str);
                     /* Getting least possible path */
@@ -307,7 +321,7 @@ int main(int argc, char *argv[]) {
                     enqueueCat(line, column + 1, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
-                        if ((line == lpath) && (column + 1 == cpath)){
+                        if ((line == lpath) && (column+1 == cpath)){
                             path = str;
                             flag = 1;
                         }
@@ -320,14 +334,14 @@ int main(int argc, char *argv[]) {
                     }
                 }
                 if ((item_south != 'X') && (item_south != 'a')){
-                    array[line - 1][column] = item;
+                    array[line-1][column] = item;
                     str = stringConcat(pos, "U");
-                    enqueueCat(line - 1, column, item, time + 1, str);
+                    enqueueCat(line-1, column, item, time + 1, str);
                     /* Getting least possible path */
                     if (arjumand != 0){
                         if ((line-1 == lpath) && (column == cpath)){
                             path = str;
-                             flag = 1;
+                            flag = 1;
                         }
                     }
                     if (arjumand == 0){
@@ -371,5 +385,6 @@ int main(int argc, char *argv[]) {
             printf("%s", path);
         }
     }
+
     return 0;
 }
