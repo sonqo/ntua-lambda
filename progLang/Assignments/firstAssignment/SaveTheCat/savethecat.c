@@ -11,6 +11,34 @@ char* stringConcat(char* position, char* destination){
     return str;
 }
 
+struct Tuple{ // Returning multiple from function - https://bit.ly/2W0Ym31
+    int arjumand;
+    int lpath;
+    int cpath
+};
+
+struct Tuple pathFinding(int line, int column, int lpath, int cpath, int global_time, int arjumand){
+/* A function that returns coordinates of the best possible location of Arjumand */
+
+    struct Tuple result;
+
+    if (global_time - 1 == arjumand){
+        if (line <= lpath){
+            if (column < cpath){
+                lpath = line;
+                cpath = column;
+            }
+        }
+    }
+    else if (global_time > arjumand){
+        arjumand = global_time - 1;
+        lpath = line;
+        cpath = column;
+    }
+    result.arjumand = arjumand; result.lpath = lpath; result.cpath = cpath;
+    return result;
+}
+
 struct node{
     int line; int column; char symbol; int time; char* position;
     struct node *next;
@@ -61,8 +89,8 @@ void dequeue(){
 
 int main(int argc, char *argv[]) {
 
-    int i, j, N = 0, M = 0, flag = 0;
     char ch;
+    int i, j, N = 0, M = 0, flag = 0;
 
     FILE *fp = fopen(argv[1], "r");
 
@@ -80,7 +108,7 @@ int main(int argc, char *argv[]) {
     fclose (fp);
     char array[N+2][M+2];
 
-    int leastl = 0, leastc = 0; // Keeping coordinates of the best possible cell on the map
+    int leastl = 0, leastc = 0; // Keeping coordinates of the best possible cat cell on the map
     int start_line = 0, start_column = 0; // Starting coordinates of Arjumand
 
     /* File reading and map padding */
@@ -96,8 +124,7 @@ int main(int argc, char *argv[]) {
             if (ch == 'A'){
                 int time = 1;
                 enqueueElem(i, j, ch, time);
-                leastl = i; leastc = j;
-                start_line = i; start_column = j;
+                leastl = i; leastc = j; start_line = i; start_column = j;
             }
         }
     }
@@ -110,10 +137,11 @@ int main(int argc, char *argv[]) {
         array[i][0] = 'X'; array[i][M+1] = 'X';
     }
 
-    int arjumand = 0; // Keeping the longest possible time for rescue
+    int arjumand, lpath, cpath;
     int global_time = 0, time = front->time;
 
-    int lpath = N, cpath = M; // Keeping coordinates of the path Arjumand ought to follow in order to be saved
+    struct Tuple result; // Keeping coordinates of the path Arjumand and the longest possible time of rescue
+    result.lpath = N; result.cpath = M; result.arjumand = 0;
 
     /* Floodfilling A's and W's */
     while (front != NULL){
@@ -171,18 +199,7 @@ int main(int argc, char *argv[]) {
                 else if (item_west == 'A'){
                     array[line][column-1] = item;
                     enqueueElem(line, column-1, item, time+1);
-                    /* Getting least possible path of the latest time */
-                    if (global_time-1 == arjumand){
-                        if ((column-1) < cpath){
-                            lpath = line;
-                            cpath = column-1;
-                        }
-                    }
-                    else if (global_time > arjumand){
-                        arjumand = global_time-1;
-                        lpath = line;
-                        cpath = column-1;
-                    }
+                    result = pathFinding(line, column-1, result.lpath, result.cpath, global_time, result.arjumand);
                 }
                 if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
                     array[line][column+1] = item;
@@ -191,18 +208,7 @@ int main(int argc, char *argv[]) {
                 else if (item_east == 'A'){
                     array[line][column+1] = item;
                     enqueueElem(line, column+1, item, time+1);
-                    /* Getting least possible path of the latest time */
-                    if (global_time-1 == arjumand){
-                        if ((column+1) < cpath){
-                            lpath = line;
-                            cpath = column+1;
-                        }
-                    }
-                    else if (global_time > arjumand){
-                        arjumand = global_time-1;
-                        lpath = line;
-                        cpath = column+1;
-                    }
+                    result = pathFinding(line, column+1, result.lpath, result.cpath, global_time, result.arjumand);
                 }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
                     array[line+1][column] = item;
@@ -211,18 +217,7 @@ int main(int argc, char *argv[]) {
                 else if (item_north == 'A'){
                     array[line+1][column] = item;
                     enqueueElem(line+1, column, item, time+1);
-                    /* Getting least possible path of the latest time */
-                    if (global_time-1 == arjumand){
-                        if ((line+1) < lpath){
-                            lpath = line+1;
-                            cpath = column;
-                        }
-                    }
-                    else if (global_time > arjumand){
-                        arjumand = global_time-1;
-                        lpath = line+1;
-                        cpath = column;
-                    }
+                    result = pathFinding(line+1, column, result.lpath, result.cpath, global_time, result.arjumand);
                 }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
                     array[line-1][column] = item;
@@ -231,18 +226,7 @@ int main(int argc, char *argv[]) {
                 else if (item_south == 'A'){
                     array[line-1][column] = item;
                     enqueueElem(line-1, column, item, time+1);
-                    /* Getting least possible path of the latest time */
-                    if (global_time-1 == arjumand){
-                        if ((line-1) < lpath){
-                            lpath = line-1;
-                            cpath = column;
-                        }
-                    }
-                    else if (global_time > arjumand){
-                        arjumand = global_time-1;
-                        lpath = line-1;
-                        cpath = column;
-                    }
+                    result = pathFinding(line-1, column, result.lpath, result.cpath, global_time, result.arjumand);
                 }
             }
             dequeue();
@@ -258,16 +242,18 @@ int main(int argc, char *argv[]) {
         global_time++;
     }
 
+    arjumand = result.arjumand; lpath = result.lpath; cpath = result.cpath;
+
     front = NULL, rear = NULL;
 
     // Enqueuing starting position of Arjumand
     array[start_line][start_column] = 'a', enqueueCat(start_line, start_column, 'a', 1, "");
 
     flag = 0; // When least possible path is found
-    char* str; // Temp variable for string concatenation
 
+    char* str; // Temp variable for string concatenation
     char* path = ""; // Safest path when Arjumand is in danger
-    char* road = ""; // Best road when Arjumans is not in danger
+    char* road = ""; // Best path when Arjumans is not in danger
 
     /* Floodfilling A's for path finding  */
     while ((front != NULL) && (flag != 1)){
