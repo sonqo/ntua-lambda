@@ -2,43 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-char* stringConcat(char* position, char* destination){
-/* A function that concatenates two strings given and returns the result - https://bit.ly/2zVGJZS */
-
-    char* str = (char*) malloc(1 + strlen(position)+ strlen(destination));
-    strcpy(str, position);
-    strcat(str, destination);
-    return str;
-}
-
-struct Tuple{ // Returning multiple from function - https://bit.ly/2W0Ym31
-    int arjumand;
-    int lpath;
-    int cpath
-};
-
-struct Tuple pathFinding(int line, int column, int lpath, int cpath, int global_time, int arjumand){
-/* A function that returns coordinates of the best possible location of Arjumand */
-
-    struct Tuple result;
-
-    if (global_time - 1 == arjumand){
-        if (line <= lpath){
-            if (column < cpath){
-                lpath = line;
-                cpath = column;
-            }
-        }
-    }
-    else if (global_time > arjumand){
-        arjumand = global_time - 1;
-        lpath = line;
-        cpath = column;
-    }
-    result.arjumand = arjumand; result.lpath = lpath; result.cpath = cpath;
-    return result;
-}
-
 struct node{
     int line; int column; char symbol; int time; char* position;
     struct node *next;
@@ -48,7 +11,8 @@ struct node *front = NULL;
 struct node *rear = NULL;
 
 void enqueueElem(int x, int y, char ch, int time){
-    /* Not keeping path of elements */
+/* Enqueing wihtout keeping path of elements */
+
     struct node *nptr = malloc(sizeof(struct node));
     nptr->line = x; nptr->column = y; nptr->symbol = ch; nptr->time = time; nptr->next = NULL;
     if (rear == NULL){
@@ -62,7 +26,8 @@ void enqueueElem(int x, int y, char ch, int time){
 }
 
 void enqueueCat(int x, int y, char ch, int time, char* pos){
-    /* Keeping path of cat elemets */
+/* Enqueing and keeping path of cat elemets */
+
     struct node *nptr = malloc(sizeof(struct node));
     nptr->line = x; nptr->column = y; nptr->symbol = ch; nptr->time = time; nptr->position = pos; nptr->next = NULL;
     if (rear == NULL){
@@ -76,6 +41,8 @@ void enqueueCat(int x, int y, char ch, int time, char* pos){
 }
 
 void dequeue(){
+/* Standard dequeue function */
+
     if (front == NULL){
         printf("\n\n Queue is empty \n");
     }
@@ -85,6 +52,89 @@ void dequeue(){
         front = front->next;
         free(temp);
     }
+}
+
+struct Tuple{ // Returning multiple values from function - https://bit.ly/2W0Ym31
+    int arjumand;
+    int line;
+    int column;
+};
+
+struct Follow{
+    char* path;
+    char* road;
+    int flag;
+};
+
+char* stringConcat(char* position, char* destination){
+/* A function that concatenates two strings given and returns the result - https://bit.ly/2zVGJZS */
+
+    char* str = (char*) malloc(1 + strlen(position)+ strlen(destination));
+    strcpy(str, position);
+    strcat(str, destination);
+    return str;
+}
+
+struct Tuple road_coordFinding(int line, int column, int leastl, int leastc){
+/* A function that returns the coordinates of the best possible position of Arjumand when she is safe */
+
+    struct Tuple value;
+
+    if (line < leastl) { // Prioratizing line over column in the best possible position
+        leastl = line;
+        leastc = column;
+    }
+    else if (line == leastl){
+        if (column < leastc){
+            leastl = line;
+            leastc = column;
+        }
+    }
+    value.line = leastl; value.column = leastc;
+    return value;
+}
+
+struct Tuple path_coordFinding(int line, int column, int lpath, int cpath, int global_time, int arjumand){
+/* A function that returns coordinates of the best possible location of Arjumand when she needs to be saved*/
+
+    struct Tuple result;
+
+    if (global_time - 1 == arjumand){
+        if (line <= lpath){
+            if (column <= cpath){
+                lpath = line;
+                cpath = column;
+            }
+        }
+    }
+    else if (global_time > arjumand){
+        arjumand = global_time - 1;
+        lpath = line;
+        cpath = column;
+    }
+    result.arjumand = arjumand; result.line = lpath; result.column = cpath;
+    return result;
+}
+
+struct Follow pathFinding(int arjumand, int line, int column, int lpath, int cpath, int leastl, int leastc, char* str, char* path, char* road, int flag){
+/* A function that returns the path Arjumand ought to follow */
+
+    struct Follow final;
+
+    if (arjumand != 0){
+        if ((line == lpath) && (column == cpath)){
+            path = str;
+            flag = 1;
+        }
+    }
+    if (arjumand == 0){
+        if ((line == leastl) && (column == leastc)){
+            road = str;
+            flag = 1;
+        }
+    }
+    final.path = path; final.road = road; final.flag = flag;
+    return final;
 }
 
 int main(int argc, char *argv[]) {
@@ -140,8 +190,10 @@ int main(int argc, char *argv[]) {
     int arjumand, lpath, cpath;
     int global_time = 0, time = front->time;
 
+    struct Tuple value; // Keeping coordinates of the best possible position of Arjumand
     struct Tuple result; // Keeping coordinates of the path Arjumand and the longest possible time of rescue
-    result.lpath = N; result.cpath = M; result.arjumand = 0;
+    value.line = leastl; value.column = leastc;
+    result.line = N; result.column = M; result.arjumand = 0;
 
     /* Floodfilling A's and W's */
     while (front != NULL){
@@ -155,40 +207,22 @@ int main(int argc, char *argv[]) {
                 if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
                     array[line][column+1] = item;
                     enqueueElem(line, column+1, item, time+1);
-                    if ((line < leastl)){
-                        leastl = line;
-                        leastc = column+1;
-                    }
+                    value = road_coordFinding(line, column+1, value.line, value.column);
                 }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
                     array[line+1][column] = item;
                     enqueueElem(line+1, column, item, time+1);
-                    if ((line < leastl)){
-                        leastl = line+1;
-                        leastc = column;
-                    }
+                    value = road_coordFinding(line+1, column, value.line, value.column);
                 }
                 if ((item_west != 'W') && (item_west != 'X') && (item_west != 'A')){
                     array[line][column-1] = item;
                     enqueueElem(line, column-1, item, time+1);
-                    /* Getting least possible path */
-                    if ((line <= leastl)){
-                        if (column-1 <= leastc){
-                            leastl = line;
-                            leastc = column-1;
-                        }
-                    }
+                    value = road_coordFinding(line, column-1, value.line, value.column);
                 }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
                     array[line-1][column] = item;
                     enqueueElem(line-1, column, item, time+1);
-                    /* Getting least possible path */
-                    if (line-1 <= leastl){
-                        if (column <= leastc){
-                            leastl = line-1;
-                            leastc = column;
-                        }
-                    }
+                    value = road_coordFinding(line-1, column, value.line, value.column);
                 }
             }
             if (item == 'W'){
@@ -199,7 +233,7 @@ int main(int argc, char *argv[]) {
                 else if (item_west == 'A'){
                     array[line][column-1] = item;
                     enqueueElem(line, column-1, item, time+1);
-                    result = pathFinding(line, column-1, result.lpath, result.cpath, global_time, result.arjumand);
+                    result = path_coordFinding(line, column-1, result.line, result.column, global_time, result.arjumand);
                 }
                 if ((item_east != 'W') && (item_east != 'X') && (item_east != 'A')){
                     array[line][column+1] = item;
@@ -208,7 +242,7 @@ int main(int argc, char *argv[]) {
                 else if (item_east == 'A'){
                     array[line][column+1] = item;
                     enqueueElem(line, column+1, item, time+1);
-                    result = pathFinding(line, column+1, result.lpath, result.cpath, global_time, result.arjumand);
+                    result = path_coordFinding(line, column+1, result.line, result.column, global_time, result.arjumand);
                 }
                 if ((item_north != 'W') && (item_north != 'X') && (item_north != 'A')){
                     array[line+1][column] = item;
@@ -217,7 +251,7 @@ int main(int argc, char *argv[]) {
                 else if (item_north == 'A'){
                     array[line+1][column] = item;
                     enqueueElem(line+1, column, item, time+1);
-                    result = pathFinding(line+1, column, result.lpath, result.cpath, global_time, result.arjumand);
+                    result = path_coordFinding(line+1, column, result.line, result.column, global_time, result.arjumand);
                 }
                 if ((item_south != 'W') && (item_south != 'X') && (item_south != 'A')){
                     array[line-1][column] = item;
@@ -226,7 +260,7 @@ int main(int argc, char *argv[]) {
                 else if (item_south == 'A'){
                     array[line-1][column] = item;
                     enqueueElem(line-1, column, item, time+1);
-                    result = pathFinding(line-1, column, result.lpath, result.cpath, global_time, result.arjumand);
+                    result = path_coordFinding(line-1, column, result.line, result.column, global_time, result.arjumand);
                 }
             }
             dequeue();
@@ -242,21 +276,21 @@ int main(int argc, char *argv[]) {
         global_time++;
     }
 
-    arjumand = result.arjumand; lpath = result.lpath; cpath = result.cpath;
+    leastl = value.line; leastc = value.column;
+    arjumand = result.arjumand; lpath = result.line; cpath = result.column;
 
-    front = NULL, rear = NULL;
+    front = NULL, rear = NULL; // Reinitialization of queue with the first cat element
 
-    // Enqueuing starting position of Arjumand
-    array[start_line][start_column] = 'a', enqueueCat(start_line, start_column, 'a', 1, "");
-
-    flag = 0; // When least possible path is found
+    /* Enqueuing starting position of Arjumand */
+    array[start_line][start_column] = 'P', enqueueCat(start_line, start_column, 'P', 1, ""); // P for path ;)
 
     char* str; // Temp variable for string concatenation
-    char* path = ""; // Safest path when Arjumand is in danger
-    char* road = ""; // Best path when Arjumans is not in danger
+
+    struct Follow final;
+    final.path = ""; final.road = ""; final.flag = 0; // Final paths
 
     /* Floodfilling A's for path finding  */
-    while ((front != NULL) && (flag != 1)){
+    while ((front != NULL) && (final.flag != 1)){
         while (global_time == time){
             int line = front->line, column = front->column;
             char item = front->symbol;
@@ -264,84 +298,35 @@ int main(int argc, char *argv[]) {
             /* Cross elements for the tested item */
             char item_east = array[line][column + 1], item_west = array[line][column - 1];
             char item_north = array[line + 1][column], item_south = array[line - 1][column];
-            if (item == 'a'){
-                if ((item_north != 'X') && (item_north != 'a')){
+            if (item == 'P'){
+                if ((item_north != 'X') && (item_north != 'P')){
                     array[line+1][column] = item;
                     str = stringConcat(pos, "D");
-                    enqueueCat(line+1, column, item, time + 1, str);
-                    /* Getting least possible path */
-                    if (arjumand != 0){
-                        if ((line+1 == lpath) && (column == cpath)){
-                            path = str;
-                            flag = 1;
-                        }
-                    }
-                    if (arjumand == 0){
-                        if ((line+1 == leastl) && (column == leastc)){
-                            road = str;
-                            flag = 1;
-                        }
-                    }
+                    enqueueCat(line+1, column, item, time+1, str);
+                    final = pathFinding(arjumand, line+1, column, lpath, cpath, leastl, leastc, str, final.path, final.road, final.flag);
                 }
-                if ((item_west != 'X') && (item_west != 'a')){
+                if ((item_west != 'X') && (item_west != 'P')){
                     array[line][column-1] = item;
                     str = stringConcat(pos, "L");
-                    enqueueCat(line, column - 1, item, time + 1, str);
-                    /* Getting least possible path */
-                    if (arjumand != 0){
-                        if ((line == lpath) && (column-1 == cpath)){
-                            path = str;
-                            flag = 1;
-                        }
-                    }
-                    if (arjumand == 0){
-                        if ((line == leastl) && (column-1 == leastc)){
-                            road = str;
-                            flag = 1;
-                        }
-                    }
+                    enqueueCat(line, column-1, item, time+1, str);
+                    final = pathFinding(arjumand, line, column-1, lpath, cpath, leastl, leastc, str, final.path, final.road, final.flag);
                 }
-                if ((item_east != 'X') && (item_east != 'a')){
-                    array[line][column + 1] = item;
+                if ((item_east != 'X') && (item_east != 'P')){
+                    array[line][column+1] = item;
                     str = stringConcat(pos, "R");
-                    enqueueCat(line, column + 1, item, time + 1, str);
-                    /* Getting least possible path */
-                    if (arjumand != 0){
-                        if ((line == lpath) && (column+1 == cpath)){
-                            path = str;
-                            flag = 1;
-                        }
-                    }
-                    if (arjumand == 0){
-                        if ((line == leastl) && (column+1 == leastc)){
-                            road = str;
-                            flag = 1;
-                        }
-                    }
+                    enqueueCat(line, column+1, item, time+1, str);
+                    final = pathFinding(arjumand, line, column+1, lpath, cpath, leastl, leastc, str, final.path, final.road, final.flag);
                 }
-                if ((item_south != 'X') && (item_south != 'a')){
+                if ((item_south != 'X') && (item_south != 'P')){
                     array[line-1][column] = item;
                     str = stringConcat(pos, "U");
-                    enqueueCat(line-1, column, item, time + 1, str);
-                    /* Getting least possible path */
-                    if (arjumand != 0){
-                        if ((line-1 == lpath) && (column == cpath)){
-                            path = str;
-                            flag = 1;
-                        }
-                    }
-                    if (arjumand == 0){
-                        if ((line-1 == leastl) && (column == leastc)){
-                            road = str;
-                            flag = 1;
-                        }
-                    }
+                    enqueueCat(line-1, column, item, time+1, str);
+                    final = pathFinding(arjumand, line-1, column, lpath, cpath, leastl, leastc, str, final.path, final.road, final.flag);
                 }
             }
             dequeue();
 
-            /* If queue is not empty, go to the next element */
-            if (front != NULL){
+            if (front != NULL){ // If queue is not empty go to the next element
                 time = front->time;
             }
             else{
@@ -354,23 +339,22 @@ int main(int argc, char *argv[]) {
     /* In case Arjumand is safe */
     if (arjumand == 0){
         printf("infinity\n");
-        if (strcmp(road, "") == 0){
+        if (strcmp(final.road, "") == 0){
             printf("stay");
         }
         else{
-            printf("%s", road);
+            printf("%s", final.road);
         }
     }
     /* In case Arjumand ought to be saved */
     else{
         printf("%d\n", arjumand);
-        if (strcmp(path, "") == 0){
+        if (strcmp(final.path, "") == 0){
             printf("stay");
         }
         else{
-            printf("%s", path);
+            printf("%s", final.path);
         }
     }
-
     return 0;
 }
