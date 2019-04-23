@@ -39,7 +39,12 @@ public class Shape extends Thread {
                 e.printStackTrace();
             }
             if (canvas.draw == false){
-                canvas.setBlue(); // Alternate blue and white(vanish)!
+                if (this.color == blue){
+                    this.color = white;
+                }
+                else{
+                    this.color = blue;
+                }
                 canvas.repaint();
             }
         }

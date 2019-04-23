@@ -22,15 +22,6 @@ public class Canvas extends JLabel implements MouseListener, MouseMotionListener
         }
     }
 
-    public void setBlue(){
-        if (this.blue == true){
-            this.blue = false;
-        }
-        else{
-            this.blue = true;
-        }
-    }
-
     public void cannotDraw(){
         this.draw = false;
     }
@@ -51,11 +42,11 @@ public class Canvas extends JLabel implements MouseListener, MouseMotionListener
                 g.drawOval(temp.x - temp.r, temp.y - temp.r, 2 * temp.r, 2 * temp.r);
             }
             else {
-                if (blue == true){
-                    g.setColor(Color.blue);
+                if (temp.color == Color.white){
+                    g.setColor(Color.white);
                 }
                 else{
-                    g.setColor(Color.white);
+                    g.setColor(Color.blue);
                 }
                 g.drawOval(temp.x - temp.r + 400, temp.y - temp.r, 2 * temp.r, 2 * temp.r);
             }
