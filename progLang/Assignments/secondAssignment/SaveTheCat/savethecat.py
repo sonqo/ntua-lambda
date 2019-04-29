@@ -8,7 +8,6 @@ class itemSymbol: # Class of cat(A) water(W) elements
 def validNeighbors(line, column, symbol):
 # A function that returns the valid neighbors of an element given
 
-    nature = symbol
     neighbors = [] # Neighbors are being returned in a list of coordinates (line, column)
 
     for ln in (line-1, line+1):
@@ -16,7 +15,7 @@ def validNeighbors(line, column, symbol):
             if symbol == 'A':
                 if map[ln][column] != 'A':
                     neighbors.append([ln, column])
-                    leastPosPad(ln, column)
+                    leastPossPad(ln, column)
             else:
                 neighbors.append([ln, column])
     for cl in (column-1, column+1):
@@ -24,17 +23,16 @@ def validNeighbors(line, column, symbol):
             if symbol == 'A':
                 if map[line][cl] != 'A':
                     neighbors.append([line, cl])
-                    leastPosPad(line, cl)
+                    leastPossPad(line, cl)
             else:
                 neighbors.append([line, cl])
 
     return neighbors
 
-def leastPosPad(line, column):
+def leastPossPad(line, column):
 # A function that returns the upper and righter possible position of Arjumand possible at each specific time
 
-    global leastl
-    global leastc
+    global leastl; global leastc
 
     if line < leastl: # Prioritazing line over column in the best possible position
         leastl = line; leastc = column
@@ -61,16 +59,15 @@ map.insert(0, ['X' for i in range (M+2)])
 map.insert(N+1, ['X' for i in range (M+2)])
 
 time = 0
-leastl = N+1; leastc = M+1
 # Enqueing water and cat elements
 for i in range (1, N+1):
     for j in range (1, M+1):
         ch = map[i][j]
         if ch is 'W' or ch is 'A':
-            ch = itemSymbol(i, j, ch, time, "")
-            queue.append(ch)
             if ch is 'A':
                 leastl = i; leastc = j # Starting pad of Arjumand
+            ch = itemSymbol(i, j, ch, time, "")
+            queue.append(ch)
 
 # Initialization of time variables
 arjumand = 0
@@ -95,8 +92,9 @@ while queue: # Floodfilling W's and A elements
                         if temp_line <= lpath:
                             if temp_column <= cpath:
                                 lpath = temp_line; cpath = temp_column
-            map[temp_line][temp_column] = element.symbol
             ch = itemSymbol(temp_line, temp_column, element.symbol, time+1, "")
+            map[temp_line][temp_column] = element.symbol
+            path[temp_line][temp_column] = ch.position
             queue.append(ch)
 
         if queue: # If queue is not empty go to next element, else break time - loop
@@ -106,9 +104,8 @@ while queue: # Floodfilling W's and A elements
             global_time = -1
     global_time += 1
 
-
-
 if (arjumand == 0):
     print("infinity")
 else:
     print(arjumand)
+
