@@ -66,11 +66,11 @@ for i in range (1, N+1):
         if ch is 'W' or ch is 'A':
             if ch is 'A':
                 leastl = i; leastc = j # Starting pad of Arjumand
+                start_line = i; start_column = j 
             ch = itemSymbol(i, j, ch, time, "")
             queue.append(ch)
 
-# Initialization of time variables
-arjumand = 0
+arjumand = 0 # Initialization of time variables
 global_time = 0
 
 element = queue[0]
@@ -103,7 +103,10 @@ while queue: # Floodfilling W's and A elements
             global_time = -1
     global_time += 1
 
-if (arjumand == 0):
-    print("infinity")
-else:
-    print(arjumand)
+
+ch = itemSymbol(start_line, start_column, 'P', 0, "") # Initializing Arjumand for path finding
+map[start_line][start_column] = 'P'
+queue.append(ch)
+
+print(lpath, cpath)
+
