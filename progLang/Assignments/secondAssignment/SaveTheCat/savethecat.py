@@ -61,7 +61,7 @@ map.insert(0, ['X' for i in range (M+2)])
 map.insert(N+1, ['X' for i in range (M+2)])
 
 time = 0
-leastl = N; leastc = M
+leastl = N+1; leastc = M+1
 # Enqueing water and cat elements
 for i in range (1, N+1):
     for j in range (1, M+1):
@@ -70,23 +70,15 @@ for i in range (1, N+1):
             ch = itemSymbol(i, j, ch, time, "")
             queue.append(ch)
             if ch is 'A':
-                leastl = i; leastc = j
+                leastl = i; leastc = j # Starting pad of Arjumand
 
 # Initialization of time variables
 arjumand = 0
 global_time = 0
 
-lpath = 0; cpath = 0
-
-print(global_time)
-for i in range(0, N + 2):
-    print(*map[i], sep=' ')
-print("\n")
-
-time = 0
 element = queue[0]
 
-while queue:
+while queue: # Floodfilling W's and A elements
 
     while element.time == global_time:
 
@@ -96,23 +88,27 @@ while queue:
             temp_line = item[0]; temp_column = item[1]
             if element.symbol == 'W':
                 if map[temp_line][temp_column] == 'A':
-                    if global_time > arjumand:
+                    if global_time > arjumand: # Keeping coordinates of best possible time
                         arjumand = global_time
                         lpath = temp_line; cpath = temp_column
+                    elif global_time == arjumand: # Minimizing string sequence
+                        if temp_line <= lpath:
+                            if temp_column <= cpath:
+                                lpath = temp_line; cpath = temp_column
             map[temp_line][temp_column] = element.symbol
             ch = itemSymbol(temp_line, temp_column, element.symbol, time+1, "")
             queue.append(ch)
 
-        if queue:
+        if queue: # If queue is not empty go to next element, else break time - loop
             element = queue.popleft()
             time = element.time
         else:
             global_time = -1
-
     global_time += 1
 
-    # Printing for testing
-    print(global_time)
-    for i in range(0, N + 2):
-        print(*map[i], sep=' ')
-    print("\n")
+
+
+if (arjumand == 0):
+    print("infinity")
+else:
+    print(arjumand)
