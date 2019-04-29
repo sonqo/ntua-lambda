@@ -11,17 +11,17 @@ def validNeighbors(line, column, symbol):
     neighbors = [] # Neighbors are being returned in a list of coordinates (line, column)
 
     for ln in (line-1, line+1):
-        if map[ln][column] != 'X' and map[ln][column] != 'W':
+        if map[ln][column] != 'X' and map[ln][column] != symbol:
             if symbol == 'A':
-                if map[ln][column] != 'A':
+                if map[ln][column] != 'W':
                     neighbors.append([ln, column])
                     leastPossPad(ln, column)
             else:
                 neighbors.append([ln, column])
     for cl in (column-1, column+1):
-        if map[line][cl] != 'X' and map[line][cl] != 'W':
+        if map[line][cl] != 'X' and map[line][cl] != symbol:
             if symbol == 'A':
-                if map[line][cl] != 'A':
+                if map[line][cl] != 'W':
                     neighbors.append([line, cl])
                     leastPossPad(line, cl)
             else:
@@ -94,7 +94,6 @@ while queue: # Floodfilling W's and A elements
                                 lpath = temp_line; cpath = temp_column
             ch = itemSymbol(temp_line, temp_column, element.symbol, time+1, "")
             map[temp_line][temp_column] = element.symbol
-            path[temp_line][temp_column] = ch.position
             queue.append(ch)
 
         if queue: # If queue is not empty go to next element, else break time - loop
@@ -108,4 +107,3 @@ if (arjumand == 0):
     print("infinity")
 else:
     print(arjumand)
-
