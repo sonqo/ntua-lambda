@@ -102,3 +102,59 @@ while queue: # Floodfilling W's and A elements
         else:
             global_time = -1
     global_time += 1
+
+ch = itemSymbol(start_line, start_column, 'P', 0, "") # Initializing Arjumand for path finding
+map[start_line][start_column] = 'P'
+queue.append(ch)
+
+global_time = 0
+flag = 0
+
+element = queue[0]
+time = element.time
+path = "Z"
+
+fl = 0
+
+while fl == 0:
+
+    while global_time == time:
+
+        temp_element = validNeighbors(element.line, element.column, element.symbol)
+
+        for item in temp_element:
+
+            temp_line = item[0]; temp_column = item[1]
+
+            if temp_line > element.line:
+                pos = element.position + "D"
+            elif temp_column < element.column:
+                pos = element.position + "L"
+            elif temp_column > element.column:
+                pos = element.position + "R"
+            elif temp_line < element.line:
+                pos = element.position + "U"
+
+            if arjumand != 0:
+                if temp_line == lpath and temp_column == cpath:
+                    if pos < path:
+                        path = pos
+                        flag = 1
+
+            ch = itemSymbol(temp_line, temp_column, 'P', time+1, pos)
+            map[temp_line][temp_column] = 'P'
+            queue.append(ch)
+
+        if queue:
+            element = queue.popleft()
+            time = element.time
+        else:
+            fl = 1
+            global_time = -1
+    global_time += 1
+
+    for i in range(0, N+2):
+        print(*map[i], sep = ' ')
+    print("\n")
+
+print(path)
