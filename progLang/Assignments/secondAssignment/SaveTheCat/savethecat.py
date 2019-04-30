@@ -27,7 +27,7 @@ def validNeighbors(line, column, symbol):
                         leastPossPad(line, cl)
                 else:
                     neighbors.append([line, cl])
-    else: # Always expand pads with the order D - L- R - U = No need for comparing strings, always finding the best path
+    else: # Always expand pads with the order D - L - R - U = Always finding the best path
         if map[line+1][column] != 'X' and map[line+1][column] != 'P':
             neighbors.append([line+1, column])
         if map[line][column-1] != 'X' and map[line][column-1] != 'P':
@@ -106,7 +106,6 @@ while not empty: # Floodfilling W's and A elements
             ch = itemSymbol(temp_line, temp_column, element.symbol, time+1, "")
             map[temp_line][temp_column] = element.symbol
             queue.append(ch)
-
         if queue: # If queue is not empty go to next element, else break time - loop
             element = queue.popleft()
             time = element.time
@@ -120,12 +119,14 @@ map[start_line][start_column] = 'P'
 queue.append(ch)
 
 flag = 0 # Path is found
+path = "" # Arjumand is in danger
+road = "" # Arjmand is not in danger
 global_time = 0
 
 empty = False
 element = queue[0]
 
-while flag != 1:
+while not empty and flag != 1:
 
     while element.time == global_time:
 
@@ -152,7 +153,6 @@ while flag != 1:
                 if temp_line == leastl and temp_column == leastc:
                     road = pos
                     flag = 1
-
         if queue:
             element = queue.popleft()
             time = element.time
