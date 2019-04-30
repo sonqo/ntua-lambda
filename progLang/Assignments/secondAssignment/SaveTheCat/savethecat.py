@@ -10,22 +10,32 @@ def validNeighbors(line, column, symbol):
 
     neighbors = [] # Neighbors are being returned in a list of coordinates (line, column)
 
-    for ln in (line-1, line+1):
-        if map[ln][column] != 'X' and map[ln][column] != symbol:
-            if symbol == 'A':
-                if map[ln][column] != 'W':
+    if symbol != 'P':
+        for ln in (line-1, line+1):
+            if map[ln][column] != 'X' and map[ln][column] != symbol:
+                if symbol == 'A':
+                    if map[ln][column] != 'W':
+                        neighbors.append([ln, column])
+                        leastPossPad(ln, column)
+                else:
                     neighbors.append([ln, column])
-                    leastPossPad(ln, column)
-            else:
-                neighbors.append([ln, column])
-    for cl in (column-1, column+1):
-        if map[line][cl] != 'X' and map[line][cl] != symbol:
-            if symbol == 'A':
-                if map[line][cl] != 'W':
+        for cl in (column-1, column+1):
+            if map[line][cl] != 'X' and map[line][cl] != symbol:
+                if symbol == 'A':
+                    if map[line][cl] != 'W':
+                        neighbors.append([line, cl])
+                        leastPossPad(line, cl)
+                else:
                     neighbors.append([line, cl])
-                    leastPossPad(line, cl)
-            else:
-                neighbors.append([line, cl])
+    else: # Always expand pads with the order D - L- R - U = No need for comparing strings, always finding the best path
+        if map[line+1][column] != 'X' and map[line+1][column] != 'P':
+            neighbors.append([line+1, column])
+        if map[line][column-1] != 'X' and map[line][column-1] != 'P':
+            neighbors.append([line, column-1])
+        if map[line][column+1] != 'X' and map[line][column+1] != 'P':
+            neighbors.append([line, column+1])
+        if map[line-1][column] != 'X' and map[line-1][column] != 'P':
+            neighbors.append([line-1, column])
 
     return neighbors
 
@@ -73,9 +83,10 @@ for i in range (1, N+1):
 arjumand = 0 # Initialization of time variables
 global_time = 0
 
-element = queue[0] # Getting first element without popping it - covers the case of zero flood
+empty = False # Queue flag
+element = queue[0] # Getting first element without popping it - covers the zero flood case ;)
 
-while queue: # Floodfilling W's and A elements
+while not empty: # Floodfilling W's and A elements
 
     while element.time == global_time:
 
@@ -100,6 +111,7 @@ while queue: # Floodfilling W's and A elements
             element = queue.popleft()
             time = element.time
         else:
+            empty = True
             global_time = -1
     global_time += 1
 
@@ -107,54 +119,57 @@ ch = itemSymbol(start_line, start_column, 'P', 0, "") # Initializing Arjumand fo
 map[start_line][start_column] = 'P'
 queue.append(ch)
 
+flag = 0 # Path is found
 global_time = 0
-flag = 0
 
+empty = False
 element = queue[0]
-time = element.time
-path = "Z"
 
-fl = 0
+while flag != 1:
 
-while fl == 0:
-
-    while global_time == time:
+    while element.time == global_time:
 
         temp_element = validNeighbors(element.line, element.column, element.symbol)
 
         for item in temp_element:
-
             temp_line = item[0]; temp_column = item[1]
-
-            if temp_line > element.line:
+            if temp_line > element.line: # Prioritazing: D - L - R - U
                 pos = element.position + "D"
-            elif temp_column < element.column:
+            if temp_column < element.column:
                 pos = element.position + "L"
-            elif temp_column > element.column:
+            if temp_column > element.column:
                 pos = element.position + "R"
-            elif temp_line < element.line:
+            if temp_line < element.line:
                 pos = element.position + "U"
-
+            ch = itemSymbol(temp_line, temp_column, element.symbol, time+1, pos)
+            map[temp_line][temp_column] = element.symbol
+            queue.append(ch)
             if arjumand != 0:
                 if temp_line == lpath and temp_column == cpath:
-                    if pos < path:
-                        path = pos
-                        flag = 1
-
-            ch = itemSymbol(temp_line, temp_column, 'P', time+1, pos)
-            map[temp_line][temp_column] = 'P'
-            queue.append(ch)
+                    path = pos
+                    flag = 1
+            else:
+                if temp_line == leastl and temp_column == leastc:
+                    road = pos
+                    flag = 1
 
         if queue:
             element = queue.popleft()
             time = element.time
         else:
-            fl = 1
+            empty = True
             global_time = -1
     global_time += 1
 
-    for i in range(0, N+2):
-        print(*map[i], sep = ' ')
-    print("\n")
-
-print(path)
+if arjumand == 0:
+    print("infinity")
+    if road == "":
+        print("stay")
+    else:
+        print(road)
+else:
+    print(arjumand)
+    if path == "":
+        print("stay")
+    else:
+        print(path)
