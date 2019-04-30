@@ -100,8 +100,12 @@ struct Tuple path_coordFinding(int line, int column, int lpath, int cpath, int g
     struct Tuple result;
 
     if (global_time - 1 == arjumand){
-        if (line <= lpath){
-            if (column <= cpath){
+        if (line < lpath){
+            lpath = line;
+            cpath = column;
+        }
+        else if (line == lpath){
+            if (column < cpath){
                 lpath = line;
                 cpath = column;
             }

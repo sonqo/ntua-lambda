@@ -1,7 +1,7 @@
 import sys
 from collections import deque
 
-class itemSymbol: # Class of cat(A) water(W) elements
+class ItemSymbol: # Class of cat(A) water(W) elements
     def __init__(self, line, column, symbol, time, position):
         self.line = line; self.column = column; self.symbol = symbol; self.time = time; self.position = position
 
@@ -27,7 +27,7 @@ def validNeighbors(line, column, symbol):
                         leastPossPad(line, cl)
                 else:
                     neighbors.append([line, cl])
-    else: # Always expand pads with the order D - L - R - U = Always finding the best path
+    elif symbol: # Always expand pads with the order D - L - R - U = Always finding the best path
         if map[line+1][column] != 'X' and map[line+1][column] != 'P':
             neighbors.append([line+1, column])
         if map[line][column-1] != 'X' and map[line][column-1] != 'P':
@@ -77,7 +77,7 @@ for i in range (1, N+1):
             if ch is 'A':
                 leastl = i; leastc = j # Starting pad of Arjumand
                 start_line = i; start_column = j
-            ch = itemSymbol(i, j, ch, time, "")
+            ch = ItemSymbol(i, j, ch, time, "")
             queue.append(ch)
 
 arjumand = 0 # Initialization of time variables
@@ -96,14 +96,16 @@ while not empty: # Floodfilling W's and A elements
             temp_line = item[0]; temp_column = item[1]
             if element.symbol == 'W':
                 if map[temp_line][temp_column] == 'A':
-                    if global_time > arjumand: # Keeping coordinates of best possible time
+                    if global_time == arjumand: # Keeping coordinates of best possible time
+                        if temp_line < lpath:
+                            lpath = temp_line; cpath = temp_column
+                        elif temp_line == lpath:
+                            if temp_column < cpath:
+                                lpath = temp_line; cpath = temp_column
+                    elif global_time > arjumand: # Minimizing string sequence
                         arjumand = global_time
                         lpath = temp_line; cpath = temp_column
-                    elif global_time == arjumand: # Minimizing string sequence
-                        if temp_line <= lpath:
-                            if temp_column <= cpath:
-                                lpath = temp_line; cpath = temp_column
-            ch = itemSymbol(temp_line, temp_column, element.symbol, time+1, "")
+            ch = ItemSymbol(temp_line, temp_column, element.symbol, time+1, "")
             map[temp_line][temp_column] = element.symbol
             queue.append(ch)
         if queue: # If queue is not empty go to next element, else break time - loop
@@ -114,7 +116,7 @@ while not empty: # Floodfilling W's and A elements
             global_time = -1
     global_time += 1
 
-ch = itemSymbol(start_line, start_column, 'P', 0, "") # Initializing Arjumand for path finding
+ch = ItemSymbol(start_line, start_column, 'P', 0, "") # Initializing Arjumand for path finding
 map[start_line][start_column] = 'P'
 queue.append(ch)
 
@@ -142,7 +144,7 @@ while not empty and flag != 1:
                 pos = element.position + "R"
             if temp_line < element.line:
                 pos = element.position + "U"
-            ch = itemSymbol(temp_line, temp_column, element.symbol, time+1, pos)
+            ch = ItemSymbol(temp_line, temp_column, element.symbol, time+1, pos)
             map[temp_line][temp_column] = element.symbol
             queue.append(ch)
             if arjumand != 0:
