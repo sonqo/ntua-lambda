@@ -148,13 +148,13 @@ while not empty and flag != 1:
             map[temp_line][temp_column] = element.symbol
             queue.append(ch)
             if arjumand != 0:
-                if temp_line == lpath and temp_column == cpath:
+                if temp_line == lpath and temp_column == cpath: # Keep path when found
                     path = pos
-                    flag = 1
+                    flag = 1 # Stop searching if path is found
             else:
-                if temp_line == leastl and temp_column == leastc:
+                if temp_line == leastl and temp_column == leastc: # Keep road when found
                     road = pos
-                    flag = 1
+                    flag = 1 # Stop searching if path is found
         if queue:
             element = queue.popleft()
             time = element.time
