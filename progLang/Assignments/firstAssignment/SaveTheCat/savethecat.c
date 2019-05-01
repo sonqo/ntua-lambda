@@ -80,7 +80,7 @@ struct Tuple road_coordFinding(int line, int column, int leastl, int leastc){
 
     struct Tuple value;
 
-    if (line < leastl) { // Prioratizing line over column in the best possible position
+    if (line < leastl) { // Prioritazing line over column in best possible pad
         leastl = line;
         leastc = column;
     }
@@ -100,7 +100,7 @@ struct Tuple path_coordFinding(int line, int column, int lpath, int cpath, int g
     struct Tuple result;
 
     if (global_time - 1 == arjumand){
-        if (line < lpath){
+        if (line < lpath){ // Prioritazing line over column in best possible pad
             lpath = line;
             cpath = column;
         }
