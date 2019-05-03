@@ -27,7 +27,7 @@ def validNeighbors(line, column, symbol):
                         leastPossPad(line, cl)
                 else:
                     neighbors.append([line, cl])
-    elif symbol: # Always expand pads with the order D - L - R - U = Always finding the best path
+    elif symbol: # Always expand pads with the order D - L - R - U => Always finding the best path
         if map[line+1][column] != 'X' and map[line+1][column] != 'P':
             neighbors.append([line+1, column])
         if map[line][column-1] != 'X' and map[line][column-1] != 'P':
@@ -80,8 +80,7 @@ for i in range (1, N+1):
             ch = ItemSymbol(i, j, ch, time, "")
             queue.append(ch)
 
-arjumand = 0 # Initialization of time variables
-global_time = 0
+arjumand = 0; global_time = 0 # Initialization of time variables
 
 empty = False # Queue flag
 element = queue[0] # Getting first element without popping it - covers the zero flood case ;)
@@ -120,10 +119,9 @@ ch = ItemSymbol(start_line, start_column, 'P', 0, "") # Initializing Arjumand fo
 map[start_line][start_column] = 'P'
 queue.append(ch)
 
-flag = 0 # Path is found
-path = "" # Arjumand is in danger
-road = "" # Arjmand is not in danger
 global_time = 0
+path = ""; road = ""
+flag = 0 # Path is found
 
 empty = False
 element = queue[0]
@@ -150,11 +148,11 @@ while not empty and flag != 1:
             if arjumand != 0:
                 if temp_line == lpath and temp_column == cpath: # Keep path when found
                     path = pos
-                    flag = 1 # Stop searching if path is found
+                    flag = 1 # Stop searching when path has been found
             else:
                 if temp_line == leastl and temp_column == leastc: # Keep road when found
                     road = pos
-                    flag = 1 # Stop searching if path is found
+                    flag = 1 # Stop searching when path has been found
         if queue:
             element = queue.popleft()
             time = element.time
@@ -163,13 +161,13 @@ while not empty and flag != 1:
             global_time = -1
     global_time += 1
 
-if arjumand == 0:
+if arjumand == 0: # Printing when Arjumand is not in danger
     print("infinity")
     if road == "":
         print("stay")
     else:
         print(road)
-else:
+else: # Printing when Arjumand ought to be saved
     print(arjumand)
     if path == "":
         print("stay")
