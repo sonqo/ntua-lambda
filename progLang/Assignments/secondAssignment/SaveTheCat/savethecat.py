@@ -2,11 +2,13 @@ import sys
 from collections import deque
 
 class ItemSymbol: # Class of cat(A) water(W) elements
+    """ Class of elements found on map, which keeps time of element expansion and it's path. """
     def __init__(self, line, column, symbol, time, position):
         self.line = line; self.column = column; self.symbol = symbol; self.time = time; self.position = position
 
 def validNeighbors(line, column, symbol):
-# A function that returns the valid neighbors of an element given
+    """ A function that receives line and column of an element and returns all valid neighbors. In addition,
+    it classifies neighbors during the second act, when the pathfinding of Arjumand is necessary. """
 
     neighbors = [] # Neighbors are being returned in a list of coordinates (line, column)
 
@@ -40,11 +42,11 @@ def validNeighbors(line, column, symbol):
     return neighbors
 
 def leastPossPad(line, column):
-# A function that returns the upper and righter possible position of Arjumand possible at each specific time
+    """ A function that calculates the best possible pad of Arjumand when she is not in danger. """
 
     global leastl; global leastc
 
-    if line < leastl: # Prioritazing line over column in the best possible position
+    if line < leastl: # Prioritazing line over column in the least possible position
         leastl = line; leastc = column
     elif line == leastl:
         if column < leastc:
@@ -80,7 +82,8 @@ for i in range (1, N+1):
             ch = ItemSymbol(i, j, ch, time, "")
             queue.append(ch)
 
-arjumand = 0; global_time = 0 # Initialization of time variables
+arjumand = 0; # Longest possible time for Arjumand to be saved
+global_time = 0 # Global time of expansion
 
 empty = False # Queue flag
 element = queue[0] # Getting first element without popping it - covers the zero flood case ;)
@@ -119,9 +122,10 @@ ch = ItemSymbol(start_line, start_column, 'P', 0, "") # Initializing Arjumand fo
 map[start_line][start_column] = 'P'
 queue.append(ch)
 
-global_time = 0
-path = ""; road = ""
 flag = 0 # Path is found
+path = "" # Moves Arjumand ought to follow when in danger
+road = "" # Moves Arjumand ought to follow in order to reach least possible coordinates (line > column)
+global_time = 0
 
 empty = False
 element = queue[0]
@@ -167,6 +171,7 @@ if arjumand == 0: # Printing when Arjumand is not in danger
         print("stay")
     else:
         print(road)
+
 else: # Printing when Arjumand ought to be saved
     print(arjumand)
     if path == "":
