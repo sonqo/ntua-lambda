@@ -19,5 +19,5 @@ fun readFile file =
       (N, W, C, readInts W [], readInts C []) (* Returning values in form of a list *)
     end
 
-val (N, W, C, Winners, Tickets) = readFile "lottery.txt"
+val (N, W, C, Tickets, Winners) = readFile "lottery.txt"
 
