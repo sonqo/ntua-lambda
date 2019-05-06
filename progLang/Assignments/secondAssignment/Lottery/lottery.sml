@@ -19,5 +19,14 @@ fun readFile file =
       (N, W, C, readInts W [], readInts C []) (* Returning values in form of a list *)
     end
 
-val (N, W, C, Tickets, Winners) = readFile "lottery.txt"
+val (N, W, C, Tickets, Winners) = readFile "lottery.txt";
 
+(* A function that reads two integers and returns total number of equal digits, starting from the end *)
+fun revEqualDigits (N, M, S) = 
+  if N = M then 
+    ~1 (* No need to calculate number of digits, in case of equality the int N is given from file *)
+  else
+    if N mod 10 = M mod 10 then
+      revEqualDigits (N div 10, M div 10, S+1)
+    else
+      S
