@@ -2,13 +2,13 @@ import sys
 from collections import deque
 
 class ItemSymbol: # Class of cat(A) water(W) elements
-    """ Class of elements found on map, which keeps time of element expansion and it's path. """
+    """ Class of elements found on map, which keeps time of element expansion and it's respective path. """
     def __init__(self, line, column, symbol, time, position):
         self.line = line; self.column = column; self.symbol = symbol; self.time = time; self.position = position
 
 def validNeighbors(line, column, symbol):
     """ A function that receives line and column of an element and returns all valid neighbors. In addition,
-    it classifies neighbors during the second act, when the pathfinding of Arjumand is necessary. """
+    it classifies neighbors during the second act of the algorithm, when the pathfinding of Arjumand is necessary. """
 
     neighbors = [] # Neighbors are being returned in a list of coordinates (line, column)
 
