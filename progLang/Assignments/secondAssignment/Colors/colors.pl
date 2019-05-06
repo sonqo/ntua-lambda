@@ -2,7 +2,7 @@
 
 read_input(File, N, M, Ribbon) :-
     open(File, read, Stream),
-    read_line(Stream, [N, K]),
+    read_line(Stream, [N, M]),
     read_line(Stream, Ribbon).
 
 read_line(Stream, L) :-
