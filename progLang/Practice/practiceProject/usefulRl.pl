@@ -28,3 +28,5 @@ append([H|L1], L2, [H|L3]) :- append(L1, L2, L3).
 % reverse(L, Y) :=> List Y is equal to the reversed list L - Not optimal!
 
 % sort(L, X) :=> List X is the sorted version of random list L
+
+% Negation Predicate: \+ :=> \+X = ¬X
