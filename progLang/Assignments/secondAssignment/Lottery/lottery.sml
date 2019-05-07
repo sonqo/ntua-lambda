@@ -24,9 +24,17 @@ val (N, W, C, Tickets, Winners) = readFile "lottery.txt";
 (* A function that reads two integers and returns total number of equal digits, starting from the end *)
 fun revEqualDigits (N, M, S) = 
   if N = M then 
-    ~1 (* No need to calculate number of digits, in case of equality the int N is given from file *)
+    ~1 (* No need to calculate number of digits, in case of equality the integer N is given from file *)
   else
     if N mod 10 = M mod 10 then
       revEqualDigits (N div 10, M div 10, S+1)
     else
       S
+
+(* A function that checks who many times a number(N) has similar digits with elements from a list *)
+fun testingSingWinner (N, [], S) = S
+  | testingSingWinner (N, h::t, S) =     
+    if revEqualDigits (N, h, 0) = 0 then 
+      testingSingWinner(N, t, S)
+    else
+      testingSingWinner(N, t, S+1)
