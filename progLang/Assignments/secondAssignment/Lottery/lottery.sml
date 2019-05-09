@@ -24,7 +24,9 @@ val (N, W, C, Tickets, Winners) = readFile "lottery.txt";
 (* A function that implements power function, modified for large integers *)
 fun powFunc (0, M) = IntInf.toLarge 0
   | powFunc (N, 0) = IntInf.toLarge 1
-  | powFunc (N, M) = IntInf.toLarge N * powFunc(N, M-1);
+  | powFunc (N, M) = IntInf.toLarge N * powFunc (N, M-1)
+
+val constant = powFunc (10, 9) + 7
 
 (* A function that reads two integers and returns total number of equal digits, starting from the end *)
 fun revEqualDigits (N, M, S) = 
@@ -36,10 +38,13 @@ fun revEqualDigits (N, M, S) =
     else
       S
 
-(* A function that checks how many times a number(N) has similar digits with elements from a list *)
+(* A function that calculates winnings of a single winning ticket, no need to include zero case *)
+fun calcWinnings (N) = powFunc (2, N) - 1 
+
+(* A function that returns how many times a number(N) has similar digits with elements from a list *)
 fun testingSingWinner (N, [], S) = S
   | testingSingWinner (N, h::t, S) =     
     if revEqualDigits (N, h, 0) = 0 then 
-      testingSingWinner(N, t, S)
+      testingSingWinner (N, t, S)
     else
-      testingSingWinner(N, t, S+1)
+      testingSingWinner (N, t, S+1)
