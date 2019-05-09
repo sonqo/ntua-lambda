@@ -37,7 +37,7 @@ function submit_form() {
 	else if( form.email.value.indexOf('@') < 0 || form.email.value.indexOf('.') < 0 )
 	{
 		ok = false;
-		alert("mail address doesn't comply to RFC-12349856145\nPlease read it and re-type accordingly :)");
+		alert("Mail address doesn't comply to RFC-12349856145\nPlease read it and re-type accordingly :)");
 	}
 
 	return ok;
