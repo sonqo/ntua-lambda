@@ -43,6 +43,9 @@ public class Canvas extends JLabel implements MouseListener {
             else{
                 g.setColor(Color.blue);
             }
+            if (temp.x - r > 500){ // Delete shape as soon as borders of windows are reached
+                delShape();
+            }
             g.drawOval(temp.x- r, temp.y - r, 2* r, 2 * r);
         }
     }
