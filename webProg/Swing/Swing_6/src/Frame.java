@@ -16,7 +16,7 @@ public class Frame {
         JFrame frame = new JFrame("JFrame title");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //frame.getContentPane().setBackground(Color.WHITE);
+        frame.getContentPane().setBackground(Color.WHITE);
         Canvas canvas = new Canvas();
         frame.add(canvas);
 

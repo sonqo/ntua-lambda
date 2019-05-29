@@ -50,9 +50,9 @@ public class Canvas extends JPanel implements MouseInputListener {
     }
 
     public void mouseClicked(MouseEvent e) {
-        Circle c = new Circle(e.getX(), e.getY(), 10, 10, time, Color.BLACK, this);
+        Circle c = new Circle(e.getX(), e.getY(), 15, 10, time, Color.BLACK, this);
         addNewItem(c);
-        time += 1000;
+        //time += 1000;
     }
 
     public void mouseEntered(MouseEvent e) {
