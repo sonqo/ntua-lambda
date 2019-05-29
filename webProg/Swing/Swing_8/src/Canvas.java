@@ -44,6 +44,13 @@ public class Canvas extends JLabel implements MouseListener, MouseMotionListener
         }
     }
 
+    public void resetBoard(){ // Reseting whole board
+        while(!shapes.isEmpty()){
+            shapes.remove(0);
+            this.repaint();
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
     }

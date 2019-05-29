@@ -7,8 +7,9 @@ import static java.awt.Color.*;
 public class Shape extends Thread {
 
     int x, y, r = 10;
+    int counter = 0;
     Canvas canvas;
-    int interval = 2000;
+    int interval = 1000;
     int index;
 
     public void setX(int x){
@@ -38,7 +39,11 @@ public class Shape extends Thread {
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+            counter += 1;
+            if (counter == 5){
+                canvas.resetBoard();
+                canvas.repaint();
+            }
         }
     }
 }

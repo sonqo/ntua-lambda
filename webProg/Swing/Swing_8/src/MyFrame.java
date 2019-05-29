@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MyFrame extends JFrame implements KeyListener{
+public class MyFrame extends JFrame implements KeyListener, ActionListener{
 
     Canvas canvas = new Canvas();
 
-    private JButton repButton;
+    private JButton resetButton;
 
     public MyFrame() throws HeadlessException {
 
@@ -17,7 +17,16 @@ public class MyFrame extends JFrame implements KeyListener{
         getContentPane().add(canvas, BorderLayout.SOUTH);
         this.setVisible(true);
 
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Button in center
+        resetButton = new JButton("Reset!");
+
+        resetButton.addActionListener(this);
+
         addKeyListener(this);
+
+        panel.add(resetButton);
+        getContentPane().add(panel);
 
         pack();
     }
@@ -42,5 +51,12 @@ public class MyFrame extends JFrame implements KeyListener{
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.resetButton){
+            canvas.resetBoard();
+        }
     }
 }
