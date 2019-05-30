@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Canvas extends JLabel implements MouseListener, MouseMotionListener, KeyListener {
+public class Canvas extends JLabel implements MouseListener, MouseMotionListener{
 
     int x, y, r  = 10; // Default rad
 
@@ -84,21 +84,5 @@ public class Canvas extends JLabel implements MouseListener, MouseMotionListener
 
     @Override
     public void mouseMoved(MouseEvent e) { // Draw without mouse click pressed
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyChar() == 'D'){
-            System.out.println("akppa");
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 }

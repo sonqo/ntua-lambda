@@ -9,8 +9,7 @@ public class Shape extends Thread {
     int x, y, r = 10;
     int counter = 0;
     Canvas canvas;
-    int interval = 1000;
-    int index;
+    int interval = 15000;
 
     public void setX(int x){
         this.x = x;
@@ -30,8 +29,6 @@ public class Shape extends Thread {
         setDaemon(true);
     }
 
-    public Color color;
-
     public void run(){
         while(true){
             try {
@@ -39,11 +36,8 @@ public class Shape extends Thread {
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            counter += 1;
-            if (counter == 5){
-                canvas.resetBoard();
-                canvas.repaint();
-            }
+            canvas.resetBoard();
+            canvas.repaint();
         }
     }
 }
