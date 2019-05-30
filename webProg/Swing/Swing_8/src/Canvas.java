@@ -1,14 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Attributes;
 
 public class Canvas extends JLabel implements MouseListener, MouseMotionListener{
 
     int x, y, r  = 10; // Default rad
 
     List<Shape> shapes = new ArrayList<Shape>();
+
+    List<Integer> Pointers = new ArrayList<Integer>();
+
+    private int temp_start, temp_finish;
 
     int counter = 0;
     int start_pointer, finish_pointer;
@@ -38,7 +44,13 @@ public class Canvas extends JLabel implements MouseListener, MouseMotionListener
     }
 
     public void delShape() {
-        for (int i = start_pointer; i < finish_pointer; i++){
+        temp_finish = Pointers.get(Pointers.size()-1);
+        temp_start = Pointers.get(Pointers.size()-2);
+
+        Pointers.remove(Pointers.size()-1);
+        Pointers.remove(Pointers.size()-1);
+
+        for (int i = temp_start; i < temp_finish; i++){
             shapes.remove(shapes.size() - 1);
             this.repaint();
         }
@@ -58,13 +70,13 @@ public class Canvas extends JLabel implements MouseListener, MouseMotionListener
     @Override
     public void mousePressed(MouseEvent e) {
         start_pointer = shapes.size();
-        System.out.println(start_pointer);
+        Pointers.add(start_pointer);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         finish_pointer = shapes.size();
-        System.out.println(finish_pointer);
+        Pointers.add(finish_pointer);
     }
 
     @Override

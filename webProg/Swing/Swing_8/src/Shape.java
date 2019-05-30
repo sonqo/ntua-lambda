@@ -36,8 +36,7 @@ public class Shape extends Thread {
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            canvas.resetBoard();
-            canvas.repaint();
+
         }
     }
 }
