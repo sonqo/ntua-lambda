@@ -1,15 +1,14 @@
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.awt.Color.*;
 
 public class Shape extends Thread {
 
     int x, y, r = 10;
     int counter = 0;
     Canvas canvas;
-    int interval = 15000;
+    int interval = 1000;
+    public Color color = Color.blue ;
+
+    boolean blue = true, red = false, yellow = false;
 
     public void setX(int x){
         this.x = x;

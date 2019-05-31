@@ -30,7 +30,7 @@ public class Canvas extends JLabel implements MouseListener, MouseMotionListener
         Shape temp;
         for (int i = 0; i < shapes.size(); i++){
             temp = shapes.get(i);
-            g.setColor(Color.blue);
+            g.setColor(temp.color);
             g.drawOval(temp.x - temp.r, temp.y - temp.r, 2 * temp.r, 2 * temp.r);
         }
     }
