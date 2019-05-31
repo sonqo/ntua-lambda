@@ -15,19 +15,6 @@ public class Shape extends Thread {
         this.x = x;
     }
 
-//    public void setColor(){
-//        if (red){
-//            blue = true;
-//            red = false;
-//            color = Color.blue;
-//        }
-//        else{
-//            blue = false;
-//            red = true;
-//            color = Color.red;
-//        }
-//    }
-
     public void setY(int y){
         this.y = y;
     }
@@ -49,7 +36,6 @@ public class Shape extends Thread {
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            this.setColor(); // Alternating colors of shapes
             if (this.r == 15){ // Alternating rad of shapes
                 this.r += 10;
             }
