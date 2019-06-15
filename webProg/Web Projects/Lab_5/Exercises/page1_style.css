@@ -1,0 +1,123 @@
+body{
+	font-family: calibri;
+}
+
+#logo{
+	width: 55px;
+	height: 55px;
+	margin-left: 15%;
+	float: left;
+}
+
+#logo:hover{
+	opacity: 0.7;
+}
+
+#headContent{
+	margin-left: 40%;
+}
+
+#back{
+	width: 100%;
+	display: block;
+}
+
+#span1{
+	font-size: 40px;
+	color: black;
+}
+
+#span2{
+	font-size: 12px;
+	color: tan;
+}
+
+#list{
+    list-style-type: none;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    overflow: hidden;
+    background-color: tan;
+	color: brown;
+}
+
+#list li{
+    display: inline-block;
+}
+
+#list li a{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px 14px 16px;
+    text-decoration: none;
+}
+
+#list li a:hover {
+    background-color: brown;
+}
+
+#maindiv{
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+	text-align: center;
+	border-radius: 25px;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#maintext{
+	font-weight: bold;
+}
+
+#div1{
+	overflow-x: auto;
+	background-color: oldlace;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#tab{
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#tabtd{
+	background-color: brown;
+	border-radius: 25px;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+}
+
+button{
+    background-color: #ff4d4d;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 14px 2px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: brown;
+    color: white;
+}
+
+footer{
+	text-align: center;
+	color: red;
+}
+
+footer a{
+	text-decoration: none;
+}
+
+footer a:hover{
+	color: blue;
+}
