@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+	.container {
+	  position: relative;
+	  padding-left: 35px;
+	  margin-bottom: 12px;
+	  cursor: pointer;
+	  font-size: 22px;
+	  -webkit-user-select: none;
+	  -moz-user-select: none;
+	  -ms-user-select: none;
+	  user-select: none;
+	}
+
+	.container input {
+	  position: absolute;
+	  opacity: 0;
+	  cursor: pointer;
+	}
+
+	.checkmark {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  height: 25px;
+	  width: 25px;
+	  background-color: #eee;
+	}
+
+	.container:hover input ~ .checkmark {
+	  background-color: #ccc;
+	}
+
+	.container input:checked ~ .checkmark {
+	  background-color: #900;
+	}
+
+	.checkmark:after {
+	  content: "";
+	  position: absolute;
+	  display: none;
+	}
+
+	.container input:checked ~ .checkmark:after {
+	  display: block;
+	}
+
+	.container .checkmark:after {
+	  left: 9px;
+	  top: 5px;
+	  width: 5px;
+	  height: 10px;
+	  border: solid white;
+	  border-width: 0 3px 3px 0;
+	  -webkit-transform: rotate(45deg);
+	  -ms-transform: rotate(45deg);
+	  transform: rotate(45deg);
+	}
+
+	.button, .input {
+	  color: #900;
+	  border: 1px solid #900;
+	  font-weight: bold;
+	  font-size: 150%;
+	}
+	</style>
+
+	<script LANGUAGE="JavaScript">
+		var total = 0;
+		var play = false;
+		var startTime;
+		
+		function display(element) {
+			var now = new Date();
+			
+			if (!play) {
+				play = true;
+				startTime = now.getTime();
+			}
+			if (now.getTime() - startTime > 5000) { 
+				element.checked = !element.checked;
+				
+				return 0;
+			}
+			if (element.checked)
+				total++;
+			else
+				total--;
+			
+			element.form.num.value = total;
+		}
+
+		function restart(form) {
+			form.num.value = 0;
+			total = 0;
+			play = false;
+			
+			for (var i = 1; i <= 100; ++i) {
+			    form.elements[i].checked = false;
+			}
+		}
+	</script>
+
+</head>
+
+<body>
+	<center><font color="#900" size="6px"> How many boxes can you check in 5 seconds? </font></center>
+	<br>
+	<script LANGUAGE="JavaScript">
+		document.write("<form><center>");
+		document.write('<input type="text" value="0" name="num" class="input">');
+		document.write("<br><br>");
+		document.write("<hr size=1 width=40%>");
+		for (var i = 0; i < 10; ++i) {
+			for (var j = 0; j < 10; ++j) {
+			document.write('<label class="container"> <input type="checkbox" onClick="display(this)"> <span class="checkmark"> </span> </label>');
+			}
+			document.write("<br><br>");
+		}
+		document.write("<hr size=1 width=40%>");
+		document.write('<input type="button" value="restart" onClick="restart(this.form)" class="button">');
+		document.write("</center></form>");
+	</script>
+</body>
+		 
+</html>
+        
