@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "CheatSeat.css">
+        <!-- Linking local Bootstrap Lib -->
+        <!-- <link rel = "stylesheet" href = "Bootstrap/css/bootstrap-theme.min.css"> --> 
+        <!-- <script src = "Bootstrap/js/bootstrap.min.js"></script> -->
+        <!-- <meta name = "viewport" content = "width = device-width, initial-scale = 1"> -->
+    </head>
 <body>
 
-<h2>Basic HTML Form</h2>
+    <h2 id = "header">Basic HTML Form</h2>
 
-<form action = "/submit_page.html"> <!-- rediricting to Submit_Page after clicking submit button -->
-  First name:
-  <br>
-  <input type = "text" name = "firstname"> <!-- value = "default" -->
-  <br>
-  Last name:
-  <br>
-  <input type = "text" name = "lastname">
-  <br><br>
-  <input type = "submit" value = "Submit">
-</form> 
+    <div class = "container">
+        <form action = "/submit_page.html" target = "_blank"> <!-- rediricting to a new tab after submitting -->
+            <label>First Number:</label><input id = "textbox" type = "text" name = "firstname" maxlength = "24" autocomplete = "off"> <!-- value = "default" -->
+            <br><br>
+            <label>Second Number:</label><input id = "textbox" type = "text" name = "lastname" maxlength = "24" autocomplete = "off">
+            <br><br>
+            <label>Symbol:</label><input id = "textbox" type = "text" name = "lastname" maxlength = "24" autocomplete = "off">
+            <br><br>
+            <input class = "button" type = "submit" value = "Submit">
+            <!-- <input class = "button" type = "reset" value = "Reset"> -->
+        </form> 
+    </div>
 
 </body>
 </html>
