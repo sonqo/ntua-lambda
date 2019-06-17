@@ -4,7 +4,6 @@ function validateFields() {
     var secondNum = document.getElementById("secondNum").value;
     var symbol = document.getElementById("symbol").value;
 
-    // Validation checking
     if (firstNum == null || firstNum == "" || secondNum == null || secondNum == "" || symbol == null || symbol == ""){
         alert("At least one of the form fields is empty! Please try again.");
     }
@@ -19,7 +18,3 @@ function validateFields() {
         }
     }
 }   
-    
-    
-    
-    

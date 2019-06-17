@@ -26,6 +26,7 @@
             <input id = "symbol" type = "text" name = "symbol" maxlength = "24" autocomplete = "off">
             <br><br>
             <p id = "result">Result is:</p>
+            <p id = "testing"></p>
             <!-- <input class = "button" type = "button" value = "Submit" onclick = validateFields()> -->
             <!-- <input class = "button" type = "reset" value = "Reset"> -->
         </form> 
@@ -33,7 +34,27 @@
 
     <!-- jQuery Calculator -->
     <script>
-        $("#firstNum, #secondNum, #symbol").keyup(function(){
+
+        // $("label").mouseenter(function(){
+        //     $("#testing").html("Mouse hovers over a label!");
+        //     $("#testing").show("slow");
+        // })
+        // $("label").mouseleave(function(){
+        //     $("#testing").hide("slow");
+            
+        // })
+        // $("#header").click(function(){
+        //     $("#firstNum").val(6);
+        //     $("#secondNum").val(7);
+        //     $("#symbol").val("*");
+        // })
+        // $("#firstNum, #secondNum").change(function(){
+        //     $("#testing").html("Either on the two numbers was changed!")
+        // })
+        
+        // Refreshing result every time a value is changed by the user
+        $("#firstNum, #secondNum, #symbol").keyup(function(){ 
+            
             var firstNumber = parseInt($("#firstNum").val(), 10);
             var secondNumber = parseInt($("#secondNum").val(), 10);
             var symbol = $("#symbol").val();  
