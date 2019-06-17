@@ -1,27 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page import="java.io.*"%>
 <%@ page import="java.util.*"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Insert title here</title>
 </head>
 <body>
-<%
-		if
-		(
-				request.getParameter("pname") != null 
-			&& 
-				request.getParameter("pvalue") != null
-			&& 
-				!request.getParameter("pname").trim().equals("") 
-			&&
-				!request.getParameter("pvalue").trim().equals("")
-		) 
-		{
-			
+	<%
+		if (request.getParameter("pname") != null && request.getParameter("pvalue") != null && !request.getParameter("pname").trim().equals("") && !request.getParameter("pvalue").trim().equals("")){
 			
 			FileInputStream in = new FileInputStream(application.getRealPath("/WEB-INF/example.properties"));			
 			Properties props = new Properties();

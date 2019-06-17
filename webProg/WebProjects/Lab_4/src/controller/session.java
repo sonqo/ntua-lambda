@@ -9,46 +9,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class session
- */
+/** Servlet implementation class session **/
+
 @WebServlet("/session")
 public class session extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    /** @see HttpServlet#HttpServlet() **/
+	
     public session() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	/** @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response) **/
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	/** @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response) **/
+	 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		if (username.equals("ntua") && password.equals("ntua"))
-		{
+		if (username.equals("Ntua") && password.equals("Ntua")){
 			HttpSession session = request.getSession();
 			session.setAttribute("username", username);
-			response.sendRedirect("servlet_welcome.jsp");
-			
+			response.sendRedirect("servlet_welcome.jsp");	
 		}
-		else
-		{
+		else{
 			request.setAttribute("message", "Account is invalid");
 			request.getRequestDispatcher("servlet_login.jsp").forward(request, response);
 		}
 	}
-
 }
