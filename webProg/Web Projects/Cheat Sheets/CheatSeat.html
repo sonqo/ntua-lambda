@@ -26,11 +26,12 @@
             <input id = "symbol" type = "text" name = "symbol" maxlength = "24" autocomplete = "off">
             <br><br>
             <p id = "result">Result is:</p>
-            <input class = "button" type = "button" value = "Submit" onclick = validateFields()>
+            <!-- <input class = "button" type = "button" value = "Submit" onclick = validateFields()> -->
             <!-- <input class = "button" type = "reset" value = "Reset"> -->
         </form> 
     </div>
 
+    <!-- jQuery Calculator -->
     <script>
         $("#firstNum, #secondNum, #symbol").keyup(function(){
             var firstNumber = parseInt($("#firstNum").val(), 10);
