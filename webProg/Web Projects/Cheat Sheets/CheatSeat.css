@@ -26,10 +26,10 @@ input:focus{
     border-color: rgb(32, 35, 228);
 }
 
-#textbox{
+#firstNum, #secondNum, #symbol{
     font-weight: normal;
     width: 300px;
-    color: purple; /* Font color */
+    color: rgb(84, 72, 185); /* Font color */
 }
 
 .container{
@@ -39,7 +39,7 @@ input:focus{
     border: solid 1px #a1a1a1;
     padding: 10px;
     width: 520px;
-    height: 165px;
+    height: 175px;
 }
 
 .container label{
@@ -60,6 +60,7 @@ input:focus{
     height: 32px;
     width: 72px;
     border-radius: 18px;
+    text-align: center;
 }
 
 .button:hover{

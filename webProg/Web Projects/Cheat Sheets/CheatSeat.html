@@ -6,23 +6,63 @@
         <!-- <link rel = "stylesheet" href = "Bootstrap/css/bootstrap-theme.min.css"> --> 
         <!-- <script src = "Bootstrap/js/bootstrap.min.js"></script> -->
         <!-- <meta name = "viewport" content = "width = device-width, initial-scale = 1"> -->
+        <script src = "validator.js"></script>
+        <script src = "jquery-3.4.1.min.js"></script>
+
     </head>
 <body>
 
     <h2 id = "header">Basic HTML Form</h2>
 
     <div class = "container">
-        <form target = "_blank"> <!-- rediricting to a new tab after submitting -->
-            <label>First Number:</label><input id = "textbox" type = "text" name = "firstnum" maxlength = "24" autocomplete = "off"> <!-- value = "default" -->
+        <form> 
+            <label>First Number:</label>
+            <input id = "firstNum" type = "text" name = "firstnum" maxlength = "24" autocomplete = "off"> <!-- value = "default" -->
             <br><br>
-            <label>Second Number:</label><input id = "textbox" type = "text" name = "secondnum" maxlength = "24" autocomplete = "off">
+            <label>Second Number:</label>
+            <input id = "secondNum" type = "text" name = "secondnum" maxlength = "24" autocomplete = "off">
             <br><br>
-            <label>Symbol:</label><input id = "textbox" type = "text" name = "symbol" maxlength = "24" autocomplete = "off">
+            <label>Symbol:</label>
+            <input id = "symbol" type = "text" name = "symbol" maxlength = "24" autocomplete = "off">
             <br><br>
-            <input class = "button" type = "submit" value = "Submit">
+            <p id = "result">Result is:</p>
+            <input class = "button" type = "button" value = "Submit" onclick = validateFields()>
             <!-- <input class = "button" type = "reset" value = "Reset"> -->
         </form> 
     </div>
+
+    <script>
+        $("#firstNum, #secondNum, #symbol").keyup(function(){
+            var firstNumber = parseInt($("#firstNum").val(), 10);
+            var secondNumber = parseInt($("#secondNum").val(), 10);
+            var symbol = $("#symbol").val();  
+
+            var result;
+            var flag = 0;
+
+            if (firstNumber != "" && secondNumber != "" && symbol != ""){
+                if (symbol == "+"){
+                    result = firstNumber + secondNumber;
+                }
+                else if (symbol == "-"){
+                    result = firstNumber - secondNumber;
+                }
+                else if (symbol == "*"){
+                    result = firstNumber * secondNumber;
+                }
+                else if (symbol == "/"){
+                    result = firstNumber / secondNumber;
+                }
+                else{
+                    flag = 1;
+                    alert("Please insert valid symbol!");
+                }
+                if (flag == 0){
+                    $("#result").html(result);
+                }
+            }
+        })
+    </script>
 
 </body>
 </html>
