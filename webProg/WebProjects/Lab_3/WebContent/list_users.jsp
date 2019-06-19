@@ -17,7 +17,7 @@
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
 	connection = DriverManager.getConnection(connectionURL, "root", "");
 	statement = connection.createStatement();
-	rs = statement.executeQuery("SELECT * FROM selection");
+	rs = statement.executeQuery("SELECT * FROM selection WHERE username = 'Efstratios'");
 	%>
 	
 	<center>
@@ -29,6 +29,7 @@
 			<tr>
 				<td>Username</td>
 				<td>Password</td>
+				<td>Address</td>
 			</tr>
 			<%
 			while (rs.next()) {
@@ -36,6 +37,7 @@
 			<tr>
 				<td><%=rs.getString("username")%></td>
 				<td><%=rs.getString("password")%></td>
+				<td><%=rs.getString("address")%></td>
 			</tr>
 			<%
 			}
