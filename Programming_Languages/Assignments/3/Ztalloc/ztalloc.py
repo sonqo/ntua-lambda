@@ -16,6 +16,8 @@ queue.append(x)
 
 flag = 0
 
+temp_state = 1
+
 while queue and flag != 1:
     
     temp = queue.popleft() 
@@ -25,18 +27,31 @@ while queue and flag != 1:
         if temp.state < 1000000:
 
             if temp.low_b >= 892871 and temp.high_b <= 918276:
+
                 flag = 1
                 print(temp.low_b, temp.high_b, temp.path, temp.state)
 
-            temp_1 = temp.low_b // 2 
-            temp_2 = temp.high_b // 2 
+            if temp.low_b != 0 and temp.high_b != 0:
 
-            x = Borders(temp_1, temp_2, temp.path + "h", temp.state+1)
-            queue.append(x)
+                temp_1 = temp.low_b // 2 
+                temp_2 = temp.high_b // 2 
+
+                temp_state += 1
+
+                x = Borders(temp_1, temp_2, temp.path + "h", temp_state)
+                queue.append(x)
 
             temp_1 = temp.low_b * 3 + 1
             temp_2 = temp.high_b * 3 + 1
 
-            x = Borders(temp_1, temp_2, temp.path + "t", temp.state+1)
-            queue.append(x)
-    
+            if temp_1 <= 999999 and temp_2 <= 999999:
+                
+                temp_state += 1
+
+                x = Borders(temp_1, temp_2, temp.path + "t", temp_state)
+                queue.append(x)
+        
+        else:
+            
+            flag = 1
+            print("IMP0SSIBLE")
