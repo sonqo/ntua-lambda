@@ -16,33 +16,27 @@ queue.append(x)
 
 flag = 0
 
-i = 1
-
 while queue and flag != 1:
     
     temp = queue.popleft() 
 
     if temp.low_b <= 999999 and temp.high_b <= 999999:
 
-        if temp.low_b >= 892871 and temp.high_b <= 918276:
-            flag = 1
-            print(temp.low_b, temp.high_b, temp.path, temp.state)
+        if temp.state < 1000000:
 
-        t_state = temp.state
+            if temp.low_b >= 892871 and temp.high_b <= 918276:
+                flag = 1
+                print(temp.low_b, temp.high_b, temp.path, temp.state)
 
-        temp_1 = temp.low_b // 2 
-        temp_2 = temp.high_b // 2 
+            temp_1 = temp.low_b // 2 
+            temp_2 = temp.high_b // 2 
 
-        x = Borders(temp_1, temp_2, temp.path + "h", t_state+1)
-        queue.append(x)
+            x = Borders(temp_1, temp_2, temp.path + "h", temp.state+1)
+            queue.append(x)
 
-        temp_1 = temp.low_b * 3 + 1
-        temp_2 = temp.high_b * 3 + 1
+            temp_1 = temp.low_b * 3 + 1
+            temp_2 = temp.high_b * 3 + 1
 
-        x = Borders(temp_1, temp_2, temp.path + "t", t_state+1)
-        queue.append(x)
-
-        i += 1
-
-print(i)
+            x = Borders(temp_1, temp_2, temp.path + "t", temp.state+1)
+            queue.append(x)
     
