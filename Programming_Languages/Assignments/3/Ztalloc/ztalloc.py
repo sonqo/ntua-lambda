@@ -16,6 +16,18 @@ with open(sys.argv[1]) as fileobj:
     for line in fileobj:
         array.append(line.split())
 
+N = int(array[0][0]) # Number of total cases
+
+
+
+
+
+
+
+
+
+
+
 x = Borders(1, 2, "", 0)
 
 queue.append(x)
