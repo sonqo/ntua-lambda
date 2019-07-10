@@ -2,15 +2,21 @@ import sys
 from collections import deque
 
 class Borders:
+    """ Class of cases, containing lower border, higher border, path of numeric calculations followed to this state and number of state """
     def __init__(self, low_b, high_b, path, state):
         self.low_b = low_b
         self.high_b = high_b
         self.path = path
         self.state = state
 
-x = Borders(1, 2, "", 0)
-
+array = []
 queue = deque()
+
+with open(sys.argv[1]) as fileobj:
+    for line in fileobj:
+        array.append(line.split())
+
+x = Borders(1, 2, "", 0)
 
 queue.append(x)
 
