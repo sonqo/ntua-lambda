@@ -17,14 +17,14 @@ N = int(array[0][0]) # Number of total cases
     
 for i in range(1, N+1):
 
-    visited = [0] * 1000000
+    visited = [0] * 1000000 # Visited cases array
 
     x = Borders(int(array[i][0]), int(array[i][1]), "", 0) # Append one case at a time
     queue.append(x)
 
     visited[int(array[i][1])] = 1
 
-    flag = 0
+    flag = 0 # Borders found flag
 
     temp_state = 1
 
@@ -34,9 +34,9 @@ for i in range(1, N+1):
 
         if temp.low_b <= 999999 and temp.high_b <= 999999:
 
-            if temp.state < 1000000:
+            if temp.state < 1000000: # Number of states which are going to be examined = 1.000.000 (M)
 
-                if temp.low_b >= int(array[i][2]) and temp.high_b <= int(array[i][3]):
+                if temp.low_b >= int(array[i][2]) and temp.high_b <= int(array[i][3]): # If the end borders are met, print the string path of calculations
 
                     flag = 1
                     if temp.path == "":
@@ -44,24 +44,22 @@ for i in range(1, N+1):
                     else:
                         print(temp.path, temp.state)
 
-                if (temp.low_b != 0 or temp.high_b != 0) and flag != 1:
+                temp_1 = temp.low_b // 2 
+                temp_2 = temp.high_b // 2 
 
-                    temp_1 = temp.low_b // 2 
-                    temp_2 = temp.high_b // 2 
+                if visited[temp_1] != 1:
 
-                    if visited[temp_1] != 1:
+                    temp_state += 1
 
-                        temp_state += 1
+                    x = Borders(temp_1, temp_2, temp.path + "h", temp_state)
+                    queue.append(x)
 
-                        x = Borders(temp_1, temp_2, temp.path + "h", temp_state)
-                        queue.append(x)
-
-                        visited[temp_1] = 1
+                    visited[temp_1] = 1
 
                 temp_1 = temp.low_b * 3 + 1
                 temp_2 = temp.high_b * 3 + 1
 
-                if (temp_1 <= 999999 and temp_2 <= 999999) and flag != 1:
+                if (temp_1 <= 999999 and temp_2 <= 999999): # Ztalloc can store a number up to 6-digits
                     
                     if visited[temp_1] != 1:
 
@@ -71,12 +69,12 @@ for i in range(1, N+1):
                         queue.append(x)
 
                         visited[temp_1] = 1 
-            
-            else:
+        
+            else: # In case examined cases exceed 1M
                 
                 flag = 1
                 print("IMP0SSIBLE")
         
-        if flag == 1:
+        if flag == 1: # Dequeue any unwanted elements, before proceeding to the next case
             while queue:
                 queue.popleft()
