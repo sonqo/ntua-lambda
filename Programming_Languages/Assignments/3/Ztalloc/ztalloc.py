@@ -17,59 +17,57 @@ with open(sys.argv[1]) as fileobj:
         array.append(line.split())
 
 N = int(array[0][0]) # Number of total cases
-
-
-
-
-
-
-
-
-
-
-
-x = Borders(1, 2, "", 0)
-
-queue.append(x)
-
-flag = 0
-
-temp_state = 1
-
-while queue and flag != 1:
     
-    temp = queue.popleft() 
+for i in range(1, N+1):
 
-    if temp.low_b <= 999999 and temp.high_b <= 999999:
+    x = Borders(int(array[i][0]), int(array[i][1]), "", 0) # Append one case at a time
+    queue.append(x)
 
-        if temp.state < 1000000:
+    flag = 0
 
-            if temp.low_b >= 892871 and temp.high_b <= 918276:
+    temp_state = 1
 
-                flag = 1
-                print(temp.low_b, temp.high_b, temp.path, temp.state)
-
-            if temp.low_b != 0 and temp.high_b != 0:
-
-                temp_1 = temp.low_b // 2 
-                temp_2 = temp.high_b // 2 
-
-                temp_state += 1
-
-                x = Borders(temp_1, temp_2, temp.path + "h", temp_state)
-                queue.append(x)
-
-            temp_1 = temp.low_b * 3 + 1
-            temp_2 = temp.high_b * 3 + 1
-
-            if temp_1 <= 999999 and temp_2 <= 999999:
-                
-                temp_state += 1
-
-                x = Borders(temp_1, temp_2, temp.path + "t", temp_state)
-                queue.append(x)
+    while queue and flag != 1:
         
-        else:
+        temp = queue.popleft() 
+
+        if temp.low_b <= 999999 and temp.high_b <= 999999:
+
+            if temp.state < 1000000:
+
+                if temp.low_b >= int(array[i][2]) and temp.high_b <= int(array[i][3]):
+
+                    flag = 1
+                    if temp.path == "":
+                        print("EMPTY")
+                    else:
+                        print(temp.low_b, temp.high_b, temp.path, temp.state)
+
+                if (temp.low_b != 0 or temp.high_b != 0) and flag != 1:
+
+                    temp_1 = temp.low_b // 2 
+                    temp_2 = temp.high_b // 2 
+
+                    # temp_state += 1
+
+                    x = Borders(temp_1, temp_2, temp.path + "h", temp.state+1)
+                    queue.append(x)
+
+                temp_1 = temp.low_b * 3 + 1
+                temp_2 = temp.high_b * 3 + 1
+
+                if (temp_1 <= 999999 and temp_2 <= 999999) and flag != 1:
+                    
+                    # temp_state += 1
+
+                    x = Borders(temp_1, temp_2, temp.path + "t", temp.state+1)
+                    queue.append(x)
             
-            flag = 1
-            print("IMP0SSIBLE")
+            else:
+                
+                flag = 1
+                print("IMP0SSIBLE")
+        
+        if flag == 1:
+            while queue:
+                queue.popleft()
