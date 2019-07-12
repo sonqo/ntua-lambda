@@ -1,8 +1,4 @@
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.awt.Color.*;
 
 public class Shape extends Thread {
 

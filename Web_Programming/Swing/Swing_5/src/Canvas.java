@@ -63,9 +63,9 @@ public class Canvas extends JLabel implements MouseListener, MouseMotionListener
 
     @Override
     public void mouseDragged(MouseEvent e) { // Draw when mouseclick is pressed
-            x = e.getX();
-            y = e.getY();
-            newShape(x, y);
+        x = e.getX();
+        y = e.getY();
+        newShape(x, y);
     }
 
     @Override
