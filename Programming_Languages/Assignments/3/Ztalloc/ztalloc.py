@@ -72,7 +72,7 @@ for i in range(1, N+1):
             if temp.path == "": # Number already between wanted borders
                 print("EMPTY")
             else:
-                print(temp.path, temp.state)
+                print(temp.path)
 
         if temp.state < 1000000:
 
@@ -103,8 +103,8 @@ for i in range(1, N+1):
             queue.popleft()
 
     if flag == 0:
-        print ("IMPOSSIBLE", temp.state)
+        print ("IMPOSSIBLE")
 
     # del(h)
-    
+
 print(time.time() - start_time)
