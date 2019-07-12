@@ -5,8 +5,8 @@ import time
 
 class Borders:
     """ Class of cases, containing lower border, higher border, path of numeric calculations followed to this state and number of state """
-    def __init__(self, low_b, high_b, path):
-        self.low_b = low_b; self.high_b = high_b; self.path = path
+    def __init__(self, low_b, high_b, path, state):
+        self.low_b = low_b; self.high_b = high_b; self.path = path; self.state = state
 
 class HashMap:
     """ HashMap class used to eliminate revisits to already visited states - https://bit.ly/2G9BMzp """
@@ -53,12 +53,13 @@ for i in range(1, N+1):
 
     h = HashMap()
 
-    x = Borders(int(array[i][0]), int(array[i][1]), "") # Append one case at a time
+    x = Borders(int(array[i][0]), int(array[i][1]), "", 0) # Append one case at a time
     queue.append(x)
 
     h.addHash(int(array[i][0]), int(array[i][1]))
 
     flag = 0 # Borders found flag
+    temp_state = 0
 
     while queue and flag != 1:
         
@@ -71,35 +72,39 @@ for i in range(1, N+1):
             if temp.path == "": # Number already between wanted borders
                 print("EMPTY")
             else:
-                print(temp.path)
+                print(temp.path, temp.state)
 
-        temp_1 = temp.low_b // 2 # Half calculation - "h"
-        temp_2 = temp.high_b // 2 
+        if temp.state < 1000000:
 
-        if h.findHash(temp_1, temp_2) is False: # Do not add to the queue already visited states
+            temp_1 = temp.low_b // 2 # Half calculation - "h"
+            temp_2 = temp.high_b // 2 
 
-            x = Borders(temp_1, temp_2, temp.path + "h")
-            h.addHash(temp_1, temp_2)
-            queue.append(x)
-
-        temp_1 = temp.low_b * 3 + 1 # Triple calculation - "t"
-        temp_2 = temp.high_b * 3 + 1
-
-        if (temp_1 <= 999999 and temp_2 <= 999999): # Machine can store only one number, not longer than 6 digits
-            
             if h.findHash(temp_1, temp_2) is False: # Do not add to the queue already visited states
 
-                x = Borders(temp_1, temp_2, temp.path + "t")
+                temp_state += 1
+                x = Borders(temp_1, temp_2, temp.path + "h", temp_state)
                 h.addHash(temp_1, temp_2)
                 queue.append(x)
+
+            temp_1 = temp.low_b * 3 + 1 # Triple calculation - "t"
+            temp_2 = temp.high_b * 3 + 1
+
+            if (temp_1 <= 999999 and temp_2 <= 999999): # Machine can store only one number, not longer than 6 digits
+                
+                if h.findHash(temp_1, temp_2) is False: # Do not add to the queue already visited states
+
+                    temp_state += 1
+                    x = Borders(temp_1, temp_2, temp.path + "t", temp_state)
+                    h.addHash(temp_1, temp_2)
+                    queue.append(x)
 
     if flag == 1: # Dequeue any unwanted elements before proceeding to next case
         while queue:
             queue.popleft()
 
     if flag == 0:
-        print ("IMPOSSIBLE")
+        print ("IMPOSSIBLE", temp.state)
 
-    del(h)
-
+    # del(h)
+    
 print(time.time() - start_time)
