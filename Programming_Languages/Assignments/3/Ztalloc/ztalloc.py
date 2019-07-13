@@ -1,8 +1,6 @@
 import sys
 from collections import deque
 
-import time
-
 class Borders:
     """ Class of cases, containing lower border, higher border, path of numeric calculations followed to this state and number of state """
     def __init__(self, low_b, high_b, path, state):
@@ -38,8 +36,6 @@ class HashMap:
                     return True
         return False
 
-start_time = time.time()
-
 array = []
 queue = deque()
 
@@ -48,7 +44,7 @@ with open(sys.argv[1]) as fileobj:
         array.append(line.split())
 
 N = int(array[0][0]) # Number of total cases
-    
+
 for i in range(1, N+1):
 
     h = HashMap()
@@ -59,7 +55,7 @@ for i in range(1, N+1):
     h.addHash(int(array[i][0]), int(array[i][1]))
 
     flag = 0 # Borders found flag
-    temp_state = 0
+    temp_state = 0 # Keeping total number of test cases examined
 
     while queue and flag != 1:
         
@@ -69,7 +65,7 @@ for i in range(1, N+1):
 
             flag = 1
 
-            if temp.path == "": # Number already between wanted borders
+            if temp.path == "": # Number is already between wanted borders
                 print("EMPTY")
             else:
                 print(temp.path)
@@ -102,9 +98,7 @@ for i in range(1, N+1):
         while queue:
             queue.popleft()
 
-    if flag == 0:
+    if flag == 0: # In case all states have been examined and no solution was found
         print ("IMPOSSIBLE")
 
-    # del(h)
-
-print(time.time() - start_time)
+    del(h) # Free HashMap memory before proceeding to the next case - slight time improvement
