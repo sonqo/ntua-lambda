@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 
-public class Floodfill {
+public class FloodFill {
 
     public char[][] map = new char [1002][1002];
     public String input;
@@ -23,7 +23,7 @@ public class Floodfill {
     public String path = ""; // Path Arjumadn ought to follow in case she is in danger
     public String road = ""; // Path Arjumand ought to follow in case she is not in danger
 
-    public Floodfill(String input){
+    public FloodFill(String input){
         this.input = input;
         mapPadding();
         endGame();

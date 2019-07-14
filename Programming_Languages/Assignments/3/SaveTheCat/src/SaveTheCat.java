@@ -2,7 +2,7 @@ public class SaveTheCat {
 
     public static void main(String args[]) {
 
-        Floodfill prayForArj = new Floodfill(args[0]);
+        FloodFill prayForArj = new FloodFill(args[0]);
 
     }
 
