@@ -1,4 +1,4 @@
-public class Arjumand {
+public class SaveTheCat {
 
     public static void main(String args[]) {
 

@@ -18,6 +18,11 @@ public class Floodfill {
     public int leastl, leastc; // Arjumand not in danger
     public int lpath = 1002, cpath = 1002; // Arjumand in danger
 
+    public int arjumand = 0;
+
+    public String path = ""; // Path Arjumadn ought to follow in case she is in danger
+    public String road = ""; // Path Arjumand ought to follow in case she is not in danger
+
     public Floodfill(String input){
         this.input = input;
         mapPadding();
@@ -35,11 +40,11 @@ public class Floodfill {
                 }
                 for (int i=1; i<=this.M; i++){
                     map[N+1][i]=line.charAt(i-1);
-                    if (line.charAt(i-1) == 'A'){ // Adding Arjumand
+                    if (line.charAt(i-1) == 'A'){ // Adding SaveTheCat
                         element = new ItemSymbol(N+1, i, "A", 0, "");
                         symbolQ.add(element);
                         leastl = N+1; leastc = i;
-                        start_line = N+1; start_column = i; // Keeping starting coordinates of Arjumand
+                        start_line = N+1; start_column = i; // Keeping starting coordinates of SaveTheCat
                     }
                     if (line.charAt(i-1) == 'W'){ // Adding water elements
                         element = new ItemSymbol(N+1, i, "W", 0, "");
@@ -67,9 +72,10 @@ public class Floodfill {
     }
 
     public void endGame(){
+
         int time = 0;
-        int arjumand = 0;
         int global_time = 0;
+
         while(symbolQ.peek() != null){
             while (global_time == time){
                 ItemSymbol element = new ItemSymbol();
@@ -176,7 +182,6 @@ public class Floodfill {
                             }
                         }
                     }
-
                     if ((itemEast != 'W') && (itemEast != 'X')) {
                         map[line][column+1] = 'W';
                         ItemSymbol item = new ItemSymbol(line, column+1, "W", time+1);
@@ -198,7 +203,6 @@ public class Floodfill {
                             }
                         }
                     }
-
                     if ((itemWest != 'W') && (itemWest != 'X')) {
                         map[line][column-1] = 'W';
                         ItemSymbol item = new ItemSymbol(line, column-1, "W", time+1);
@@ -237,6 +241,124 @@ public class Floodfill {
 
     public void spurenJagd(){
 
+        ItemSymbol item = new ItemSymbol(start_line, start_column, "P", 0, ""); // BFS initialization
+        map[start_line][start_column] = 'P';
+        symbolQ.add(item);
+
+        int flag = 0; // Position found flag
+        int time = 0;
+        int global_time = 0;
+
+        while ((symbolQ.peek() != null) && (flag != 1)){
+            while (global_time == time){
+                ItemSymbol element = new ItemSymbol();
+                element = ((LinkedList<ItemSymbol>) symbolQ).getFirst();
+                time = element.getTime();
+                String symbol = element.getSymbol();
+                String position = element.getPosition();
+                int line = element.getLine(); int column = element.getColumn();
+                char itemWest = map[line][column-1]; char itemEast = map[line][column+1];
+                char itemNorth = map[line-1][column]; char itemSouth = map[line+1][column];
+                if ((itemSouth != 'X') && (itemSouth != 'P')) {
+                    map[line+1][column] = 'P';
+                    item = new ItemSymbol(line+1, column, "A", time+1, position + "D");
+                    symbolQ.add(item);
+                    if (arjumand != 0){
+                        if ((line+1 == lpath) && (column == cpath)){
+                            path = position + "D";
+                            flag = 1;
+                        }
+                    }
+                    else{
+                        if ((line+1 == leastl) && (column == leastc)){
+                            road = position + "D";
+                            flag = 1;
+                        }
+                    }
+                }
+                if ((itemWest != 'X') && (itemWest != 'P')) {
+                    map[line][column-1] = 'P';
+                    item = new ItemSymbol(line, column-1, "A", time+1, position + "L");
+                    symbolQ.add(item);
+                    if (arjumand != 0){
+                        if ((line == lpath) && (column-1 == cpath)){
+                            path = position + "L";
+                            flag = 1;
+                        }
+                    }
+                    else{
+                        if ((line == leastl) && (column-1 == leastc)){
+                            road = position + "L";
+                            flag = 1;
+                        }
+                    }
+                }
+                if ((itemEast != 'X') && (itemEast != 'P')) {
+                    map[line][column+1] = 'P';
+                    item = new ItemSymbol(line, column+1, "A", time+1, position + "R");
+                    symbolQ.add(item);
+                    if (arjumand != 0){
+                        if ((line == lpath) && (column+1 == cpath)){
+                            path = position + "R";
+                            flag = 1;
+                        }
+                    }
+                    else{
+                        if ((line == leastl) && (column+1 == leastc)){
+                            road = position + "R";
+                            flag = 1;
+                        }
+                    }
+                }
+                if ((itemNorth != 'X') && (itemNorth != 'P')) {
+                    map[line-1][column] = 'P';
+                    item = new ItemSymbol(line-1, column, "A", time+1, position + "U");
+                    symbolQ.add(item);
+                    if (arjumand != 0){
+                        if ((line-1 == lpath) && (column == cpath)){
+                            path = position + "U";
+                            flag = 1;
+                        }
+                    }
+                    else{
+                        if ((line-1 == leastl) && (column == leastc)){
+                            road = position + "U";
+                            flag = 1;
+                        }
+                    }
+                }
+                symbolQ.remove();
+                if (symbolQ.peek() != null){
+                    element = ((LinkedList<ItemSymbol>) symbolQ).getFirst();
+                    time = element.getTime();
+                }
+                else{
+                    global_time = -1;
+                }
+            }
+            global_time ++;
+        }
+        printSolutions();
     }
 
+    public void printSolutions(){
+        if (arjumand == 0){
+            System.out.println("infinity");
+            if (road == ""){
+                System.out.println("stay");
+            }
+            else{
+                System.out.println(road);
+            }
+        }
+        else{
+            System.out.println(arjumand);
+            if (path == ""){
+                System.out.println("stay");
+            }
+            else{
+                System.out.println(path);
+            }
+        }
+    }
 }
