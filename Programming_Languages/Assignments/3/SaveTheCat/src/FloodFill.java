@@ -25,8 +25,10 @@ public class FloodFill {
 
     public FloodFill(String input){
         this.input = input;
-        mapPadding();
-        endGame();
+        mapPadding(); // File reading and border creation
+        endGame(); // Floodfill
+        spurenJagd(); // BFS
+        printSolutions(); // Printing
     }
 
     public void mapPadding(){ // File reading - https://bit.ly/2utVcbH
@@ -236,7 +238,6 @@ public class FloodFill {
             }
             global_time ++;
         }
-        spurenJagd();
     }
 
     public void spurenJagd(){
@@ -338,7 +339,6 @@ public class FloodFill {
             }
             global_time ++;
         }
-        printSolutions();
     }
 
     public void printSolutions(){
