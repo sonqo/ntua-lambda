@@ -1,22 +1,21 @@
+import java.util.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 public class Calculations {
 
-    public String input;
-
     public int N;
+    public String input;
+    public Integer[][] cases = new Integer[10][4];
 
-    public int[][] cases = new int[10][4];
+    public Queue<Case> caseQ = new LinkedList<Case>(); // Queue declaration
 
     public Calculations(String input){
-
         this.input = input;
-        fileReading();
-
+        fileReading(); // Case reading
+        caseExpansion();
     }
 
     public void fileReading(){
@@ -49,8 +48,20 @@ public class Calculations {
         catch(IOException ex){
             return;
         }
+    }
 
-        System.out.println(Arrays.deepToString(cases));
+    public void caseExpansion(){
+
+        for (int i=0; i<N; i++){
+
+            Case element = new Case(cases[i][0], cases[i][1], "", 0);
+            caseQ.add(element);
+
+
+
+        }
+
+//        System.out.print(caseQ.size());
 
     }
 
