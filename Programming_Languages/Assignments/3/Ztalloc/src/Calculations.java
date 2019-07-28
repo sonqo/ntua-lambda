@@ -59,7 +59,7 @@ public class Calculations {
 
             HashMap<Integer, ArrayList<Integer>> hashCases = new HashMap<>(); // Different HashMap for every case
 
-            ArrayList<Integer> myList =  new ArrayList<Integer>();
+            ArrayList<Integer> myList =  new ArrayList<>();
             myList.add(cases[i][1]);
             hashCases.put(cases[i][0], myList);
 
