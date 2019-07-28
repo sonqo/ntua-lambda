@@ -40,6 +40,6 @@ public class Canvas extends JLabel{
     }
 
     public void maxHeight(){
-        System.out.println(height);
+        System.out.println(500 - height);
     }
 }
