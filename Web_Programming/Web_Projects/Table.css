@@ -16,10 +16,10 @@ td{
     background: gainsboro;
 }
 
-[id="1"], [id="4"]{
+#red{
     background: lightcoral;
 }
 
-[id="11"], [id="24"]{
+#blue{
     background: lightblue;
 }
