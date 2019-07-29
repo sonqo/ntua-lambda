@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "CheatSheet.css">
+        <script src = "jquery-3.4.1.min.js"></script>
+
+    </head>
+<body>
+
+    <h2 id = "header">BMI Calculator</h2>
+
+    <div class = "container">
+        <form> 
+            <label>Name:</label>
+            <input id = "name" type = "text" name = "firstnum" maxlength = "24" autocomplete = "off"> <!-- value = "default" -->
+            <br><br>
+            <label>Height:</label>
+            <input id = "height" type = "number" step = "any" name = "secondnum" maxlength = "24" autocomplete = "off">
+            <br><br>
+            <label>Weight:</label>
+            <input id = "weight" type = "number" step = "any" name = "symbol" maxlength = "24" autocomplete = "off">
+            <br><br>
+            <p id = "result"></p>
+            <input id = "submit" class = "button" type = "button" value = "Submit">
+            <!-- <input class = "button" type = "reset" value = "Reset"> -->
+        </form> 
+    </div>
+    
+    <script>
+        $("#submit").click(function(){ 
+            
+            var name = $("#name").val(); 
+            var height = parseInt($("#height").val(), 10);
+            var weight = parseInt($("#weight").val(), 10);
+             
+            var result, result_text;
+            var flag = 0;
+
+            if (name != "" && height > 0 && weight > 0 ){
+                result = Math.round(weight / (height ^ 2));
+            }
+            else{
+                flag = 1;
+                alert("Please fill all the fields with appropriate values!")
+            }
+            if (flag == 0){
+                if (result <= 18.5){
+                    result_text = "Underweight";
+                }
+                else if (result <= 25){
+                    result_text = "Normal Weight";
+                }
+                else if (result <= 30){
+                    result_text = "Overweight";
+                }
+                else{
+                    result_text = "Obese";
+                }
+                alert("Name: " + name + "\n" + "Height: " + height + "\n" + "Weight: " + weight + "\n" + "Your BMI is: " + result + "\n" + result_text);
+            }
+        })
+    </script>
+
+</body>
+</html>
