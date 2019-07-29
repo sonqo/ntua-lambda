@@ -6,58 +6,59 @@
     </head>
 <body>
     <h2> Table Game!</h2><br><br>
+    <button id="button" onclick=getWinner();>Play</button><br><br>
     <table>
         <tr>
             <td id="1"><div class="content"></div></td>
             <td id="2"><div class="content"></div></td>
             <td id="3"><div class="content"></div></td>
-            <td id="4"><div class="content"></div></td>
-            <td id="5"><div class="content"></div></td>
-            <td id="6"><div class="content"></div></td>   
+            <td id="4"><div class="content"></div></td>   
         </tr>
         <tr>
+            <td id="5"><div class="content"></div></td>
+            <td id="6"><div class="content"></div></td>
             <td id="7"><div class="content"></div></td>
-            <td id="8"><div class="content"></div></td>
+            <td id="8"><div class="content"></div></td>  
+        </tr>
+        <tr>
             <td id="9"><div class="content"></div></td>
             <td id="10"><div class="content"></div></td>
             <td id="11"><div class="content"></div></td>
-            <td id="12"><div class="content"></div></td>   
+            <td id="12"><div class="content"></div></td> 
         </tr>
         <tr>
             <td id="13"><div class="content"></div></td>
             <td id="14"><div class="content"></div></td>
             <td id="15"><div class="content"></div></td>
             <td id="16"><div class="content"></div></td>
-            <td id="17"><div class="content"></div></td>
-            <td id="18"><div class="content"></div></td>   
-        </tr>
-        <tr>
-            <td id="19"><div class="content"></div></td>
-            <td id="20"><div class="content"></div></td>
-            <td id="21"><div class="content"></div></td>
-            <td id="22"><div class="content"></div></td>
-            <td id="23"><div class="content"></div></td>
-            <td id="24"><div class="content"></div></td>
-        </tr>
-        <tr>
-            <td id="25"><div class="content"></div></td>
-            <td id="26"><div class="content"></div></td>
-            <td id="27"><div class="content"></div></td>
-            <td id="28"><div class="content"></div></td>
-            <td id="29"><div class="content"></div></td>
-            <td id="30"><div class="content"></div></td>
-        </tr>
-        <tr>
-            <td id="31"><div class="content"></div></td>
-            <td id="32"><div class="content"></div></td>
-            <td id="33"><div class="content"></div></td>
-            <td id="34"><div class="content"></div></td>
-            <td id="35"><div class="content"></div></td>
-            <td id="36"><div class="content"></div></td>
         </tr>
     <table>
 
     <script>
+
+        var Counters = new Array(17).fill(0); 
+        
+        function getWinner(){    
+
+            var r = Math.floor(Math.random() * 16) + 1;
+            while (Counters[r] == 1){
+                r = Math.floor(Math.random() * 16) + 1; 
+            }
+            Counters[r] = 1;
+
+            var temp = document.getElementById(r.toString());
+            temp.id = "red";
+
+            var r = Math.floor(Math.random() * 16) + 1;
+            while (Counters[r] == 1){
+                r = Math.floor(Math.random() * 16) + 1; 
+            }
+            Counters[r] = 1;
+
+            temp = document.getElementById(r.toString());
+            temp.id = "blue";
+
+        }
         
     </script>
 </body>
