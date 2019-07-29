@@ -1,0 +1,25 @@
+table{
+    width: 45%;
+    margin: 0px auto;
+}
+
+h2{
+    font-size: 40px;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    color: grey;
+}
+
+td{
+    width: 30px;
+    height: 120px;
+    background: gainsboro;
+}
+
+[id="1"], [id="4"]{
+    background: lightcoral;
+}
+
+[id="11"], [id="24"]{
+    background: lightblue;
+}
