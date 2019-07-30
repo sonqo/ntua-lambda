@@ -1,0 +1,83 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: top;
+    text-align: center;
+}
+
+form {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    display: inline-block;
+}
+
+#header{
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    vertical-align: center;
+    color: rgb(32, 35, 228);
+}
+
+input{
+    height: 20px;
+}
+
+input:focus{
+    border-color: rgb(32, 35, 228);
+}
+
+#firstNum, #secondNum, #symbol{
+    font-weight: normal;
+    width: 250px;
+    color: rgb(84, 72, 185); /* Font color */
+}
+
+.container{
+    margin-top: 10px;
+    font-size: 18px;
+    background-color: #f3f3f3;
+    border: solid 1px #a1a1a1;
+    padding: 10px;
+    width: 520px;
+    height: 100px;
+}
+
+.container label{
+    display: inline-block;
+    clear: left;
+    text-align: left;
+    padding-right: 10px;
+    width: 150px;
+}
+
+#result{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+}
+
+.button{
+    font-family: 'Courier New', Courier, monospace;
+    background-color: white; 
+    color: black; 
+    border: 2px solid rgb(32, 35, 228);
+    transition-duration: 0.4s;
+    float: bottom;
+    cursor: pointer;
+    height: 32px;
+    width: 72px;
+    border-radius: 18px;
+    text-align: center;
+}
+
+.button:hover{
+    background-color: rgb(32, 35, 228);
+    color: white;
+}

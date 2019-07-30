@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "Guessing.css">
+        <script src = "MyScript.js"></script>
+    </head>
+<body>
+
+    <h2 id="header">Guess a number between 1 - 100!</h2>
+
+    <div class = "container">
+        <form> 
+            <label>Guess:</label>
+            <input id="number" type="text" name="firstnum" maxlength="24" autocomplete="off"> <!-- value = "default" -->
+            <br><br><br>
+            <input id = "submit" class = "button" type = "button" value = "Submit" onclick=takeNumber();>
+            <input class = "button" type = "reset" value = "Reset">
+        </form> 
+    </div>
+
+    <p id = "result"></p>
+
+</body>
+</html>
