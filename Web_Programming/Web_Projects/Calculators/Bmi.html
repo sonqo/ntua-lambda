@@ -22,7 +22,7 @@
             <br><br>
             <p id = "result"></p>
             <input id = "submit" class = "button" type = "button" value = "Submit">
-            <!-- <input class = "button" type = "reset" value = "Reset"> -->
+            <input class = "button" type = "reset" value = "Reset">
         </form> 
     </div>
     
@@ -30,8 +30,8 @@
         $("#submit").click(function(){ 
             
             var name = $("#name").val(); 
-            var height = parseInt($("#height").val(), 10);
-            var weight = parseInt($("#weight").val(), 10);
+            var height = parseFloat($("#height").val(), 10);
+            var weight = parseFloat($("#weight").val(), 10);
              
             var result, result_text;
             var flag = 0;
