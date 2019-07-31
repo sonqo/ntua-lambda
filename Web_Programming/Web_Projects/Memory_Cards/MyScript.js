@@ -79,6 +79,7 @@ function countWinners(){
         }
     }
     if (counter == 16){
-        document.getElementById("winner").innerHTML = "Total number of tries: " + tries;
+        var name = window.prompt("Insert your name:");
+        document.getElementById("winner").innerHTML = "Great job " + name + "! You completed the game in " + counter + "tries!";
     }
 } 
