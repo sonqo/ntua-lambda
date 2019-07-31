@@ -80,6 +80,6 @@ function countWinners(){
     }
     if (counter == 16){
         var name = window.prompt("Insert your name:");
-        document.getElementById("winner").innerHTML = "Great job " + name + "! You completed the game in " + counter + "tries!";
+        document.getElementById("winner").innerHTML = "Great job " + name + "! You completed the game in " + counter + " tries!";
     }
 } 
