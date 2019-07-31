@@ -4,34 +4,90 @@
         <link rel = "stylesheet" type = "text/css" href = "Table.css">
         <script src = "MyScript.js"></script>
     </head>
-<body onload=cardPadding();>
+<body onload=boardPadding();>
 
-    <h2> Memory Card Game!</h2><br>
+    <h2>Minesweeper</h2><br>
     <h2 id="winner"></h2>
     <table>
         <tr>
-            <td id="1" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="2" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="3" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="4" onclick=onTesting(this.id);><div class="content"></div></td>   
+            <td id="1" class="ltop" onclick=onTesting(this.id);></td>
+            <td id="2" class="top" onclick=onTesting(this.id);></td>
+            <td id="3" class="top" onclick=onTesting(this.id);></td>
+            <td id="4" class="top" onclick=onTesting(this.id);></td>
+            <td id="5" class="top" onclick=onTesting(this.id);></td>
+            <td id="6" class="top" onclick=onTesting(this.id);></td>
+            <td id="7" class="top" onclick=onTesting(this.id);></td>
+            <td id="8" class="rtop" onclick=onTesting(this.id);></td>   
         </tr>
         <tr>
-            <td id="5" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="6" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="7" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="8" onclick=onTesting(this.id);><div class="content"></div></td>  
+            <td id="9" class="left" onclick=onTesting(this.id);></td>
+            <td id="10" onclick=onTesting(this.id);></td>
+            <td id="11" onclick=onTesting(this.id);></td>
+            <td id="12" onclick=onTesting(this.id);></td>
+            <td id="13" onclick=onTesting(this.id);></td>
+            <td id="14" onclick=onTesting(this.id);></td>
+            <td id="15" onclick=onTesting(this.id);></td>
+            <td id="16" class="right" onclick=onTesting(this.id);></td>  
         </tr>
         <tr>
-            <td id="9" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="10" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="11" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="12" onclick=onTesting(this.id);><div class="content"></div></td> 
+            <td id="17" class="left" onclick=onTesting(this.id);></td>
+            <td id="18" onclick=onTesting(this.id);></td>
+            <td id="19" onclick=onTesting(this.id);></td>
+            <td id="20" onclick=onTesting(this.id);></td>
+            <td id="21" onclick=onTesting(this.id);></td>
+            <td id="22" onclick=onTesting(this.id);></td>
+            <td id="23" onclick=onTesting(this.id);></td>
+            <td id="24" class="right" onclick=onTesting(this.id);></td>  
         </tr>
         <tr>
-            <td id="13" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="14" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="15" onclick=onTesting(this.id);><div class="content"></div></td>
-            <td id="16" onclick=onTesting(this.id);><div class="content"></div></td>
+            <td id="25" class="left" onclick=onTesting(this.id);></td>
+            <td id="26" onclick=onTesting(this.id);></td>
+            <td id="27" onclick=onTesting(this.id);></td>
+            <td id="28" onclick=onTesting(this.id);></td>
+            <td id="29" onclick=onTesting(this.id);></td>
+            <td id="30" onclick=onTesting(this.id);></td>
+            <td id="31" onclick=onTesting(this.id);></td>
+            <td id="32" class="right" onclick=onTesting(this.id);></td>
+        </tr>
+        <tr>
+            <td id="33" class="left" onclick=onTesting(this.id);></td>
+            <td id="34" onclick=onTesting(this.id);></td>
+            <td id="35" onclick=onTesting(this.id);></td>
+            <td id="36" onclick=onTesting(this.id);></td>
+            <td id="37" onclick=onTesting(this.id);></td>
+            <td id="38" onclick=onTesting(this.id);></td>
+            <td id="39" onclick=onTesting(this.id);></td>
+            <td id="40" class="right" onclick=onTesting(this.id);></td>
+        </tr>
+        <tr>
+            <td id="41" class="left" onclick=onTesting(this.id);></td>
+            <td id="42" onclick=onTesting(this.id);></td>
+            <td id="43" onclick=onTesting(this.id);></td>
+            <td id="44" onclick=onTesting(this.id);></td>
+            <td id="45" onclick=onTesting(this.id);></td>
+            <td id="46" onclick=onTesting(this.id);></td>
+            <td id="47" onclick=onTesting(this.id);></td>
+            <td id="48" class="right" onclick=onTesting(this.id);></td>
+        </tr>
+        <tr>
+            <td id="49" class="left" onclick=onTesting(this.id);></td>
+            <td id="50" onclick=onTesting(this.id);></td>
+            <td id="51" onclick=onTesting(this.id);></td>
+            <td id="52" onclick=onTesting(this.id);></td>
+            <td id="53" onclick=onTesting(this.id);></td>
+            <td id="54" onclick=onTesting(this.id);></td>
+            <td id="55" onclick=onTesting(this.id);></td>
+            <td id="56" class="right" onclick=onTesting(this.id);></td>
+        </tr>
+        <tr>
+            <td id="57" class="lbottom" onclick=onTesting(this.id);></td>
+            <td id="58" class="bottom" onclick=onTesting(this.id);></td>
+            <td id="59" class="bottom" onclick=onTesting(this.id);></td>
+            <td id="60" class="bottom" onclick=onTesting(this.id);></td>
+            <td id="61" class="bottom" onclick=onTesting(this.id);></td>
+            <td id="62" class="bottom" onclick=onTesting(this.id);></td>
+            <td id="63" class="bottom" onclick=onTesting(this.id);></td>
+            <td id="64" class="rbottom" onclick=onTesting(this.id);></td>
         </tr>
     <table>
         

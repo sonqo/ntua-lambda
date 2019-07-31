@@ -1,6 +1,8 @@
 table{
-    width: 45%;
+    height: 100px;
+    width: 1200px;
     margin: 0px auto;
+    zoom: 0.60;
 }
 
 h2{
