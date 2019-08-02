@@ -1,5 +1,7 @@
 var r;
 var flag = 0;
+var lose = 0;
+var winner = 0;
 var Visited = new Array(65).fill(0);
 var Counters = new Array(65).fill(0);
 
@@ -17,9 +19,9 @@ function boardPadding(){
             while (Visited[r] == 1){
                 r = Math.floor(Math.random() * 64) + 1;
             }
-            document.getElementById(r.toString()).innerHTML = "&#9827;";
+            document.getElementById(r).innerHTML = "&#9827;";
             Visited[r]++;
-            // document.getElementById(r.toString()).style.color = "gainsboro";
+            document.getElementById(r).style.color = "gainsboro";
 
             var temp = document.getElementById(r).className;
             
@@ -55,9 +57,26 @@ function boardPadding(){
             if (Counters[i] != 0){
                 if (Visited[i] != 1){
                     document.getElementById(i).innerHTML = Counters[i];
+                    document.getElementById(i).style.color = "gainsboro";
                 }
             }
         }
+    }
+}
+
+function onTesting(clicked_id){
+    if (Visited[clicked_id] == 1){
+        lose = 1;
+        document.getElementById(clicked_id).style.background = "lightcoral";
+    }
+    else{
+        document.getElementById(clicked_id).style.background = "lightgreen";
+        winner++;
+    }
+    document.getElementById(clicked_id).style.color = "grey";
+    if (lose == 1){
+        document.getElementById("winner").innerHTML = "Too bad! You lose with " + winner + " right tiles.";
+        document.getElementById("winner").style.color = "lightcoral";   
     }
 }
 
