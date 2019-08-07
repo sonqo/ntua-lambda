@@ -6,7 +6,7 @@ last_elem(X, [_|L]) :- last_elem(X, L).
 second_last(X, [X, _]).
 second_last(X, [_, SecondLast|L]) :- second_last(X, [SecondLast|L]).
 
-% Finding the N'th element of a list
+% Finding the Nth element of a list
 find_elem(X, [X|_], 1).
 find_elem(X, [_|L], N) :- N > 1, N1 is N-1, find_elem(X, L, N1).
 
