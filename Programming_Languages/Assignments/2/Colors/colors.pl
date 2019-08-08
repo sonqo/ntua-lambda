@@ -11,5 +11,9 @@ check([]).
 check([H|L]) :- \+H = 0, check(L).
 correct([H|L]) :- H = 0, check(L).
 
-update([H|_], List, NewList) :- replace(List, Head, El, NewList), nth1(H, List, Elem), El is Elem+1, Head is H-1, !.
+% A predicate update/3 that returns an update counter list for ribbon
+update([H|_], List, NewList) :- replace(List, H, El, NewList), nth0(H, List, Elem), El is Elem+1, !.
 
+% A predicate that returns the fist counter list of completed sequence
+while_p(_, Counters, NewCounters) :- correct(Counters), NewCounters = Counters, !.
+while_p([H|L], Counters, FinalCounters) :- update([H|L], Counters, NewCounters), while_p(L, NewCounters, FinalCounters).
