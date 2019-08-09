@@ -40,5 +40,3 @@ locate_head(List, Counters, _, StartingP, Iteration, FinalCounters, FinalP) :-
 locate_head(List, Counters, N, StartingP, Iteration, FinalCounters, FinalP) :- 
     nth0(StartingP, List, Index), update_dec(Counters, Index, NewCounters), NewStartingP is StartingP+1, 
     NewIteration is Iteration+1, locate_head(List, NewCounters, N, NewStartingP, NewIteration, FinalCounters, FinalP), !.
-
-
