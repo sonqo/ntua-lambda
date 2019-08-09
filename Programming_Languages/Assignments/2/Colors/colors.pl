@@ -16,5 +16,9 @@ check([H|L]) :- \+H = 0, check(L).
 all_colors([H|L]) :- H = 0, check(L).
 
 % A predicate locate_seq/3 that returns the counter list of the first completed sequence of colors
-% locate_seq(_, Counters, NewCounters, _, _) :- all_colors(Counters), NewCounters = Counters, !.
-% locate_seq([H|L], Counters, FinalCounters, StartingP, FinalP) :- update_inc([H|L], Counters, NewCounters), locate_seq(L, NewCounters, FinalCounters).
+locate_seq(_, Counters, _, EndingP, FinalP) :- all_colors(Counters), FinalP = EndingP, !.
+locate_seq(List, Counters, StartingP, EndingP, FinalP) :- 
+    update_inc(Counters, Index, NewCounters), nth0(EndingP, List, Index),
+    locate_seq(List, NewCounters, StartingP, NewEndingP, FinalP), NewEndingP is EndingP+1.
+
+test(List, Counters, Pointer, NewCounters) :- nth0(Pointer, List, Index), update_inc(Counters, Index, NewCounters). 
