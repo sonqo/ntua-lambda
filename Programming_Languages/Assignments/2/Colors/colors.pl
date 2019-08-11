@@ -11,12 +11,14 @@ check([]).
 check([H|L]) :- \+H = 0, check(L).
 all_colors([H|L]) :- H = 0, check(L).
 
-% Predicates update_inc/3 and update_dec/3 that increases and decreases respectively the ColorCounter list - https://bit.ly/2yKGpMf
+% Predicates update_inc/3 and update_dec/3 that increases and decreases respectively the ColorCounter list index - https://bit.ly/2yKGpMf
 replace([_|T], 0, X, [X|T]).
 replace([H|T], I, V, [H|N]) :- 
     I > 0, I1 is I-1, replace(T, I1, V, N).
-update_inc(List, Index, NewList) :- replace(List, Index, El, NewList), nth0(Index, List, Elem), El is Elem+1, !.
-update_dec(List, Index, NewList) :- replace(List, Index, El, NewList), nth0(Index, List, Elem), El is Elem-1, !.
+update_inc(List, Index, NewList) :- 
+    replace(List, Index, El, NewList), nth0(Index, List, Elem), El is Elem+1, !.
+update_dec(List, Index, NewList) :- 
+    replace(List, Index, El, NewList), nth0(Index, List, Elem), El is Elem-1, !.
 
 % A predicate locate_head/5 that locates the best possible starting pointer for a potential valid sequence
 locate_head(List, Counters, _, StartingP, Iteration, FinalCounters, FinalP) :- 
@@ -25,22 +27,19 @@ locate_head(List, Counters, N, StartingP, Iteration, FinalCounters, FinalP) :-
     nth0(StartingP, List, Index), update_dec(Counters, Index, NewCounters), NewStartingP is StartingP+1, 
     NewIteration is Iteration+1, locate_head(List, NewCounters, N, NewStartingP, NewIteration, FinalCounters, FinalP), !.
 
-% A predicate locate_tail/5 that locates the ending pointer of a valid sequence
-locate_tail(_, _, N, _, EndingP, _, _, _) :- EndingP > N.  
-locate_tail(_, Counters, _, _, EndingP, Iteration, FinalCounters, FinalP) :- 
-    Iteration = 0, all_colors(Counters), FinalCounters = Counters, FinalP is EndingP-1, !.
-locate_tail(List, Counters, _, StartingP, EndingP, Iteration, FinalCounters, FinalP) :- 
-    Iteration = 1, nth0(StartingP, List, Element), nth0(Element, Counters, El), \+El = 0, FinalCounters = Counters, FinalP is EndingP-1, !.
-locate_tail(List, Counters, N, StartingP, EndingP, Iteration, FinalCounters, FinalP) :- 
-    nth0(EndingP, List, Index), update_inc(Counters, Index, NewCounters),
-    NewEndingP is EndingP+1, locate_tail(List, NewCounters, N, StartingP, NewEndingP, Iteration, FinalCounters, FinalP).
+% A predicate locate_tail/5 that locates the ending pointer of a valid sequence 
+locate_tail(_, Counters, _, EndingP, _, FinalCounters, FinalP) :- 
+    all_colors(Counters), FinalCounters = Counters, FinalP is EndingP-1, !.
+locate_tail(List, Counters, N, EndingP, _, FinalCounters, FinalP) :- 
+    nth0(EndingP, List, Index), update_inc(Counters, Index, NewCounters), nth0(Counters, Index, Element), Element = 1, 
+    NewEndingP is EndingP+1, locate_tail(List, NewCounters, N, NewEndingP, 1, FinalCounters, FinalP).
 
 % A predicate prefinal/9 that provides starting and ending pointers of a valid sequence every new each iteration
 prefinal(List, Counters, N, StartingP, EndingP, Iteration, FinalS, FinalE, FinalCounters) :-
-    Iteration = 0, FinalS is StartingP, locate_tail(List, Counters, N, StartingP, EndingP, 0, FinalCounters, FinalE), !.
+    Iteration = 0, FinalS is StartingP, locate_tail(List, Counters, N, EndingP, 0, FinalCounters, FinalE), !.
 prefinal(List, Counters, N, StartingP, EndingP, Iteration, FinalS, FinalE, FinalCounters) :-
-    Iteration = 1, locate_head(List, Counters, N, StartingP, 0, NewCounters, FinalS), locate_tail(List, NewCounters, N, StartingP, EndingP, 1, FinalCounters, FinalE),
-    (locate_tail(List, NewCounters, N, FinalS, EndingP, 1, FinalCounters, FinalE) = false -> false ; true).
+    Iteration = 1, locate_head(List, Counters, N, StartingP, 0, NewCounters, FinalS), locate_tail(List, NewCounters, N, EndingP, 0, FinalCounters, FinalE),
+    (locate_tail(List, NewCounters, N, EndingP, 0, FinalCounters, FinalE) = false -> false ; true).
 
 % Final predicate providing the minimum length found in the ribbon
 final(List, Counters, N, StartingP, EndingP, Iteration, Length, FinalLength) :-
