@@ -12,9 +12,8 @@ check([H|L]) :- \+H = 0, check(L).
 all_colors([H|L]) :- H = 0, check(L).
 
 % Predicates update_inc/3 and update_dec/3 that increases and decreases respectively the ColorCounter list index - https://bit.ly/2yKGpMf
-replace([_|T], 0, X, [X|T]).
-replace([H|T], I, V, [H|N]) :- 
-    I > 0, I1 is I-1, replace(T, I1, V, N).
+replace(L, I, X, R) :-
+    Dummy =.. [dummy|L], J is I+1, setarg(J, Dummy, X), Dummy =.. [dummy|R].
 update_inc(List, Index, NewList) :- 
     replace(List, Index, El, NewList), nth0(Index, List, Elem), El is Elem+1, !.
 update_dec(List, Index, NewList) :- 
@@ -27,11 +26,11 @@ locate_head(List, Counters, N, StartingP, Iteration, FinalCounters, FinalP) :-
     nth0(StartingP, List, Index), update_dec(Counters, Index, NewCounters), NewStartingP is StartingP+1, 
     NewIteration is Iteration+1, locate_head(List, NewCounters, N, NewStartingP, NewIteration, FinalCounters, FinalP), !.
 
-% A predicate locate_tail/5 that locates the ending pointer of a valid sequence 
+% A predicate locate_tail/5 that locates the ending pointer of a valid sequence
 locate_tail(_, Counters, _, EndingP, _, FinalCounters, FinalP) :- 
     all_colors(Counters), FinalCounters = Counters, FinalP is EndingP-1, !.
 locate_tail(List, Counters, N, EndingP, _, FinalCounters, FinalP) :- 
-    nth0(EndingP, List, Index), update_inc(Counters, Index, NewCounters), nth0(Counters, Index, Element), Element = 1, 
+    nth0(EndingP, List, Index), update_inc(Counters, Index, NewCounters),
     NewEndingP is EndingP+1, locate_tail(List, NewCounters, N, NewEndingP, 1, FinalCounters, FinalP).
 
 % A predicate prefinal/9 that provides starting and ending pointers of a valid sequence every new each iteration
@@ -52,4 +51,4 @@ final(_, _, N, _, _, _, Length, FinalLength) :-
 
 colors(File, Answer) :- 
     read_file(File, N, K, List), NewK is K+1, NewN is N+1, build(0, NewK, Counters),
-    final(List, Counters, N, 0, 0 , 0, NewN, Answer).
+    final(List, Counters, N, 0, 0 , 0, NewN, Answer), !.
