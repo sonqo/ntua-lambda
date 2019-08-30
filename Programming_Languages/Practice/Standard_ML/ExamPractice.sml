@@ -39,3 +39,21 @@ fun last ([], _) = []
     |last (_, 0) = []
     |last (l, n) = drop(l, (len l) - n)
 
+fun fact 0 = 1
+    |fact n = n * fact (n-1)
+
+fun max(x, y) = if x > y then x else y
+fun mymax [] = 0
+    |mymax [x] = x
+    |mymax (x::xs) = let val y = mymax xs in max(x, y) end
+
+fun listify [] = [[]]
+    |listify [x] = [[]]
+    |listify [x, y] = if x < y then [[x, y]] else [[x], [y]]
+    |listify (x::y::xs) = 
+        let 
+            val first::rest = listify (y::xs) 
+        in
+            if x < y then (x::first)::rest
+            else [x]::first::rest
+        end 
