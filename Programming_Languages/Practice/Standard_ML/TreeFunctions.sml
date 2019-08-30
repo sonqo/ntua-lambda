@@ -1,11 +1,28 @@
+(* Trees *)
 datatype btree = Empty | Leaf | Node of btree * btree
 
-(* A funtion that counts the leaves of a tree *)
 fun countLeaves Empty = 0
     | countLeaves Leaf = 1
     | countLeaves (Node (t1, t2)) = countLeaves(t1) + countLeaves(t2)
 
-(* A function that calculates the maximum depth of a tree *)
 fun maxDepth Empty = 0
     | maxDepth Leaf = 1
     | maxDepth (Node (t1, t2)) = 1 + Int.max (maxDepth t1, maxDepth t2)
+
+(* Binary Search Trees *)
+datatype BinarySearchTree = Leaf | Br of BinarySearchTree * int * BinarySearchTree
+
+fun Insert (i, Leaf) = Br (Leaf, i, Leaf)
+    |Insert (i, tr as Br (t1, j, t2)) = 
+        if i = j then tr
+        else if i < j then Br (Insert(i, t1), j, t2)
+        else Br (t1, j, Insert(i, t2))
+
+fun Member (i, Leaf) = false
+    |Member (i, Br (t1, j, t2)) = 
+        if i = j then true
+        else if i < j then Member(i, t1)
+        else Member (i, t2)
+
+fun Traverse (Leaf) = []
+    |Traverse (Br (t1, i, t2)) = traverse (t1) @ [i] @ traverse (t2)
