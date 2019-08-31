@@ -24,5 +24,16 @@ fun Member (i, Leaf) = false
         else if i < j then Member(i, t1)
         else Member (i, t2)
 
-fun Traverse (Leaf) = []
-    |Traverse (Br (t1, i, t2)) = traverse (t1) @ [i] @ traverse (t2)
+fun traverse (Leaf) = []
+    |traverse (Br (t1, i, t2)) = traverse (t1) @ [i] @ traverse (t2)
+
+fun floor tr key = 
+    let 
+        fun walk Leaf sofar = sofar
+            |walk (Br(t1, i, t2)) sofar =    
+                if key = i then SOME i
+                else if key < i then walk t1 sofar
+                else walk t2 SOME i
+    in 
+        walk tr None
+    end
