@@ -1,0 +1,30 @@
+table{
+    width: 35%;
+    margin: 0px auto;
+}
+
+h2{
+    font-size: 45px;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    color: grey;
+}
+
+td{
+    width: 35px;
+    height: 150px;
+    background: gainsboro;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 50px;
+    text-align: center;
+    color: grey;  
+}
+
+#winner{
+    font-size: 30px;
+    color: lightgreen;
+}
+
+td:hover{
+    cursor: pointer;
+}

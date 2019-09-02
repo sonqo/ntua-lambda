@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "Table.css">
+        <script src = "MyScript.js"></script>
+    </head>
+<body onload=cardPadding();>
+
+    <input id = "submit" class = "button" type = "button" value = "Submit" onclick = Initial();>   
+    <h2> Memory Card Game!</h2><br><br>
+    <h2 id="winner">Tries: </h2>
+    <table>
+        <tr>
+            <td id="1" onclick=onTesting(this.id);><div class="content"></div></td>
+            <td id="2" onclick=onTesting(this.id);><div class="content"></div></td>
+            <td id="3" onclick=onTesting(this.id);><div class="content"></div></td>   
+        </tr>
+        <tr>
+            <td id="4" onclick=onTesting(this.id);><div class="content"></div></td>
+            <td id="5" onclick=onTesting(this.id);><div class="content"></div></td>
+            <td id="6" onclick=onTesting(this.id);><div class="content"></div></td> 
+        </tr>
+        <tr>
+            <td id="7" onclick=onTesting(this.id);><div class="content"></div></td>
+            <td id="8" onclick=onTesting(this.id);><div class="content"></div></td>
+            <td id="9" onclick=onTesting(this.id);><div class="content"></div></td>
+        </tr>
+    <table>
+        
+</body>
+</html>
