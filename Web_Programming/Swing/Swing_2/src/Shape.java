@@ -25,7 +25,7 @@ public class Shape extends Thread {
         setDaemon(true);
     }
 
-    public Color color;
+    public Color color = blue;
 
     public void run(){
         while(true){
