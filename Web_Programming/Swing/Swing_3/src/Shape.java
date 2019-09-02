@@ -2,7 +2,10 @@ public class Shape extends Thread {
 
     int r, x, y;
     Canvas canvas;
-    int interval = 1000;
+    int interval = 65;
+
+    boolean up = false;
+    boolean down = true;
 
     public void setX(int x){
         this.x = x;
@@ -29,7 +32,20 @@ public class Shape extends Thread {
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            this.x += 25; // Move every different circle to the right by 20 pixels
+            if (this.down == true){
+                this.y += 50;
+                if (this.y > 435){
+                    this.up = true;
+                    this.down = false;
+                }
+            }
+            else if (this.up == true){
+                this.y -= 50;
+                if (this.y < 65){
+                    this.up = false;
+                    this.down = true;
+                }
+            }
             canvas.repaint();
         }
     }

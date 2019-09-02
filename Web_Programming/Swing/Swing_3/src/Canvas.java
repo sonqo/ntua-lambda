@@ -47,6 +47,8 @@ public class Canvas extends JLabel implements MouseListener {
                 temp.x -= 500;
             }
             g.drawOval(temp.x- r, temp.y - r, 2* r, 2 * r);
+            g.drawOval(temp.x- 2* r, temp.y - 2* r, 4* r, 4 * r);
+            g.drawOval(temp.x- 3* r, temp.y - 3* r, 6* r, 6 * r);
         }
     }
 
