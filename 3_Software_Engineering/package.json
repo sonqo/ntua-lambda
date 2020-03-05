@@ -1,0 +1,31 @@
+{
+	"name": "energymarket",
+	"version": "1.0.0",
+	"description": "EnergyMarketApp",
+	"main": "app.js",
+	"scripts": {
+		"backend-install": "cd back-end && npm install",
+		"cli-sys-install": "cd cli-client && npm install && npm link --force",
+		"cli-api-install": "cd cli-client-api && npm install && npm link --force",
+		"frontend-install": "cd front-end && npm install",
+		"full-install": "npm run backend-install && npm run cli-sys-install && npm run cli-api-install && npm run frontend-install ",
+		"server": "cd back-end && npm run server",
+		"front-client": "cd front-end && npm run start",
+		"full-front": "concurrently \"npm run server\" \"npm run front-client\" "
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ntua/TL19-09.git"
+	},
+	"author": "BitsPlease",
+	"license": "ISC",
+	"dependencies": {
+		"apexcharts": "^3.16.0",
+		"create-react-app": "^3.4.0",
+		"react-apexcharts": "^1.3.6",
+		"react-charts": "^2.0.0-beta.6"
+	},
+	"devDependencies": {
+		"concurrently": "^5.1.0"
+	}
+}
