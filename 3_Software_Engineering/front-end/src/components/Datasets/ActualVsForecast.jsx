@@ -1,0 +1,239 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Table, Button } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+
+export default class ActualvsForecast extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			areaname: '',
+			timeresolution: '',
+			datetype: '',
+			date: '',
+			response: null
+		};
+
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleAreaname = this.handleAreaname.bind(this);
+		this.handleTimeresolution = this.handleTimeresolution.bind(this);
+		this.handleDatetype = this.handleDatetype.bind(this);
+		this.handleDate = this.handleDate.bind(this);
+	}
+
+	handleAreaname(event) {
+		this.setState({
+			areaname: event.target.value
+		});
+	}
+	handleTimeresolution(event) {
+		this.setState({
+			timeresolution: event.target.value
+		});
+	}
+	handleDatetype(event) {
+		this.setState({
+			datetype: event.target.value
+		});
+	}
+	handleDate(event) {
+		this.setState({
+			date: event.target.value
+		});
+	}
+
+	mapTimeResolution(string) {
+		if (string == 'PT15M') {
+			return 1;
+		} else if (string == 'PT30M') {
+			return 3;
+		} else if (string == 'PT60M') {
+			return 2;
+		} else {
+			return 4;
+		}
+	}
+
+	handleSubmit(event) {
+		const token = window.sessionStorage.getItem('token');
+		axios
+			.get(
+				`http://localhost:8765/energy/api/ActualvsForecast/${
+					this.state.areaname
+				}/${this.mapTimeResolution(this.state.timeresolution)}/${
+					this.state.datetype
+				}/${this.state.date}`,
+				{
+					headers: {
+						'X-OBSERVATORY-AUTH': `Bearer ${token}`
+					}
+				}
+			)
+			.then((res) => {
+				this.setState({
+					response: res.data
+				});
+			})
+			.catch((err) => {
+				alert(err);
+			});
+
+		event.preventDefault();
+	}
+
+	createTable(dataset) {
+		return (
+			<Table striped bordered hover>
+				<thead>
+					<tr>
+						<th>#</th>
+						{/* <th>Source</th> */}
+						<th>Area Name</th>
+						<th>Area Type Code</th>
+						<th>Map Code</th>
+						<th>Resolution Code</th>
+						<th>Year</th>
+						<th>Month</th>
+						{this.state.datetype == 'date' || this.state.datetype == 'month' ? (
+							<th>Day</th>
+						) : null}
+						{this.state.datetype == 'date' ? <th>DateTimeUTC</th> : null}
+						{this.state.datetype == 'date' ? (
+							<th>Day Ahead Total Load Forecast Value</th>
+						) : null}
+						{this.state.datetype == 'month' ? (
+							<th>Actual Total Load Forecast By Day Value</th>
+						) : null}
+						{this.state.datetype == 'year' ? (
+							<th>Actual Total Load Forecast By Month Value</th>
+						) : null}
+						{this.state.datetype == 'date' ? (
+							<th>Actual Total Load Value</th>
+						) : null}
+						{this.state.datetype == 'month' ? (
+							<th>Actual Total Load By Day Value</th>
+						) : null}
+						{this.state.datetype == 'year' ? (
+							<th>Actual Total Load By Month Value</th>
+						) : null}
+					</tr>
+				</thead>
+				<tbody>{this.fillTable(dataset)}</tbody>
+			</Table>
+		);
+	}
+	fillTable(dataset) {
+		return dataset.map((details, index) => {
+			return (
+				<tr>
+					<td>{index + 1}</td>
+					{/* <td>{details.Source}</td> */}
+					<td>{details.AreaName}</td>
+					<td>{details.AreaTypeCode}</td>
+					<td>{details.MapCode}</td>
+					<td>{details.ResolutionCode}</td>
+					<td>{details.Year}</td>
+					<td>{details.Month}</td>
+					{this.state.datetype == 'date' || this.state.datetype == 'month' ? (
+						<td>{details.Day}</td>
+					) : null}
+					{this.state.datetype == 'date' ? (
+						<td>{details.DateTimeUTC}</td>
+					) : null}
+					{this.state.datetype == 'date' ? (
+						<td>{details.DayAheadTotalLoadForecastValue}</td>
+					) : null}
+					{this.state.datetype == 'month' ? (
+						<td>{details.DayAheadTotalLoadForecastByDayValue}</td>
+					) : null}
+					{this.state.datetype == 'year' ? (
+						<td>{details.DayAheadTotalLoadForecastByMonthValue}</td>
+					) : null}
+					{this.state.datetype == 'date' ? (
+						<td>{details.ActualTotalLoadValue}</td>
+					) : null}
+					{this.state.datetype == 'month' ? (
+						<td>{details.ActualTotalLoadByDayValue}</td>
+					) : null}
+					{this.state.datetype == 'year' ? (
+						<td>{details.ActualTotalLoadByMonthValue}</td>
+					) : null}
+				</tr>
+			);
+		});
+	}
+
+	render() {
+		return (
+			<div>
+				<Container>
+					<br />
+					<h3>Actual Vs Forecast</h3>
+					<br />
+					<form onSubmit={this.handleSubmit}>
+						<div className="form-group">
+							<label>AreaName</label>
+							<input
+								type="text"
+								className="form-control"
+								placeholder="Enter AreaName"
+								value={this.state.areaname}
+								onChange={this.handleAreaname}
+							/>
+						</div>
+						<div className="form-group">
+							<label>Time Resolution</label>
+							<input
+								type="text"
+								className="form-control"
+								placeholder="PT15M | PT30M | PT60M"
+								value={this.state.timeresolution}
+								onChange={this.handleTimeresolution}
+							/>
+						</div>
+						<div className="form-group">
+							<label>Date Type</label>
+							<input
+								type="text"
+								className="form-control"
+								placeholder="Date | Month | Year"
+								value={this.state.datetype}
+								onChange={this.handleDatetype}
+							/>
+						</div>
+						<div className="form-group">
+							<label>Date</label>
+							<input
+								type="text"
+								className="form-control"
+								placeholder="YYYY-MM-DD | YYYY-MM | YYYY"
+								value={this.state.date}
+								onChange={this.handleDate}
+							/>
+						</div>
+						<Button variant="success" onClick={this.handleSubmit}>
+							Submit
+						</Button>
+					</form>
+					<br />
+					<br />
+					{this.state.response != null ? (
+						<div>
+							<h3>Results</h3>
+							<br />
+							{this.state.datetype == 'date' ||
+							this.state.datetype == 'month' ? (
+								<div className="app">
+									<div className="row">
+										<div className="mixed-chart"></div>
+									</div>
+								</div>
+							) : null}
+							{this.createTable(this.state.response)}{' '}
+						</div>
+					) : null}
+				</Container>
+			</div>
+		);
+	}
+}
