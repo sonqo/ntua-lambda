@@ -1,0 +1,28 @@
+{
+	"name": "energy_group09",
+	"version": "1.0.0",
+	"description": "EnergyMarketAppCLI",
+	"main": "cli.js",
+	"preferGlobal": true,
+	"bin": "./cli.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ntua/TL19-09.git"
+	},
+	"author": "BitsPlease",
+	"license": "ISC",
+	"dependencies": {
+		"await-exec": "^0.1.2",
+		"axios": "^0.19.2",
+		"commander": "^4.1.0",
+		"json2csv": "^4.5.4",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.8.9",
+		"passport": "^0.4.1",
+		"passport-jwt": "^4.0.0",
+		"validator": "^12.2.0"
+	}
+}
