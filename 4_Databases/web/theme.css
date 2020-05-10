@@ -1,6 +1,6 @@
 body {
     height:100%;
-    background: repeating-linear-gradient(#bcb6ae, #aa3d01);
+    background: repeating-linear-gradient(#f4f4f4, #ff7315);
 }
 
 .menu-container {
@@ -27,7 +27,7 @@ body {
     margin: 30px 3px;
     width: 190px;
     height: 110px;
-    background-color: #df861d;
+    background-color: #232020;
     background-position: center center;
     z-index: 1;
     /* Text styling */
@@ -45,13 +45,13 @@ body {
 }
 
 .hexagon:hover {
-    background-color: #fdc029;
+    background-color: #3a3535;
 }
 
 .hexagon h1 {
     font-size: 1.8em;
     font-weight: bold;
-    color: #171820;
+    color: #f9f9f9;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
