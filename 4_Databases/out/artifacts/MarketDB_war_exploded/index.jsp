@@ -8,33 +8,50 @@
     <div class="menu-container">
       <div class="hex-wrapper">
         <div class="hex-row shift">
-          <div class="hexagon" id="nav1">
-            1
+          <a href="newpage.jsp">
+            <div class="hexagon" id="nav1">
+            <h1>Store Sales</h1>
             <div class="face1"></div>
             <div class="face2"></div>
-          </div>
-          <div class="hexagon" id="nav2">
-            2
-            <div class="face1"></div>
-            <div class="face2"></div>
-          </div>
+            </div>
+          </a>
+          <a href="newpage.jsp">
+            <div class="hexagon" id="nav2">
+              <h1>Customer Infos</h1>
+              <div class="face1"></div>
+              <div class="face2"></div>
+            </div>
+          </a>
+          <a href="newpage.jsp">
+            <div class="hexagon" id="nav3">
+              <h1>Useful Infos</h1>
+              <div class="face1"></div>
+              <div class="face2"></div>
+            </div>
+          </a>
         </div>
         <div class="hex-row">
-          <div class="hexagon" id="nav3">
-            3
-            <div class="face1"></div>
-            <div class="face2"></div>
-          </div>
-          <div class="hexagon" id="nav4">
-            4
-            <div class="face1"></div>
-            <div class="face2"></div>
-          </div>
-          <div class="hexagon" id="nav5">
-            5
-            <div class="face1"></div>
-            <div class="face2"></div>
-          </div>
+          <a href="newpage.jsp">
+            <div class="hexagon" id="nav4">
+              <h1>Database Views</h1>
+              <div class="face1"></div>
+              <div class="face2"></div>
+            </div>
+          </a>
+          <a href="newpage.jsp">
+            <div class="hexagon" id="nav5">
+              <h1>Data Additions</h1>
+              <div class="face1"></div>
+              <div class="face2"></div>
+            </div>
+          </a>
+          <a href="newpage.jsp">
+            <div class="hexagon" id="nav6">
+              <h1>Price Update</h1>
+              <div class="face1"></div>
+              <div class="face2"></div>
+            </div>
+          </a>
         </div>
       </div>
     </div>
