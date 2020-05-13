@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Market Database</title>
-    <link rel="stylesheet" type="text/css" href="theme.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
   </head>
   <body>
     <div class="menu-container">

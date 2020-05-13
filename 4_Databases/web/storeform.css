@@ -9,13 +9,14 @@ html {
 }
 
 body {
+    background: black url("https://i.pinimg.com/originals/e3/c0/ff/e3c0ff0dc4454f2ed5d55b1a66a8401d.jpg") no-repeat bottom right;
+    background-size: 512px 512px;
     height: 100%;
     padding:0;
     margin:0;
     font-family: "Courier New";
     font-weight: bold;
-    background: repeating-linear-gradient(#f4f4f4, #ff7315);
-    height: 100%;
+    color: #f4f4f4;
 }
 
 form {
@@ -37,8 +38,8 @@ input[type="time"],
 input[type="url"],
 textarea,
 select {
-    background-color: #232020;
-    border: 1px solid #e5e5e4;
+    background-color: #f4f4f4;
+    border: 1px solid #f4f4f4;
     font-size: 16px;
     height: auto;
     margin: 0;
@@ -46,8 +47,8 @@ select {
     padding: 8px 18px;
     height: 48px;
     width: 100%;
-    color: #f4f4f4;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+    color: #232020;
+    box-shadow: 0 1px 0 #232020 inset;
     margin-bottom: 16px;
     transition: all .2s ease;
 }
@@ -59,7 +60,8 @@ input::placeholder {
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: #0f868c;
+    border-color: #f4f4f4;
+    outline: none;
 }
 
 input[type="radio"],
@@ -81,7 +83,7 @@ button {
     color: #f4f4f4;
     background-color: #3a3535;
     border-radius: 4px;
-    border: 1px solid #ffacb7;
+    border: 1px solid #f4f4f4;
     text-align: center;
     width: 100%;
 }

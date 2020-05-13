@@ -1,6 +1,7 @@
 body {
     height:100%;
-    background: repeating-linear-gradient(#f4f4f4, #ff7315);
+    background: black url("https://i.pinimg.com/originals/e3/c0/ff/e3c0ff0dc4454f2ed5d55b1a66a8401d.jpg") no-repeat bottom right;
+    background-size: 512px 512px;
 }
 
 .menu-container {
