@@ -1,5 +1,8 @@
+html {
+    min-height: 100%;
+}
+
 body {
-    height:100%;
     background: black url("https://i.pinimg.com/originals/e3/c0/ff/e3c0ff0dc4454f2ed5d55b1a66a8401d.jpg") no-repeat bottom right;
     background-size: 512px 512px;
 }
