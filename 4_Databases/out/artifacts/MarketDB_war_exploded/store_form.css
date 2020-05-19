@@ -9,20 +9,20 @@ html {
 }
 
 body {
-    background: black url("https://i.pinimg.com/originals/e3/c0/ff/e3c0ff0dc4454f2ed5d55b1a66a8401d.jpg") no-repeat bottom right;
+    background: white url("./Image.jpg") no-repeat bottom right;
     background-size: 512px 512px;
     padding:0;
     margin:0;
     font-family: "Courier New";
     font-weight: bold;
-    color: #f4f4f4;
+    color: #232020;
 }
 
 form {
     max-width: 480px;
     margin: 50px auto;
     padding: 16px;
-    border: 1px solid #eaeaea;
+    border: 1px solid #232020;
 }
 
 input[type="text"],
@@ -38,7 +38,7 @@ input[type="url"],
 textarea,
 select {
     background-color: #f4f4f4;
-    border: 1px solid #f4f4f4;
+    border: 1px solid #232020;
     font-size: 16px;
     height: auto;
     margin: 0;
@@ -59,7 +59,7 @@ input::placeholder {
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: #f4f4f4;
+    border-color: #232020;
     outline: none;
 }
 

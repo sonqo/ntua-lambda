@@ -1,3 +1,8 @@
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.DriverManager" %>
+<%@ page import="Database_Manager.DBManager" %>
+<%@page language="java" contentType="text/html; ISO-8859-1" pageEncoding="ISO-8859-1" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,6 +10,12 @@
     <link rel="stylesheet" type="text/css" href="store_form.css">
 </head>
 <body>
+
+<%
+    DBManager db = new DBManager();
+    Connection conn = db.getConnection();
+%>
+
     <form action="index.html" method="post">
 
         <h2>Store Sales</h2>
