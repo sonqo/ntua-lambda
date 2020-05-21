@@ -1,12 +1,17 @@
 package Queries;
 
-import javax.xml.transform.Result;
 import java.sql.*;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class Store {
 
-    public ResultSet selectQuery() throws SQLException {
+    public ResultSet selectQuery(String address, String date, String money_amount, String product_amount, int method, String category) throws SQLException {
+
+        String query;
 
         String driver = "com.mysql.jdbc.Driver";
         String url = "jdbc:mysql://localhost/testdb?serverTimezone=UTC";
@@ -15,8 +20,7 @@ public class Store {
 
         Connection con = DriverManager.getConnection(url, username, password);
 
-        PreparedStatement statement = con.prepareStatement(
-            "SELECT Store.Street, Store.Number, NewTable.Datetime, NewTable.Card_number, NewTable.Name, NewTable.Cat, NewTable.Pieces, NewTable.Total_amount, NewTable.Payment_method " +
+        query = "SELECT Store.Street, Store.Number, NewTable.Datetime, NewTable.Card_number, NewTable.Name, NewTable.Cat, NewTable.Pieces, NewTable.Total_amount, NewTable.Payment_method " +
                 "FROM " +
                 "(SELECT DISTINCT Transaction.Store_id, Transaction.DateTime, Transaction.Card_number, Product.Name, Category.Name as Cat, Contains.Pieces, Transaction.Total_amount, Transaction.Payment_method " +
                 "FROM Transaction INNER JOIN Contains ON Transaction.Card_number = Contains.Card_Number AND Transaction.Datetime = Contains.Datetime " +
@@ -24,16 +28,34 @@ public class Store {
                 "INNER JOIN Provides ON Product.Category_id = Provides.Category_id " +
                 "INNER JOIN Category ON Provides.Category_id = Category.Category_id) NewTable " +
                 "INNER JOIN Store ON NewTable.Store_id = Store.Store_id " +
-                "WHERE NewTable.Store_id = 1 " +
-                "AND DATE(NewTable.Datetime) = '2020-05-13' " +
-                "AND NewTable.Payment_method = 'Card' " +
-                "AND NewTable.Total_amount > 20 " +
-                "AND NewTable.Pieces > 2 " +
-                "ORDER BY NewTable.DateTime");
+                "WHERE NewTable.Store_id = " + address;
+
+        if (date != ""){
+            query += String.format(" AND DATE(NewTable.Datetime) = '%s'", date);
+        }
+        if (money_amount != ""){
+            query += String.format(" AND NewTable.Total_amount > %s", money_amount);
+        }
+        if (product_amount != ""){
+            query += String.format(" AND NewTable.Pieces > %s", product_amount);
+        }
+        if (category != null){
+            query += String.format(" AND NewTable.Cat = '%s'", category);
+        }
+        if (method != 0){
+            if (method == 1){
+                query += " AND NewTable.Payment_method = 'Cash' ";
+            }
+            else{
+                query += " AND NewTable.Payment_method = 'Card' ";
+            }
+        }
+        query += " ORDER BY NewTable.DateTime";
+
+        PreparedStatement statement = con.prepareStatement(query);
 
         ResultSet rs = statement.executeQuery();
 
         return rs;
     }
-
 }

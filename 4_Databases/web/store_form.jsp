@@ -14,11 +14,6 @@
 </head>
 <body>
 
-<%
-    Store store = new Store();
-    ResultSet rs = store.selectQuery();
-%>
-
     <form action="display_store.jsp" method="post">
 
         <h2>Store Sales</h2>
@@ -37,15 +32,16 @@
 
         <label>Payment Method</label>
             <div class="wrap">
-                <input type="radio" id="cash" value="cash" name="payment_method"><label for="cash" class="light">Cash</label>
-                <input type="radio" id="credit" value="credit" name="payment_method"><label for="credit" class="light">Credit Card</label>
+                <input type="radio" id="cash" value="1" name=payment_method><label for="Cash" class="light">Cash</label>
+                <input type="radio" id="credit" value="2" name=payment_method><label for="Card" class="light">Credit Card</label>
             </div>
         <br>
 
         <label for="category">Select Product Category</label>
         <select id="category" name="product_categories">
-            <option value="fresh_products">Fresh Products</option>
-            <option value="refrigerator_products">Refrigerator Products</option>
+            <option disabled selected value> -- Select category -- </option>
+            <option value="Fresh">Fresh Products</option>
+            <option value="Fridge">Refrigerator Products</option>
             <option value="personal_care">Personal Care</option>
             <option value="house_products">Household Products</option>
             <option value="pet_products">Pet Products</option>
@@ -54,37 +50,6 @@
         <button type="submit">Submit</button>
 
     </form>
-
-<br><br><br>
-
-    <table>
-        <tr>
-            <th>Street Name</th>
-            <th>Street Number</th>
-            <th>DateTime</th>
-            <th>Card #</th>
-            <th>Product Name</th>
-            <th>Category</th>
-            <th>Pieces</th>
-            <th>Amount</th>
-            <th>Payment</th>
-        </tr>
-    <% while(rs.next()){%>
-        <tr>
-            <td><%=rs.getString("Street")%></td>
-            <td><%=rs.getInt("Number")%></td>
-            <td><%=rs.getString("Datetime")%></td>
-            <td><%=rs.getInt("Card_number")%></td>
-            <td><%=rs.getString("Name")%></td>
-            <td><%=rs.getString("Cat")%></td>
-            <td><%=rs.getInt("Pieces")%></td>
-            <td><%=rs.getInt("Total_amount")%></td>
-            <td><%=rs.getString("Payment_method")%></td>
-        </tr>
-    <%}%>
-    </table>
-
-<br><br><br>
 
 </body>
 </html>
