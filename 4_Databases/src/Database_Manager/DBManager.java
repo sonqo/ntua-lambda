@@ -8,8 +8,13 @@ public class DBManager {
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
 
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/testdb?serverTimezone=UTC", "root", "root");
+        String driver = "com.mysql.jdbc.Driver";
+        String url = "jdbc:mysql://localhost/testdb?serverTimezone=UTC";
+        String username = "root";
+        String password = "root";
+
+        Class.forName(driver);
+        Connection conn = DriverManager.getConnection(url, username, password);
 
         return conn;
     }

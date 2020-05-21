@@ -1,8 +1,11 @@
+<%@ page import="Queries.Store" %>
 <%@page import="java.sql.Connection" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.util.ArrayList" %>
 <%@page import="java.sql.DriverManager" %>
 <%@ page import="Database_Manager.DBManager" %>
-<%@page language="java" contentType="text/html; ISO-8859-1" pageEncoding="ISO-8859-1" %>
 
+<%@page language="java" contentType="text/html; ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,11 +15,11 @@
 <body>
 
 <%
-    DBManager db = new DBManager();
-    Connection conn = db.getConnection();
+    Store store = new Store();
+    ResultSet rs = store.selectQuery();
 %>
 
-    <form action="index.html" method="post">
+    <form action="display_store.jsp" method="post">
 
         <h2>Store Sales</h2>
 
@@ -51,6 +54,37 @@
         <button type="submit">Submit</button>
 
     </form>
+
+<br><br><br>
+
+    <table>
+        <tr>
+            <th>Street Name</th>
+            <th>Street Number</th>
+            <th>DateTime</th>
+            <th>Card #</th>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Pieces</th>
+            <th>Amount</th>
+            <th>Payment</th>
+        </tr>
+    <% while(rs.next()){%>
+        <tr>
+            <td><%=rs.getString("Street")%></td>
+            <td><%=rs.getInt("Number")%></td>
+            <td><%=rs.getString("Datetime")%></td>
+            <td><%=rs.getInt("Card_number")%></td>
+            <td><%=rs.getString("Name")%></td>
+            <td><%=rs.getString("Cat")%></td>
+            <td><%=rs.getInt("Pieces")%></td>
+            <td><%=rs.getInt("Total_amount")%></td>
+            <td><%=rs.getString("Payment_method")%></td>
+        </tr>
+    <%}%>
+    </table>
+
+<br><br><br>
 
 </body>
 </html>
