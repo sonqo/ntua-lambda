@@ -24,14 +24,17 @@
 
         Store store = new Store();
         ResultSet rs = store.selectQuery(address, date, money_amount, product_amount, method, category);
+        if (rs.next()){
+            String str = rs.getString("Street");
+            String n = rs.getString("Number");
+            out.print("<br><h2>Store: " + str + " " + n + "</h2>");
+        }
     %>
 
 <br><br><br>
 
 <table>
     <tr>
-        <th>Street Name</th>
-        <th>Street Number</th>
         <th>DateTime</th>
         <th>Card #</th>
         <th>Product Name</th>
@@ -42,8 +45,6 @@
     </tr>
     <% while(rs.next()){%>
     <tr>
-        <td><%=rs.getString("Street")%></td>
-        <td><%=rs.getString("Number")%></td>
         <td><%=rs.getString("Datetime")%></td>
         <td><%=rs.getInt("Card_number")%></td>
         <td><%=rs.getString("Name")%></td>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Market Database</title>
-    <link rel="stylesheet" type="text/css" href="store_form.css">
+    <link rel="stylesheet" type="text/css" href="store/store_form.css">
 </head>
 <body>
 <form action="index.html" method="post">

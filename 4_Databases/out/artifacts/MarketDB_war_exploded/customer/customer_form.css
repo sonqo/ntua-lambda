@@ -9,13 +9,17 @@ html {
 }
 
 body {
-    background: white url("./Image.jpg") no-repeat bottom right;
+    background: white url("../Image.jpg") no-repeat bottom right;
     background-size: 384px 384px;
     padding:0;
     margin:0;
     font-family: "Courier New";
     font-weight: bold;
     color: #232020;
+}
+
+h2 {
+    text-align:center;
 }
 
 form {
@@ -32,11 +36,11 @@ table, th, td {
 
 table{
     margin: 0 auto;
-    width: 60%;
+    width: 70%;
 }
 
 td{
-   text-align: center;
+    text-align: center;
 }
 
 input[type="text"],
