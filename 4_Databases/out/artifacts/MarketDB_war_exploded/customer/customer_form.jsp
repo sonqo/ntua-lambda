@@ -1,10 +1,11 @@
+<%@page language="java" contentType="text/html; ISO-8859-1" pageEncoding="ISO-8859-1" %>
+
 <%@ page import="Queries.Store" %>
 <%@page import="java.sql.Connection" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.util.ArrayList" %>
 <%@page import="java.sql.DriverManager" %>
 
-<%@page language="java" contentType="text/html; ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html>
 <html>
 <head>

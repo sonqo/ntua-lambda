@@ -1,7 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ page import="Queries.Store" %>
 <%@ page import="java.sql.ResultSet" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
@@ -44,15 +45,15 @@
         <th>Payment</th>
     </tr>
     <% while(rs.next()){%>
-    <tr>
-        <td><%=rs.getString("Datetime")%></td>
-        <td><%=rs.getInt("Card_number")%></td>
-        <td><%=rs.getString("Name")%></td>
-        <td><%=rs.getString("Cat")%></td>
-        <td><%=rs.getInt("Pieces")%></td>
-        <td><%=rs.getInt("Total_amount")%></td>
-        <td><%=rs.getString("Payment_method")%></td>
-    </tr>
+        <tr>
+            <td><%=rs.getString("Datetime")%></td>
+            <td><%=rs.getInt("Card_number")%></td>
+            <td><%=rs.getString("Name")%></td>
+            <td><%=rs.getString("Cat")%></td>
+            <td><%=rs.getInt("Pieces")%></td>
+            <td><%=rs.getInt("Total_amount")%></td>
+            <td><%=rs.getString("Payment_method")%></td>
+        </tr>
     <%}%>
 </table>
 

@@ -60,4 +60,88 @@ public class Customer {
 
         return rs;
     }
+
+    public ResultSet selectPopularStoresQuery(String cardnum) throws SQLException{
+
+        String query;
+
+        String driver = "com.mysql.jdbc.Driver";
+        String url = "jdbc:mysql://localhost/testdb?serverTimezone=UTC";
+        String username = "root";
+        String password = "root";
+
+        Connection con = DriverManager.getConnection(url, username, password);
+
+        query = "SELECT S.Street, S.Number, COUNT(*) AS TimesVisited " +
+                "FROM Transaction as T, Store as S " +
+                "WHERE T.Card_number = " + cardnum + " " +
+                "AND T.Store_id = S.Store_id " +
+                "GROUP BY T.Store_id " +
+                "ORDER BY COUNT(*) DESC";
+
+        PreparedStatement statement = con.prepareStatement(query);
+
+        ResultSet rs = statement.executeQuery();
+
+        return rs;
+    }
+
+    public ResultSet selectVisitingHoursQuery(String cardnum) throws SQLException{
+
+        String query;
+
+        String driver = "com.mysql.jdbc.Driver";
+        String url = "jdbc:mysql://localhost/testdb?serverTimezone=UTC";
+        String username = "root";
+        String password = "root";
+
+        Connection con = DriverManager.getConnection(url, username, password);
+
+        query = "SELECT Store_id, Street, Number,  Datetime " +
+                "FROM STRATOS " +
+                "WHERE Card_number = " + cardnum + " " +
+                "GROUP BY Datetime " +
+                "ORDER BY DateTime";
+
+        PreparedStatement statement = con.prepareStatement(query);
+
+        ResultSet rs = statement.executeQuery();
+
+        return rs;
+    }
+
+    public ResultSet selectAverageExpensesQuery(String cardnum) throws SQLException{
+
+        String query, min, max, months, weeks, total_spent, monthly, weekly;
+
+        String driver = "com.mysql.jdbc.Driver";
+        String url = "jdbc:mysql://localhost/testdb?serverTimezone=UTC";
+        String username = "root";
+        String password = "root";
+
+        Connection con = DriverManager.getConnection(url, username, password);
+
+        min = "SET @min = (SELECT DateTime FROM Transaction WHERE Card_number = " + cardnum + " ORDER BY DateTime ASC LIMIT 0,1)";
+        con.prepareStatement(min).executeQuery();
+        max = "SET @max = (SELECT DateTime FROM Transaction WHERE Card_number = " + cardnum + " ORDER BY DateTime DESC LIMIT 0,1)";
+        con.prepareStatement(max).executeQuery();
+        months = "SET @months = abs(period_diff(extract(year_month from @min), extract(year_month from @max))) + 1";
+        con.prepareStatement(months).executeQuery();
+        weeks = "SET @weeks = WEEK(@max) - WEEK(@min) + 1";
+        con.prepareStatement(weeks).executeQuery();
+        total_spent = "SET @total_spent = (SELECT SUM(Total_amount) FROM Transaction WHERE Card_number = " + cardnum + ")";
+        con.prepareStatement(total_spent).executeQuery();
+        monthly = "SET @monthly = @total_spent / @months";
+        con.prepareStatement(monthly).executeQuery();
+        weekly = "SET @weekly = @total_spent / @weeks";
+        con.prepareStatement(weekly).executeQuery();
+
+        query = "SELECT @min AS FirstTransaction, @max AS LastTransaction, @weeks AS NumberOfWeeks, @months AS NumberOfMonths, @weekly AS WeeklyAverage, @monthly AS MonthlyAverage";
+
+        PreparedStatement statement = con.prepareStatement(query);
+
+        ResultSet rs = statement.executeQuery();
+
+        return rs;
+    }
 }
