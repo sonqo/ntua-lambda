@@ -1,9 +1,10 @@
 <%@page language="java" contentType="text/html; ISO-8859-1" pageEncoding="ISO-8859-1" %>
 
-<%@ page import="Queries.Store" %>
+<%@page import="Queries.Store" %>
+
 <%@page import="java.sql.Connection" %>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.util.ArrayList" %>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.util.ArrayList" %>
 <%@page import="java.sql.DriverManager" %>
 
 <!DOCTYPE html>
@@ -20,6 +21,9 @@
 
     <label for="cardnum">Customer Card Number</label>
     <input type="text" id="store" name="cardnum">
+
+    <label for="cardnum">Store ID</label>
+    <input type="text" id="store" name="storeid">
 
     <label for="feature_names">Select Feature Category</label>
     <select id="feature_names" name="feature_names">

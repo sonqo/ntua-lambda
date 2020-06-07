@@ -86,7 +86,7 @@ public class Customer {
         return rs;
     }
 
-    public ResultSet selectVisitingHoursQuery(String cardnum) throws SQLException{
+    public ResultSet selectVisitingHoursQuery(String cardnum, String storeid) throws SQLException{
 
         String query;
 
@@ -97,9 +97,10 @@ public class Customer {
 
         Connection con = DriverManager.getConnection(url, username, password);
 
-        query = "SELECT Store_id, Street, Number,  Datetime " +
+        query = "SELECT Store_id, Datetime " +
                 "FROM STRATOS " +
-                "WHERE Card_number = " + cardnum + " " +
+                "WHERE Card_number = " + cardnum + " AND " +
+                "Store_id = " + storeid + " " +
                 "GROUP BY Datetime " +
                 "ORDER BY DateTime";
 

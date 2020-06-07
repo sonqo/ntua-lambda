@@ -1,9 +1,10 @@
 <%@page language="java" contentType="text/html; ISO-8859-1" pageEncoding="ISO-8859-1" %>
 
-<%@ page import="Queries.Store" %>
+<%@page import="Queries.Store" %>
+
 <%@page import="java.sql.Connection" %>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.util.ArrayList" %>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.util.ArrayList" %>
 <%@page import="java.sql.DriverManager" %>
 
 <!DOCTYPE html>
@@ -11,6 +12,7 @@
 <head>
     <title>Market Database</title>
     <link rel="stylesheet" type="text/css" href="store_form.css">
+    <script type="text/javascript" src="../js/AlertStore.js"></script>
 </head>
 <body>
 
@@ -48,6 +50,7 @@
         </select>
 
         <button type="submit">Submit</button>
+        <button type="button" onclick="AlertStore()">Help</button>
 
     </form>
 

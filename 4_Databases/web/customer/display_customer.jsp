@@ -1,22 +1,21 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html; charset=UTF-8" language="java" %>
 
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="Queries.Customer" %>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.google.gson.Gson" %>
-<%@ page import="com.google.gson.JsonObject"%>
-<%@ page import="java.util.HashMap" %>
+<%@page import="Queries.Customer" %>
 
-<html>
-<head>
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="customer_form.css">
-</head>
-<body>
+<%@page import="java.util.*" %>
+<%@page import="com.google.gson.*" %>
+<%@page import="java.sql.ResultSet" %>
+
 <%
-    String cardnum= request.getParameter("cardnum");
+    Gson gsonObj = new Gson();
+    Map<Object, Object> map = null;
+    List<Map<Object, Object>> list = new ArrayList<Map<Object, Object>>();
+    String dataPoints = null;
+
+    StringBuilder jsonData = new StringBuilder();
+
+    String cardnum = request.getParameter("cardnum");
+    String storeid = request.getParameter("storeid");
     String feature = request.getParameter("feature_names");
 
     ResultSet rs = null;
@@ -32,12 +31,52 @@
         rs = customer.selectPopularStoresQuery(cardnum);
     }
     else if (feature.equals("hours")){
-        rs = customer.selectVisitingHoursQuery(cardnum);
+        rs = customer.selectVisitingHoursQuery(cardnum, storeid);
+        String yVal;
+        double i = 0;
+        while(rs.next()){
+            i++;
+            String[] curr = rs.getString("DateTime").split("\\s+");
+            yVal = curr[1].split(":")[0];
+            map = new HashMap<Object,Object>();
+            map.put("x", i);
+            map.put("y", Double.parseDouble(yVal));
+            list.add(map);
+            dataPoints = gsonObj.toJson(list);
+        }
     }
     else if (feature.equals("expenses")){
         rs = customer.selectAverageExpensesQuery(cardnum);
     }
 %>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="customer_form.css">
+    <script type="text/javascript">
+        window.onload = function() {
+
+            <% if(dataPoints != null) { %>
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                exportEnabled: true,
+                title: {
+                    text: ""
+                },
+                data: [{
+                    type: "line", //change type to bar, line, area, pie, etc
+                    dataPoints: <%out.print(dataPoints);%>
+                }]
+            });
+            chart.render();
+            <% } %>
+        }
+    </script>
+
+</head>
+<body>
 
 <br><br><br>
 
@@ -92,23 +131,8 @@
             <td><%=rs.getString("Number")%></td>
             <td><%=rs.getString("TimesVisited")%></td>
         </tr>
+
         <%}
-    } else if (feature.equals("hours")) {
-
-        String xVal, yVal;
-
-        Gson gsonObj = new Gson();
-        Map<Object, Object> map = null;
-        List<Map<Object, Object>> list = new ArrayList<Map<Object,Object>>();
-        String dataPoints = null;
-
-        while(rs.next()){
-            xVal = rs.getString("x");
-            yVal = rs.getString("y");
-            map = new HashMap<Object,Object>(); map.put("x", Double.parseDouble(xVal)); map.put("y", Double.parseDouble(yVal)); list.add(map);
-            dataPoints = gsonObj.toJson(list);
-        }
-
     } else if (feature.equals("expenses")){%>
         <tr>
             <th>First Transaction</th>
@@ -119,19 +143,20 @@
             <th>Monthly Average</th>
         </tr>
             <% while(rs.next()){%>
-        <tr>
-            <td><%=rs.getString("FirstTransaction")%></td>
-            <td><%=rs.getString("LastTransaction")%></td>
-            <td><%=rs.getString("NumberOfWeeks")%></td>
-            <td><%=rs.getString("NumberOfMonths")%></td>
-            <td><%=rs.getString("WeeklyAverage")%></td>
-            <td><%=rs.getString("MonthlyAverage")%></td>
-        </tr>
+                <tr>
+                    <td><%=rs.getString("FirstTransaction")%></td>
+                    <td><%=rs.getString("LastTransaction")%></td>
+                    <td><%=rs.getString("NumberOfWeeks")%></td>
+                    <td><%=rs.getString("NumberOfMonths")%></td>
+                    <td><%=rs.getString("WeeklyAverage")%></td>
+                    <td><%=rs.getString("MonthlyAverage")%></td>
+                </tr>
             <%}
     }%>
 </table>
 
-<br><br><br>
+<div id="chartContainer" style="height: 300px; width: 75%; margin: auto;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 </body>
 </html>
