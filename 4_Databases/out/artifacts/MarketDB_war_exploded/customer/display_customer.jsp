@@ -72,7 +72,6 @@
             });
             chart.render();
             <% } %>
-
         }
     </script>
 
