@@ -54,7 +54,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="customer_form.css">
+    <link rel="stylesheet" type="text/css" href="../css/form.css">
     <script type="text/javascript">
         window.onload = function() {
 

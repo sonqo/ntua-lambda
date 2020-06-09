@@ -3,7 +3,6 @@
 <%@page import="Queries.Views" %>
 
 <%@page import="java.util.*" %>
-<%@page import="com.google.gson.*" %>
 <%@page import="java.sql.ResultSet" %>
 
 <%
@@ -25,7 +24,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="view_form.css">
+    <link rel="stylesheet" type="text/css" href="../css/form.css">
 </head>
 <body>
 

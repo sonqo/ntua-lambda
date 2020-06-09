@@ -20,7 +20,7 @@
         rs = infos.favoriteAlleysQuery(info);
     }
     else if (feature.equals("brand")){
-
+        //TODO
     }
     else if (feature.equals("hours")){
         rs = infos.hoursMoneySpentQuery();
@@ -34,7 +34,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="info_form.css">
+    <link rel="stylesheet" type="text/css" href="../css/form.css">
 </head>
 <body>
 

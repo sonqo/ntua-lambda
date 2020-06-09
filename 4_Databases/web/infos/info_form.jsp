@@ -1,15 +1,8 @@
-<%@page language="java" contentType="text/html; ISO-8859-1" pageEncoding="ISO-8859-1" %>
-
-<%@page import="java.sql.Connection" %>
-<%@page import="java.sql.ResultSet" %>
-<%@page import="java.util.ArrayList" %>
-<%@page import="java.sql.DriverManager" %>
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Market Database</title>
-    <link rel="stylesheet" type="text/css" href="info_form.css">
+    <link rel="stylesheet" type="text/css" href="../css/form.css">
 </head>
 <body>
 
