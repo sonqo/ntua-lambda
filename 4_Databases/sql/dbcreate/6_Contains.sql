@@ -15,6 +15,7 @@ BEGIN
     DECLARE DT timestamp;
     DECLARE ST INT;
     SET @AMOUNT = 0;
+    SET @TOTAL_PIECES = 0;
     
     SELECT COUNT(*) FROM Transaction INTO n;
     SELECT COUNT(*) FROM Customer INTO n_customers;
@@ -29,7 +30,7 @@ BEGIN
 			CREATE TEMPORARY TABLE TMP 
             SELECT * FROM Product ORDER BY RAND();
 			
-			SET @ITEMS = FLOOR(RAND()*6 + 1);
+			SET @ITEMS = FLOOR(RAND()*7 + 1);
 			WHILE j < @ITEMS DO
 				SET @PCS = FLOOR(RAND()*3 + 1);
                 SELECT P.Barcode, P.Price INTO brc, prc 
@@ -39,13 +40,15 @@ BEGIN
 				INSERT INTO Contains (Card_number, DateTime, Store_id, Product_barcode, Pieces) VALUES (C, DT, ST, brc, @PCS);
 				
 				SET @AMOUNT = @AMOUNT + @PCS * prc;
+                SET @TOTAL_PIECES = @TOTAL_PIECES + @PCS;
 				SET j = j + 1;
 			END WHILE;
 			SET j = 0;
             DROP TEMPORARY TABLE IF EXISTS TMP;
-			UPDATE Transaction SET Total_amount = @AMOUNT 
+			UPDATE Transaction SET Total_amount = @AMOUNT, Total_pieces = @TOTAL_PIECES 
 			WHERE Card_number = C AND DateTime = DT AND Store_id = ST;
 			SET @AMOUNT = 0;
+            SET @TOTAL_PIECES = 0;
 			SET i = i + 1;
 		END WHILE; 
         SET k = k + 1;

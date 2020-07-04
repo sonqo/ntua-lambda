@@ -102,3 +102,7 @@ CREATE TABLE Older_prices (
     FOREIGN KEY (Product_barcode) REFERENCES Product(Barcode) ON DELETE CASCADE,
     CONSTRAINT check_date CHECK ((Start_date <= End_date) OR End_date = NULL) 
 );
+
+CREATE UNIQUE INDEX transaction_pk ON Transaction(DateTime, Store_id, Card_number);
+CREATE UNIQUE INDEX category_pk ON Product(Barcode);
+CREATE UNIQUE INDEX contains_pk ON Contains(Product_barcode, Card_number, DateTime, Store_id);
