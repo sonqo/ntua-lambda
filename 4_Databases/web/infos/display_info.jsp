@@ -20,7 +20,7 @@
         rs = infos.favoriteAlleysQuery(info);
     }
     else if (feature.equals("brand")){
-        //TODO
+        rs = infos.brandPercentage();
     }
     else if (feature.equals("hours")){
         rs = infos.hoursMoneySpentQuery();
@@ -73,17 +73,14 @@
         <%}
     } else if (feature.equals("brand")){ %>
         <tr>
-            <th>Street</th>
-            <th>Street Number</th>
-            <th>Times Visited</th>
+            <th>Category ID</th>
+            <th>Brand Percentage</th>
         </tr>
         <% while(rs.next()){%>
         <tr>
-            <td><%=rs.getString("Street")%></td>
-            <td><%=rs.getString("Number")%></td>
-            <td><%=rs.getString("TimesVisited")%></td>
+            <td><%=rs.getString("Category_id")%></td>
+            <td><%=rs.getString("Percentage")%></td>
         </tr>
-
         <%}
     } else if (feature.equals("hours")){%>
         <tr>
@@ -111,7 +108,7 @@
                     <td><%=rs.getInt("Count")%></td>
                 </tr>
             <%}
-    }%>
+    } %>
 </table>
 
 </body>

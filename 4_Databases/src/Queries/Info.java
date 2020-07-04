@@ -128,4 +128,38 @@ public class Info {
         return rs;
     }
 
+    public ResultSet brandPercentage() throws SQLException{
+
+        String query;
+
+        String driver = "com.mysql.jdbc.Driver";
+        String url = "jdbc:mysql://localhost/testdb?serverTimezone=UTC";
+        String username = "root";
+        String password = "root";
+
+        Connection con = DriverManager.getConnection(url, username, password);
+
+        query = "SELECT *, bn_count/total_count*100 AS Percentage FROM " +
+                "(SELECT Category_id, COUNT(*) AS bn_count " +
+                "FROM " +
+                "(SELECT * FROM " +
+                "Transaction NATURAL JOIN Contains AS C INNER JOIN Product AS P ON Product_barcode = Barcode) AS q1 " +
+                "WHERE Brand_name = True " +
+                "GROUP BY Category_id) AS q1 " +
+                "NATURAL JOIN " +
+                "(" +
+                "SELECT Category_id, COUNT(*) AS total_count " +
+                "FROM " +
+                "(SELECT * FROM " +
+                "Transaction NATURAL JOIN Contains AS C INNER JOIN Product AS P ON Product_barcode = Barcode) AS q1 " +
+                "GROUP BY Category_id) AS q2 " +
+                "ORDER BY category_id";
+
+        PreparedStatement statement = con.prepareStatement(query);
+
+        ResultSet rs = statement.executeQuery();
+
+        return rs;
+    }
+
 }
