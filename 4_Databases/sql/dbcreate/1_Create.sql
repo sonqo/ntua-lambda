@@ -57,6 +57,7 @@ CREATE TABLE Transaction (
 	Card_number INT,
     DateTime TIMESTAMP,
     Total_amount NUMERIC(15,2),
+    Total_pieces int,
     Payment_method VARCHAR(10), CHECK (Payment_method in ('Cash', 'Card', 'Points')),
     PRIMARY KEY (Card_number, DateTime, Store_id),
     FOREIGN KEY (Card_number) REFERENCES Customer(Card_number) ON DELETE CASCADE ON UPDATE CASCADE,

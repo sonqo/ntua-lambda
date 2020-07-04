@@ -51,3 +51,19 @@ FROM
 WHERE Store_id = 1
 GROUP BY hour(DateTime), Age_group
 ORDER BY hour(DateTime);
+
+SELECT *, bn_count/total_count*100 AS Percentage FROM
+(SELECT Category_id, COUNT(*) AS bn_count
+FROM
+(SELECT * FROM 
+Transaction NATURAL JOIN Contains AS C INNER JOIN Product AS P ON Product_barcode = Barcode) AS q1
+WHERE Brand_name = True
+GROUP BY Category_id) AS q1
+NATURAL JOIN 
+(
+SELECT Category_id, COUNT(*) AS total_count  
+FROM
+(SELECT * FROM 
+Transaction NATURAL JOIN Contains AS C INNER JOIN Product AS P ON Product_barcode = Barcode) AS q1
+GROUP BY Category_id) AS q2 
+ORDER BY category_id;
