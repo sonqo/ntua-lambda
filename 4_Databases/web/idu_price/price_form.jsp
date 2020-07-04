@@ -7,7 +7,7 @@
 <body>
 <form action="display_price_update.jsp" method="post">
 
-    <h2>Product Data Manipulation</h2>
+    <h2>Product Price Update</h2>
 
     <label for="barcode">Barcode</label>
     <input type="text" id="barcode" name="barcode">
