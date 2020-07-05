@@ -35,9 +35,9 @@
             <option disabled selected value> -- Select Product Category -- </option>
             <option value="Fresh">Fresh Products</option>
             <option value="Fridge">Refrigerator Products</option>
-            <option value="personal_care">Personal Care</option>
-            <option value="house_products">Household Products</option>
-            <option value="pet_products">Pet Products</option>
+            <option value="Personal Care">Personal Care</option>
+            <option value="Home">Household Products</option>
+            <option value="Pets">Pet Products</option>
         </select>
 
         <button type="submit">Submit</button>

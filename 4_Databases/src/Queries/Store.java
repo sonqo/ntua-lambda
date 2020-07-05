@@ -20,9 +20,9 @@ public class Store {
 
         Connection con = DriverManager.getConnection(url, username, password);
 
-        query = "SELECT Store.Street, Store.Number, NewTable.Datetime, NewTable.Card_number, NewTable.Name, NewTable.Cat, NewTable.Pieces, NewTable.Total_amount, NewTable.Payment_method " +
+        query = "SELECT Store.Street, Store.Number, NewTable.Datetime, NewTable.Card_number, NewTable.Name, NewTable.Cat, NewTable.Total_Pieces, NewTable.Total_amount, NewTable.Payment_method " +
                 "FROM " +
-                "(SELECT DISTINCT Transaction.Store_id, Transaction.DateTime, Transaction.Card_number, Product.Name, Category.Name as Cat, Contains.Pieces, Transaction.Total_amount, Transaction.Payment_method " +
+                "(SELECT DISTINCT Transaction.Store_id, Transaction.DateTime, Transaction.Card_number, Product.Name, Category.Name as Cat, Transaction.Total_Pieces, Transaction.Total_amount, Transaction.Payment_method " +
                 "FROM Transaction INNER JOIN Contains ON Transaction.Card_number = Contains.Card_Number AND Transaction.Datetime = Contains.Datetime " +
                 "INNER JOIN Product ON Contains.Product_Barcode = Product.Barcode " +
                 "INNER JOIN Provides ON Product.Category_id = Provides.Category_id " +
@@ -37,7 +37,7 @@ public class Store {
             query += String.format(" AND NewTable.Total_amount > %s", money_amount);
         }
         if (product_amount != ""){
-            query += String.format(" AND NewTable.Pieces > %s", product_amount);
+            query += String.format(" AND NewTable.Total_Pieces > %s", product_amount);
         }
         if (category != null){
             query += String.format(" AND NewTable.Cat = '%s'", category);

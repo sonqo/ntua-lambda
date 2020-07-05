@@ -51,7 +51,7 @@
             <td><%=rs.getInt("Card_number")%></td>
             <td><%=rs.getString("Name")%></td>
             <td><%=rs.getString("Cat")%></td>
-            <td><%=rs.getInt("Pieces")%></td>
+            <td><%=rs.getInt("Total_Pieces")%></td>
             <td><%=rs.getInt("Total_amount")%></td>
             <td><%=rs.getString("Payment_method")%></td>
         </tr>

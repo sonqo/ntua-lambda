@@ -49,10 +49,21 @@ public class Customer {
 
         Connection con = DriverManager.getConnection(url, username, password);
 
-        query = "SELECT DISTINCT ST.CName, ST.Barcode, ST.Name, COUNT(*) AS NumberOfTimesBought " +
-                "FROM STRATOS AS ST " +
-                "WHERE ST.Card_number = " + cardnum + " GROUP BY ST.Barcode ORDER BY NumberOfTimesBought DESC " +
-                "LIMIT 0, 10";
+        query = "SELECT DISTINCT ST.Barcode, ST.Name, COUNT(*) AS NumberOfTimesBought " +
+                "FROM (SELECT NewTable.CName, NewTable.CN, NewTable.Datetime, NewTable.Barcode, NewTable.Name " +
+                "FROM " +
+                "( " +
+                "SELECT DISTINCT Customer.Name AS CName, Customer.Card_number AS CN, Transaction.Store_id, Transaction.DateTime, Transaction.Card_number, Product.Barcode, Product.Name " +
+                "FROM Transaction " +
+                "INNER JOIN Customer ON Transaction.Card_number = Customer.Card_number " +
+                "INNER JOIN Contains ON Transaction.Card_number = Contains.Card_Number AND Transaction.Datetime = Contains.Datetime " +
+                "INNER JOIN Product ON Contains.Product_Barcode = Product.Barcode " +
+                "INNER JOIN Provides ON Product.Category_id = Provides.Category_id " +
+                "INNER JOIN Category ON Provides.Category_id = Category.Category_id " +
+                ") NewTable " +
+                "INNER JOIN Store ON NewTable.Store_id = Store.Store_id) AS ST " +
+                "WHERE ST.CN = 2 GROUP BY ST.Barcode ORDER BY NumberOfTimesBought DESC " +
+                "LIMIT 0, 10;";
 
         PreparedStatement statement = con.prepareStatement(query);
 
@@ -97,12 +108,22 @@ public class Customer {
 
         Connection con = DriverManager.getConnection(url, username, password);
 
-        query = "SELECT Store_id, Datetime " +
-                "FROM STRATOS " +
-                "WHERE Card_number = " + cardnum + " AND " +
-                "Store_id = " + storeid + " " +
-                "GROUP BY Datetime " +
-                "ORDER BY DateTime";
+        query = "SELECT DISTINCT ST.Store_id, ST.DateTime " +
+                "FROM (SELECT NewTable.Store_id, NewTable.CN, NewTable.Datetime, NewTable.Barcode, NewTable.Card_number " +
+                "FROM  " +
+                "( " +
+                "SELECT DISTINCT Customer.Name AS CName, Customer.Card_number AS CN, Transaction.Store_id, Transaction.DateTime, Transaction.Card_number " +
+                "FROM Transaction " +
+                "INNER JOIN Customer ON Transaction.Card_number = Customer.Card_number " +
+                "INNER JOIN Contains ON Transaction.Card_number = Contains.Card_Number AND Transaction.Datetime = Contains.Datetime " +
+                "INNER JOIN Product ON Contains.Product_Barcode = Product.Barcode " +
+                "INNER JOIN Provides ON Product.Category_id = Provides.Category_id " +
+                "INNER JOIN Category ON Provides.Category_id = Category.Category_id " +
+                ") NewTable " +
+                "INNER JOIN Store ON NewTable.Store_id = Store.Store_id) AS ST " +
+                "WHERE ST.Card_number = " + cardnum +  " AND ST.Store_id = " + storeid + " " +
+                "GROUP BY ST.DateTime " +
+                "ORDER BY ST.DateTime";
 
         PreparedStatement statement = con.prepareStatement(query);
 
