@@ -108,21 +108,21 @@ public class Customer {
 
         Connection con = DriverManager.getConnection(url, username, password);
 
-        query = "SELECT DISTINCT ST.Store_id, ST.DateTime " +
-                "FROM (SELECT NewTable.Store_id, NewTable.CN, NewTable.Datetime, NewTable.Barcode, NewTable.Card_number " +
-                "FROM  " +
-                "( " +
-                "SELECT DISTINCT Customer.Name AS CName, Customer.Card_number AS CN, Transaction.Store_id, Transaction.DateTime, Transaction.Card_number " +
-                "FROM Transaction " +
-                "INNER JOIN Customer ON Transaction.Card_number = Customer.Card_number " +
-                "INNER JOIN Contains ON Transaction.Card_number = Contains.Card_Number AND Transaction.Datetime = Contains.Datetime " +
-                "INNER JOIN Product ON Contains.Product_Barcode = Product.Barcode " +
-                "INNER JOIN Provides ON Product.Category_id = Provides.Category_id " +
-                "INNER JOIN Category ON Provides.Category_id = Category.Category_id " +
-                ") NewTable " +
-                "INNER JOIN Store ON NewTable.Store_id = Store.Store_id) AS ST " +
-                "WHERE ST.Card_number = " + cardnum +  " AND ST.Store_id = " + storeid + " " +
-                "GROUP BY ST.DateTime " +
+        query = "SELECT DISTINCT ST.Store_id, ST.DateTime\n" +
+                "FROM (SELECT NewTable.Store_id, NewTable.CN, NewTable.Datetime, NewTable.Barcode, NewTable.Card_number\n" +
+                "FROM \n" +
+                "(\n" +
+                "\tSELECT DISTINCT Customer.Name AS CName, Customer.Card_number AS CN, Transaction.Store_id, Transaction.DateTime, Transaction.Card_number, Product.Barcode, Product.Name, Contains.Pieces\n" +
+                "\tFROM Transaction\n" +
+                "INNER JOIN Customer ON Transaction.Card_number = Customer.Card_number\n" +
+                "\tINNER JOIN Contains ON Transaction.Card_number = Contains.Card_Number AND Transaction.Datetime = Contains.Datetime\n" +
+                "INNER JOIN Product ON Contains.Product_Barcode = Product.Barcode\n" +
+                "\tINNER JOIN Provides ON Product.Category_id = Provides.Category_id\n" +
+                "\tINNER JOIN Category ON Provides.Category_id = Category.Category_id\n" +
+                ") NewTable\n" +
+                "INNER JOIN Store ON NewTable.Store_id = Store.Store_id) AS ST\n" +
+                "WHERE ST.Card_number = " + cardnum + " AND ST.Store_id = " + storeid + " " +
+                "GROUP BY ST.DateTime\n" +
                 "ORDER BY ST.DateTime";
 
         PreparedStatement statement = con.prepareStatement(query);
@@ -143,11 +143,11 @@ public class Customer {
 
         Connection con = DriverManager.getConnection(url, username, password);
 
-        min = "SET @min = (SELECT DateTime FROM Transaction WHERE Card_number = " + cardnum + " ORDER BY DateTime ASC LIMIT 0,1)";
+        min = "SET @min = (SELECT DateTime FROM Transaction WHERE Card_number = " + cardnum + " ORDER BY DateTime ASC LIMIT 0, 1)";
         con.prepareStatement(min).executeQuery();
-        max = "SET @max = (SELECT DateTime FROM Transaction WHERE Card_number = " + cardnum + " ORDER BY DateTime DESC LIMIT 0,1)";
+        max = "SET @max = (SELECT DateTime FROM Transaction WHERE Card_number = " + cardnum + " ORDER BY DateTime DESC LIMIT 0, 1)";
         con.prepareStatement(max).executeQuery();
-        months = "SET @months = abs(period_diff(extract(year_month from @min), extract(year_month from @max))) + 1";
+        months = "SET @months = abs(period_diff(EXTRACT(year_month from @min), EXTRACT(year_month FROM @max))) + 1";
         con.prepareStatement(months).executeQuery();
         weeks = "SET @weeks = WEEK(@max) - WEEK(@min) + 1";
         con.prepareStatement(weeks).executeQuery();

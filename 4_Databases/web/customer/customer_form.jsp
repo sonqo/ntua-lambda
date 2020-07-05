@@ -13,8 +13,8 @@
     <label for="cardnum">Customer Card Number</label>
     <input type="text" id="store" name="cardnum">
 
-    <label for="cardnum">Store ID</label>
-    <input type="text" id="store" name="storeid">
+    <label for="storeid">Store ID</label>
+    <input type="text" id="storeid" name="storeid">
 
     <label for="feature_names">Select Feature Category</label>
     <select id="feature_names" name="feature_names">

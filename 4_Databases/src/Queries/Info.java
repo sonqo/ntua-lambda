@@ -48,7 +48,7 @@ public class Info {
         Connection con = DriverManager.getConnection(url, username, password);
 
         query = "SELECT O.Alley_number,O.Shelf_number, COUNT(*) AS Count " +
-                "FROM Transaction as T, Contains as C, Product as P, Offers as O " +
+                "FROM Transaction AS T, Contains AS C, Product AS P, Offers AS O " +
                 "WHERE " +
                 "T.DateTime = C.DateTime " +
                 "AND T.Card_number = C.Card_number " +
