@@ -62,7 +62,7 @@ public class Customer {
                 "INNER JOIN Category ON Provides.Category_id = Category.Category_id " +
                 ") NewTable " +
                 "INNER JOIN Store ON NewTable.Store_id = Store.Store_id) AS ST " +
-                "WHERE ST.CN = 2 GROUP BY ST.Barcode ORDER BY NumberOfTimesBought DESC " +
+                "WHERE ST.CN = " + cardnum + " GROUP BY ST.Barcode ORDER BY NumberOfTimesBought DESC " +
                 "LIMIT 0, 10;";
 
         PreparedStatement statement = con.prepareStatement(query);
