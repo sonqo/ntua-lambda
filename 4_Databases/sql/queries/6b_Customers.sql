@@ -13,8 +13,19 @@ INNER JOIN Store ON NewTable.Store_id = Store.Store_id
 WHERE Card_number = 3;
 
 SELECT DISTINCT ST.Barcode, ST.Name, COUNT(*) AS NumberOfTimesBought
-FROM STRATOS AS ST
-WHERE ST.Card_number = 2 GROUP BY ST.Barcode ORDER BY COUNT(*) DESC
+FROM (SELECT NewTable.CName, NewTable.CN, NewTable.Datetime, NewTable.Barcode, NewTable.Name
+FROM 
+(
+	SELECT DISTINCT Customer.Name AS CName, Customer.Card_number AS CN, Transaction.Store_id, Transaction.DateTime, Transaction.Card_number, Product.Barcode, Product.Name, Contains.Pieces
+	FROM Transaction
+    INNER JOIN Customer ON Transaction.Card_number = Customer.Card_number
+	INNER JOIN Contains ON Transaction.Card_number = Contains.Card_Number AND Transaction.Datetime = Contains.Datetime
+    INNER JOIN Product ON Contains.Product_Barcode = Product.Barcode
+	INNER JOIN Provides ON Product.Category_id = Provides.Category_id
+	INNER JOIN Category ON Provides.Category_id = Category.Category_id
+) NewTable
+INNER JOIN Store ON NewTable.Store_id = Store.Store_id) AS ST
+WHERE ST.CN = 2 GROUP BY ST.Barcode ORDER BY NumberOfTimesBought DESC
 LIMIT 0, 10;
 
 SELECT S.Street, S.Number, COUNT(*) AS TimesVisited
