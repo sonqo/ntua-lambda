@@ -68,10 +68,10 @@ with open('transport-ontology.owl', 'a') as owl_file:
                 owl_file.write(' '*8 + ':stopDescription "' + unidecode(str(e)) + '"^^xsd:string ;\n')
             elif i == 4:
                 i += 1
-                curr = unidecode(str(e))
+                owl_file.write(' '*8 + ':stopLat "' + unidecode(str(e)) + '"^^xsd:float ;\n')
             elif i == 5:
                 i += 1
-                owl_file.write(' '*8 + ':stopCoordinates "Point(' + curr + ' ' + unidecode(str(e)) + ')"^^<http://openlinksw.com/schemas/virtrdf#Geometry> .\n\n')
+                owl_file.write(' '*8 + ':stopLon "' + unidecode(str(e)) + '"^^xsd:float .\n\n')
             else:
                 i += 1
 
