@@ -95,3 +95,24 @@ with open('transport-ontology.owl', 'a') as owl_file:
                 owl_file.write(' '*8 + ':tripDirection "' + unidecode(str(e)) + '"^^xsd:int .\n\n')
             else:
                 i += 1
+
+    # Parsing Stops CSV file
+    stimes = pd.read_csv('data/stop_times.txt')
+    for index, row in stimes.iterrows():
+        i = 0
+        owl_file.write(':' + unidecode(str(row[3]).replace(' ', '').replace('/', '-')) + ' rdf:type ' + ':StopTime ;\n')
+        for e in row:
+            if i == 0:
+                i += 1
+                owl_file.write(' '*8 + ':tripID "' + unidecode(str(e)) + '"^^xsd:string ;\n')
+            elif i == 1:
+                i += 1
+                owl_file.write(' '*8 + ':arrivalTime "' + unidecode(str(e)) + '"^^xsd:string ;\n')
+            elif i == 2:
+                i += 1
+                owl_file.write(' '*8 + ':departureTime "' + unidecode(str(e)) + '"^^xsd:string ;\n')
+            elif i == 4:
+                i += 1
+                owl_file.write(' '*8 + ':stopSequence "' + unidecode(str(e)) + '"^^xsd:int .\n\n')
+            else:
+                i += 1
