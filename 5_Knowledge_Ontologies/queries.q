@@ -51,3 +51,15 @@ where{
         <http://www.ex.org/transport-ontology#stopLon> "23.6666067420973"^^xsd:float .
 }
 limit 10
+
+select ?f
+where{
+    ?x <http://www.ex.org/transport-ontology#stopFrom> <http://www.ex.org/transport-ontology#9803638-TELEMA-T3-Paraskeue-02> .
+    ?x <http://www.ex.org/transport-ontology#hasStop> ?y .
+    ?y <http://www.ex.org/transport-ontology#stopLat> ?xa ;
+        <http://www.ex.org/transport-ontology#stopLon> ?xb ;
+        <http://www.ex.org/transport-ontology#stopName> ?f .
+    Filter(bif:st_intersects (bif:st_point (?xa, ?xb), bif:st_point (35, 28), 1000)) .
+}
+order by desc(bif:haversine_deg_km(?xa, ?xb, 35, 28))
+limit 10
