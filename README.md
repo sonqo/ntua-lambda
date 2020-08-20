@@ -1,8 +1,23 @@
-## Ntua_Lambda
+## NTUA - Electrical and Computer Engineering - Lambda Flow
 
-Personal projects from studying years at the National Technical University of Athens. 
+This repository contains my personal academic projects while following the Computer Software flow at the National Technical University of Athens. Details about each directory is given in the following sections.
 
-*Included courses:*
+### Programming Languages I
 
-		1. Programming Languages I: C, Python, Java, SML, Prolog 
-		2. Web Programming: HTML, CSS, Javascript, Java Swing
+:bulb: Technologies used: ******
+
+### Internet Programming
+
+:bulb: Technologies used: ******
+
+### Software Engineering
+
+:bulb: Technologies used: ******
+
+### Databases
+
+:bulb: Technologies used: ******
+
+### Knowledge Systems and Technologies
+
+:bulb: Technologies used: ******
