@@ -3,8 +3,10 @@
 This repository contains my personal academic projects while following the Computer Software flow at the National Technical University of Athens. Details about each directory is given in the following sections.
 
 ### Programming Languages I
+_Problems solved on different types of programming languages._  
+Imperative programming, functional programming, object-oriented programming, logical programming.
 
-:bulb: Technologies used: ******
+:bulb: Technologies used: ***C, Standard ML, Java, Python, Prolog***
 
 ### Internet Programming
 _Java applets, Javascript minigames._  
