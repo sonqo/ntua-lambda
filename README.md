@@ -7,15 +7,19 @@ This repository contains my personal academic projects while following the Compu
 :bulb: Technologies used: ******
 
 ### Internet Programming
+_Java applets, Javascript minigames._  
+Java Swing graphic apps, HTML/CSS/Bootstrap formatting, Javascript applications.
 
-:bulb: Technologies used: ******
+:bulb: Technologies used: ***Java, Javascript***
 
 ### Software Engineering
+_European Energy Market administration application, RESTful API creation, full stack development._  
+Software Requirements Specification, Stakeholder Requirements Specification, specialized data retrieval, data manipulation, Token-through-Header functionality, user-quota functionality, command line application for API calls, front-end interface, data visualization.
 
-:bulb: Technologies used: ***Javascript*** _()_
+:bulb: Technologies used: ***Visual Paradigm, MongoDB, Javascript*** _(express, axios, React)_
 
 ### Databases
-_Online CRUD application for a supermarket chain._  
+_Supermarket chain online CRUD application._  
 Entity-Relationship diagram, Relational diagram, object oriented approach, insert/update/delete queries, specialized data retrieval queries, database triggers, data statistics and analysis.
 
 :bulb: Technologies used: ***Apache Tomcat, Java, MySQL***
