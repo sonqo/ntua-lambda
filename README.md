@@ -12,12 +12,16 @@ This repository contains my personal academic projects while following the Compu
 
 ### Software Engineering
 
-:bulb: Technologies used: ******
+:bulb: Technologies used: ***Javascript*** _()_
 
 ### Databases
+_Online CRUD application for a supermarket chain._  
+Entity-Relationship diagram, Relational diagram, object oriented approach, insert/update/delete queries, specialized data retrieval queries, database triggers, data statistics and analysis.
 
-:bulb: Technologies used: ******
+:bulb: Technologies used: ***Apache Tomcat, Java, MySQL***
 
 ### Knowledge Systems and Technologies
+_Transport ontology for the Athenian bus network._  
+TBox creation, conversion of available .csv data into RDF tuples, Turtle syntax, ABox population, specialized ontology queries.
 
-:bulb: Technologies used: ******
+:bulb: Technologies used: ***Protégé, OpenLink Virtuoso, SparQL, Python***
