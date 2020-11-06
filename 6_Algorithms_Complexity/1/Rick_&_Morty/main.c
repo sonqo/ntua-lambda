@@ -87,7 +87,7 @@ int main() {
         for (int j=0; j<3; j++){
             scanf("%d", &acc[j]);
         }
-        if (acc[0] < acc[1]){
+        if (acc[0] < acc[1]) {
             portals[i]->base = acc[0];
             portals[i]->destination = acc[1];
         } else {
@@ -106,12 +106,12 @@ int main() {
     }
 
     int path[N+1];
-    for (int i=0; i<N+1; i++){
+    for (int i=0; i<N+1; i++) {
         path[i] = 0;
     }
 
     int c1, c2;
-    for (int i=M-1; i>=0; i--) {
+    for (int i=M-1; i>=0; i--) { // Kruskal's algorithm
 
         struct edge* curr = portals[i];
 
@@ -129,8 +129,10 @@ int main() {
                 }
             }
         }
-
     }
+
+    int weight_path[N];
+    //TODO create array for weight of node the his ancestor
 
     for (int i=1; i<N+1; i++){
         printf("%d ", path[i]);
