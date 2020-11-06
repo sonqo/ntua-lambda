@@ -1,5 +1,8 @@
+#include <mem.h>
 #include <stdio.h>
 #include <malloc.h>
+
+#define MIN(a,b) (((a)<(b))?(a):(b))
 
 struct edge {
     int base, destination, weight;
@@ -54,7 +57,6 @@ void merge(struct edge** arr, int l, int m, int r) {
 void mergesort(struct edge** arr, int l, int r) {
 
     if (l<r) {
-
         int m = l + (r-l)/2;
 
         mergesort(arr, l ,m);
@@ -71,13 +73,16 @@ int main() {
         scanf("%d", &NMs[i]);
     }
 
-    int array[NMs[0]];
-    for (int i=0; i<NMs[0]; i++) { // read unordered array
+    int N = NMs[0];
+    int M = NMs[1];
+
+    int array[N];
+    for (int i=0; i<N; i++) { // read unordered array
         scanf("%d", &array[i]);
     }
 
-    struct edge* portals[NMs[1]];
-    for (int i=0; i<NMs[1]; i++) { // read array of points to EDGE struct
+    struct edge* portals[M];
+    for (int i=0; i<M; i++) { // read array of points to EDGE struct
         int acc[3];
         portals[i] = malloc(sizeof(struct edge));
         for (int j=0; j<3; j++){
@@ -88,10 +93,33 @@ int main() {
         portals[i]->weight = acc[2];
     }
 
-    mergesort(portals, 0, NMs[1]); //sort pointers of edges according to their weight
+    mergesort(portals, 0, M-1); //sort pointers of edges according to their weight
 
-//    for (int i=0; i<NMs[1]; i++){
-//        printf("%d ", portals[i]->weight);
+    int parent[N+1]; // create parent array for union find implementation
+    for (int i=1; i<N+1; i++) {
+        parent[i] = i;
+    }
+
+    int cno1, cno2;
+    for (int i=M-1; i>=0; i--) {
+
+        struct edge* curr = portals[i];
+
+        cno1 = parent[curr->base];
+        cno2 = parent[curr->destination];
+
+        if (cno1 != cno2){
+            for (int j=1; j<N+1; j++) {
+                if (parent[j] == cno2) {
+                    parent[j] = cno1;
+                }
+            }
+        }
+
+    }
+
+//    for (int i=1; i<N+1; i++){
+//        printf("%d ", parent[i]);
 //    }
 
     return 0;
