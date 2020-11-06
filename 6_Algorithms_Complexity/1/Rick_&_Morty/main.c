@@ -1,4 +1,3 @@
-#include <mem.h>
 #include <stdio.h>
 #include <malloc.h>
 
@@ -88,8 +87,14 @@ int main() {
         for (int j=0; j<3; j++){
             scanf("%d", &acc[j]);
         }
-        portals[i]->base = acc[0];
-        portals[i]->destination = acc[1];
+        if (acc[0] < acc[1]){
+            portals[i]->base = acc[0];
+            portals[i]->destination = acc[1];
+        } else {
+            portals[i]->base = acc[1];
+            portals[i]->destination = acc[0];
+        }
+
         portals[i]->weight = acc[2];
     }
 
@@ -100,27 +105,36 @@ int main() {
         parent[i] = i;
     }
 
-    int cno1, cno2;
+    int path[N+1];
+    for (int i=0; i<N+1; i++){
+        path[i] = 0;
+    }
+
+    int c1, c2;
     for (int i=M-1; i>=0; i--) {
 
         struct edge* curr = portals[i];
 
-        cno1 = parent[curr->base];
-        cno2 = parent[curr->destination];
+        c1 = parent[curr->base];
+        c2 = parent[curr->destination];
 
-        if (cno1 != cno2){
+        if (c1 != c2){
+            path[curr->destination] = curr->base;
             for (int j=1; j<N+1; j++) {
-                if (parent[j] == cno2) {
-                    parent[j] = cno1;
+                if (parent[j] == c2) {
+                    if (path[j] == 0) {
+                        path[j] = curr->destination;
+                    }
+                    parent[j] = c1;
                 }
             }
         }
 
     }
 
-//    for (int i=1; i<N+1; i++){
-//        printf("%d ", parent[i]);
-//    }
+    for (int i=1; i<N+1; i++){
+        printf("%d ", path[i]);
+    }
 
     return 0;
 }
