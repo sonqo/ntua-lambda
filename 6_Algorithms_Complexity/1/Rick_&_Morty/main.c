@@ -112,7 +112,7 @@ int main() {
     }
 
     int c1, c2;
-    int global_min = 1000000;
+    int global_min = 1000000000;
     for (int i=M-1; i>=0; i--) { // Kruskal's algorithm
 
         struct edge* curr = portals[i];
@@ -137,7 +137,7 @@ int main() {
 
     int p1, p2;
     int flag = 0;
-    int curr_min = 1000000;
+    int curr_min = 1000000000;
     for (int i=1; i<N+1; i++) { // check sorting sequence
         if (array[i] != i){
             p1 = i;
