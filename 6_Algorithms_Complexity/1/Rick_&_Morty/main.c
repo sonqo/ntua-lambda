@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <malloc.h>
+#include <mem.h>
 
 #define MIN(a,b) (((a)<(b))?(a):(b))
 
@@ -75,8 +76,8 @@ int main() {
     int N = NMs[0];
     int M = NMs[1];
 
-    int array[N];
-    for (int i=0; i<N; i++) { // read unordered array
+    int array[N+1];
+    for (int i=1; i<N+1; i++) { // read unordered array
         scanf("%d", &array[i]);
     }
 
@@ -106,13 +107,17 @@ int main() {
     }
 
     int path[N+1];
-    int weight_path[N];
+    int weight_path[N+1];
+    memset(path, 0, (N+1)*sizeof(int));
+    memset(weight_path, 0, (N+1)*sizeof(int));
+
     for (int i=0; i<N+1; i++) {
         path[i] = 0;
         weight_path[i] = -1;
     }
 
     int c1, c2;
+    int global_min = 1000000;
     for (int i=M-1; i>=0; i--) { // Kruskal's algorithm
 
         struct edge* curr = portals[i];
@@ -121,6 +126,7 @@ int main() {
         c2 = parent[curr->destination];
 
         if (c1 != c2){
+            global_min = MIN(global_min, curr->weight);
             path[curr->destination] = curr->base;
             weight_path[curr->destination] = curr->weight;
             for (int j=1; j<N+1; j++) {
@@ -134,9 +140,34 @@ int main() {
         }
     }
 
-    for (int i=1; i<N+1; i++){
-        printf("%d ", weight_path[i]);
+    int p1, p2;
+    int flag = 0;
+    int curr_min = 1000000;
+    for (int i=1; i<N+1; i++) {
+        if (array[i] != i){
+            p1 = i;
+            p2 = array[i];
+            while ((path[p1] !=0 || path[p2] != 0) && flag == 0) {
+                if (path[p1] != 0) {
+                    if (weight_path[p1] != -1) {
+                        curr_min = MIN(weight_path[p1], curr_min);
+                    }
+                    p1 = path[p1];
+                }
+                if (path[p2] != 0) {
+                    if (weight_path[p2] != -1) {
+                        curr_min = MIN(weight_path[p2], curr_min);
+                    }
+                    p2 = path[p2];
+                }
+                if (curr_min == global_min) {
+                    flag = 1;
+                }
+            }
+        }
     }
+
+    printf("%d", curr_min);
 
     return 0;
 }
