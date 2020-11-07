@@ -106,8 +106,10 @@ int main() {
     }
 
     int path[N+1];
+    int weight_path[N];
     for (int i=0; i<N+1; i++) {
         path[i] = 0;
+        weight_path[i] = -1;
     }
 
     int c1, c2;
@@ -120,6 +122,7 @@ int main() {
 
         if (c1 != c2){
             path[curr->destination] = curr->base;
+            weight_path[curr->destination] = curr->weight;
             for (int j=1; j<N+1; j++) {
                 if (parent[j] == c2) {
                     if (path[j] == 0) {
@@ -131,11 +134,8 @@ int main() {
         }
     }
 
-    int weight_path[N];
-    //TODO create array for weight of node the his ancestor
-
     for (int i=1; i<N+1; i++){
-        printf("%d ", path[i]);
+        printf("%d ", weight_path[i]);
     }
 
     return 0;
