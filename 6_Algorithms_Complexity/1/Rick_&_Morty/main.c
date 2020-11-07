@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <malloc.h>
-#include <mem.h>
 
-#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MIN(a, b) (((a)<(b))?(a):(b))
 
 struct edge {
     int base, destination, weight;
@@ -17,11 +16,10 @@ void merge(struct edge** arr, int l, int m, int r) {
     struct edge* L[n1];
     struct edge* R[n2];
 
-    // Copy arrays
-    for (int i=0; i<n1; i++) {
+    for (i=0; i<n1; i++) { // spit arrays to L(eft) and R(ight)
         L[i] = arr[l+i];
     }
-    for (int i=0; i<n2; i++) {
+    for (i=0; i<n2; i++) {
         R[i] = arr[m+1+i];
     }
 
@@ -40,8 +38,7 @@ void merge(struct edge** arr, int l, int m, int r) {
         k++;
     }
 
-    // Filling unsorted items
-    while (i<n1) {
+    while (i<n1) { // filling unsorted items
         arr[k] = L[i];
         i++;
         k++;
@@ -106,10 +103,8 @@ int main() {
         parent[i] = i;
     }
 
-    int path[N+1];
-    int weight_path[N+1];
-    memset(path, 0, (N+1)*sizeof(int));
-    memset(weight_path, 0, (N+1)*sizeof(int));
+    int path[N+1]; // ancestor array
+    int weight_path[N+1]; // weight2ancestor array
 
     for (int i=0; i<N+1; i++) {
         path[i] = 0;
@@ -143,7 +138,7 @@ int main() {
     int p1, p2;
     int flag = 0;
     int curr_min = 1000000;
-    for (int i=1; i<N+1; i++) {
+    for (int i=1; i<N+1; i++) { // check sorting sequence
         if (array[i] != i){
             p1 = i;
             p2 = array[i];
@@ -167,7 +162,7 @@ int main() {
         }
     }
 
-    printf("%d", curr_min);
+    printf("%d\n", curr_min);
 
     return 0;
 }
