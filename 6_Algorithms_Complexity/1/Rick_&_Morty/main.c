@@ -7,6 +7,60 @@ struct edge {
     int base, destination, weight;
 };
 
+void make_set(int* parent, int*size, int v) {
+    parent[v] = v;
+    size[v] = 1;
+}
+
+int find_set(int* parent, int v) {
+    if (v == parent[v]) {
+        return v;
+    }
+    return parent[v] = find_set(parent, parent[v]);
+}
+
+void union_sets(int* parent, int* size, int a, int b) {
+    int t;
+    a = find_set(parent, a);
+    b = find_set(parent, b);
+    if (a != b) {
+        if (size[a] < size[b]) {
+            t = a;
+            a = b;
+            b = t;
+        }
+        parent[b] = a;
+        size[a] += size[b];
+    }
+}
+
+struct node {
+    int data;
+    struct node* next;
+};
+
+void push (struct node** head, int data) {
+    struct node* curr;
+    curr = (struct node*) malloc(sizeof(struct node));
+
+    curr->data = data;
+    curr->next = *head;
+    *head = curr;
+}
+
+int pop (struct node** head) {
+    int r;
+    if (*head != NULL) {
+        r = (*head)->data;
+        struct node* curr = *head;
+        *head = (*head) -> next;
+        free(curr);
+        return r;
+    } else {
+        return -1;
+    }
+}
+
 void merge(struct edge** arr, int l, int m, int r) {
 
     int i, j, k;
@@ -27,7 +81,7 @@ void merge(struct edge** arr, int l, int m, int r) {
     j = 0;
     k = l;
     while (i<n1 && j<n2) {
-        if (L[i]->weight <= R[j]->weight) {
+        if (L[i]->weight > R[j]->weight) {
             arr[k] = L[i];
             i++;
         }
@@ -96,73 +150,108 @@ int main() {
         portals[i]->weight = acc[2];
     }
 
-    mergesort(portals, 0, M-1); //sort pointers of edges according to their weight
+    mergesort(portals, 0, M-1); //sort pointers of edges in ascending order
 
-    int parent[N+1]; // create parent array for union find implementation
-    for (int i=1; i<N+1; i++) {
-        parent[i] = i;
+    int parent[N+1], size[N+1];
+    for (int i=1; i<N+1; i++) { // create a set of each vertex
+        make_set(parent, size, i);
     }
 
-    int path[N+1]; // ancestor array
-    int weight_path[N+1]; // weight2ancestor array
-
-    for (int i=0; i<N+1; i++) {
-        path[i] = 0;
-        weight_path[i] = -1;
-    }
-
-    int c1, c2;
-    int global_min = 1000000000;
-    for (int i=M-1; i>=0; i--) { // Kruskal's algorithm
-
-        struct edge* curr = portals[i];
-
-        c1 = parent[curr->base];
-        c2 = parent[curr->destination];
-
-        if (c1 != c2){
-            global_min = MIN(global_min, curr->weight);
-            path[curr->destination] = curr->base;
-            weight_path[curr->destination] = curr->weight;
-            for (int j=1; j<N+1; j++) {
-                if (parent[j] == c2) {
-                    if (path[j] == 0) {
-                        path[j] = curr->destination;
-                    }
-                    parent[j] = c1;
-                }
-            }
+    for (int i=0; i<M; i++) { // traverse sorted edges
+        if (find_set(parent, portals[i]->base) != find_set(parent, portals[i]->destination)) {
+            union_sets(parent, size, portals[i]->base, portals[i]->destination);
         }
     }
 
-    int p1, p2;
-    int flag = 0;
-    int curr_min = 1000000000;
-    for (int i=1; i<N+1; i++) { // check sorting sequence
-        if (array[i] != i){
-            p1 = i;
-            p2 = array[i];
-            while ((path[p1] !=0 || path[p2] != 0) && flag == 0) {
-                if (path[p1] != 0) {
-                    if (weight_path[p1] != -1) {
-                        curr_min = MIN(weight_path[p1], curr_min);
-                    }
-                    p1 = path[p1];
-                }
-                if (path[p2] != 0) {
-                    if (weight_path[p2] != -1) {
-                        curr_min = MIN(weight_path[p2], curr_min);
-                    }
-                    p2 = path[p2];
-                }
-                if (curr_min == global_min) {
-                    flag = 1;
-                }
-            }
-        }
-    }
-
-    printf("%d\n", curr_min);
+//    int path[N+1]; // ancestor array
+//    int weight_path[N+1]; // weight2ancestor array
+//    struct node* children[N+1];
+//
+//    for (int i=1; i<N+1; i++) {
+//        path[i] = 0;
+//        parent[i] = i;
+//        weight_path[i] = -1;
+//
+//        children[i] = malloc(sizeof(struct node));
+//        children[i]->data = -1;
+//        children[i]->next = NULL;
+//    }
+//
+//    int temp;
+//    int c1, c2;
+//    int global_min = 1000000;
+//    for (int i=M-1; i>=0; i--) { // Kruskal's algorithm
+//
+//        struct edge* curr = portals[i];
+//
+//        c1 = parent[curr->base];
+//        c2 = parent[curr->destination];
+//
+////        if (c1 != c2){
+////            global_min = MIN(global_min, curr->weight);
+////            weight_path[curr->destination] = curr->weight;
+////            parent[c2] = c1;
+////            if (path[c2] == 0) {
+////                if (c2 == curr->destination) {
+////                    path[c2] = curr->base;
+////                } else {
+////                    path[c2] = curr->destination;
+////                }
+////            }
+////            push(&children[c1], c2);
+////            temp = pop(&children[c2]);
+////            while (temp != -1) {
+////                parent[temp] = c1;
+////                path[temp] = curr->base;
+////                push(&children[c1], temp);
+////                temp = pop(&children[c2]);
+////            }
+////        }
+//
+//        if (c1 != c2){
+//            global_min = MIN(global_min, curr->weight);
+//            path[curr->destination] = curr->base;
+//            weight_path[curr->destination] = curr->weight;
+//            for (int j=1; j<N+1; j++) {
+//                if (parent[j] == c2) {
+//                    if (path[j] == 0) {
+//                        path[j] = curr->destination;
+//                    }
+//                    parent[j] = c1;
+//                }
+//            }
+//        }
+//    }
+//
+//    int p1, p2;
+//
+//    int flag = 0;
+//    int curr_min = 1000000;
+////    for (int i=1; i<N+1; i++) { // check sorting sequence
+////        if (array[i] != i){
+////            p1 = i;
+////            p2 = array[i];
+////            while ((path[p1] !=0 || path[p2] != 0) && flag == 0) {
+////                if (path[p1] != 0) {
+////                    if (weight_path[p1] != -1) {
+////                        curr_min = MIN(weight_path[p1], curr_min);
+////                    }
+////                    p1 = path[p1];
+////                }
+////                if (path[p2] != 0) {
+////                    if (weight_path[p2] != -1) {
+////                        curr_min = MIN(weight_path[p2], curr_min);
+////                    }
+////                    p2 = path[p2];
+////                }
+////                if (curr_min == global_min) {
+////                    flag = 1;
+////                }
+////            }
+////        }
+////    }
+//
+//    printf("%d\n", curr_min);
 
     return 0;
 }
