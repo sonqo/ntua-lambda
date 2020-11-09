@@ -26,13 +26,17 @@ int discard(int* array, int* new_array, int length) {
 int binary_search_answer(int lower, int higher, int* distances_nd, int max_distance, int max_capacity) {
     int curr;
     if (lower == higher) {
-        return lower;
+        if (check_capacity(lower, distances_nd, max_distance, max_capacity) >= 0) {
+            return lower;
+        } else {
+            return -1;
+        }
     } else {
         curr = (lower+higher)/2;
         if (check_capacity(curr, distances_nd, max_distance, max_distance) >= 0) {
             binary_search_answer(lower, curr, distances_nd, max_distance, max_capacity);
         } else {
-            binary_search_answer(curr, higher, distances_nd, max_distance, max_capacity);
+            binary_search_answer(curr+1, higher, distances_nd, max_distance, max_capacity);
         }
     }
 }
