@@ -1,4 +1,21 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void * a, const void * b) {
+    return ( *(int*)a - *(int*)b );
+}
+
+int discard(int* array, int* new_array, int length) {
+    int t=-1;
+    int max_dist = 0;
+    for (int i=0; i<length; i++) {
+        if (array[i] != array[i+1]) {
+            max_dist++;
+            new_array[++t] = array[i];
+        }
+    }
+    return max_dist;
+}
 
 int main() {
 
@@ -14,6 +31,7 @@ int main() {
     }
 
     int distances[NKDTs[1]];
+    int distances_nd[NKDTs[1]];
     for (int i=0; i<NKDTs[1]; i++) {
         scanf("%d", &distances[i]); // array of stations
     }
@@ -23,6 +41,13 @@ int main() {
         scanf("%d", &TCs[i]);
     }
 
-    
+    qsort(distances, NKDTs[1], sizeof(int), compare); // sort distances of stations
+
+    int max_dist;
+    max_dist = discard(distances, distances_nd, NKDTs[1]); // discard duplicate distances
+
+//    for (int i=0; i<NKDTs[0]; i++) {
+//
+//    }
 
 }
