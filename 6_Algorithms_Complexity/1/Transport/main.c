@@ -3,12 +3,36 @@
 
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
-int compare(const void * a, const void * b) {
+int compare(const void * a, const void * b) { // qsort comparison function
     return ( *(int*)a - *(int*)b );
 }
 
-int check_capacity(int curr, int* distances_nd, int max_distance, int max_capacity) {
+// TCs[0] : Ts | TCs[1] : Cs | TCs[2] : Tf | TCs[3] : Cf
 
+int check_capacity(int curr_capacity, int* distances_nd, int max_distance, int* TCs, int max_time) {
+    if (curr_capacity >= max_distance*TCs[1]) {
+        if (max_distance*TCs[2] <= max_time) {
+            int Xs, Xf = 0;
+            int Ts, Tf = 0;
+            while (curr_capacity-TCs[3] >= max_distance*TCs[1]) {
+                Xf++;
+                Tf += TCs[2];
+                curr_capacity -= TCs[3];
+            }
+            Xs = max_distance-Xf;
+            Ts = Xs*TCs[0];
+            int total_time = Ts + Tf;
+            if (total_time > max_time) {
+                return 1;
+            } else {
+                return -1;
+            }
+        } else { // distance not drivable in time with fast-capacity
+            return 0;
+        }
+    } else { // distance not drivable with slow-capacity
+        return -1;
+    }
 }
 
 int discard(int* array, int* new_array, int length) {
@@ -23,20 +47,21 @@ int discard(int* array, int* new_array, int length) {
     return max_dist;
 }
 
-int binary_search_answer(int lower, int higher, int* distances_nd, int max_distance, int max_capacity) {
-    int curr;
+int binary_search_answer(int lower, int higher, int* distances_nd, int max_distance, int* TCs, int NKDTs[3]) {
     if (lower == higher) {
-        if (check_capacity(lower, distances_nd, max_distance, max_capacity) >= 0) {
-            return lower;
+        if (check_capacity(lower, distances_nd, max_distance, TCs, NKDTs[3]) > 0) {
+            return higher;
         } else {
             return -1;
         }
     } else {
-        curr = (lower+higher)/2;
-        if (check_capacity(curr, distances_nd, max_distance, max_distance) >= 0) {
-            binary_search_answer(lower, curr, distances_nd, max_distance, max_capacity);
+        int curr = (lower+higher)/2;
+        if (check_capacity(curr, distances_nd, max_distance, TCs, NKDTs[3]) > 0) {
+            binary_search_answer(lower, curr, distances_nd, max_distance, TCs, NKDTs[3]);
+        } else if (check_capacity(curr, distances_nd, max_distance, TCs, NKDTs[3]) < 0) {
+            binary_search_answer(curr+1, higher, distances_nd, max_distance, TCs, NKDTs[3]);
         } else {
-            binary_search_answer(curr+1, higher, distances_nd, max_distance, max_capacity);
+            return -1;
         }
     }
 }
@@ -81,6 +106,9 @@ int main() {
         }
     }
 
-    
+    int optimal_capacity;
+    optimal_capacity = binary_search_answer(1, max_capacity, distances_nd, max_distance, TCs, NKDTs[3]);
+
+    printf("%d", optimal_capacity);
 
 }
