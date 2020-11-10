@@ -1,3 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2020.2\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Transport.dir/objects.a
-C:\MinGW\bin\ar.exe cr CMakeFiles\Transport.dir/objects.a @CMakeFiles\Transport.dir\objects1.rsp
-C:\MinGW\bin\gcc.exe -g   -Wl,--whole-archive CMakeFiles\Transport.dir/objects.a -Wl,--no-whole-archive  -o Transport.exe -Wl,--out-implib,libTransport.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Transport.dir\linklibs.rsp
