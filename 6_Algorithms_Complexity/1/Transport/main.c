@@ -23,10 +23,9 @@ SHIPIT check_capacity(SHIPIT curr_capacity, SHIPIT const* distances_nd, SHIPIT u
     SHIPIT curr = curr_capacity;
     if (curr_capacity >= max_distance*TCs[1]) {
         if (max_distance*TCs[2] <= max_time) {
-            SHIPIT total_time;
             SHIPIT Xs, Xf, Ts, Tf;
             SHIPIT global_time = 0;
-            SHIPIT curr_distance, initial;
+            SHIPIT initial, curr_distance, total_time;
             for (SHIPIT i=1; i<uniq; i++) {
                 total_time = 0;
                 curr_capacity = curr;
@@ -78,7 +77,7 @@ int main() {
 
     SHIPIT* NKDTs = malloc(4 * sizeof(SHIPIT)); // NKDTs0] : number of cars | NKDTs0[1] : number of stations | NKDTs[2] : distance | NKDTs[3] : time
     for (SHIPIT i=0; i<4; i++) {
-            scanf("%lld", &NKDTs[i]);
+        scanf("%lld", &NKDTs[i]);
     }
 
     SHIPIT max_capacity = 0;
@@ -131,5 +130,5 @@ int main() {
         }
         printf("%lld\n", max_price);
     }
-    
+
 }
