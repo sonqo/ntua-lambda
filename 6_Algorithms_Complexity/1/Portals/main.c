@@ -79,7 +79,7 @@ void merge(struct edge** arr, SHIPIT l, SHIPIT m, SHIPIT r) {
 
 void merge_sort(struct edge** arr, SHIPIT l, SHIPIT r) {
     if (l<r) {
-        
+
         SHIPIT m = l + (r-l)/2;
 
         merge_sort(arr, l ,m);
@@ -172,29 +172,29 @@ SHIPIT main() {
     SHIPIT p1, p2;
     SHIPIT flag = 0;
     SHIPIT curr_min = 1000000000;
-//    for (SHIPIT i=1; i<(N+1/2); i++) { // check sorting sequence
-//        if (array[i] != i){
-//            p1 = i;
-//            p2 = array[i];
-//            while ((path[p1] !=0 || path[p2] != 0) && flag == 0) {
-//                if (path[p1] != 0) {
-//                    if (weight_path[p1] != -1) {
-//                        curr_min = MIN(weight_path[p1], curr_min);
-//                    }
-//                    p1 = path[p1];
-//                }
-//                if (path[p2] != 0) {
-//                    if (weight_path[p2] != -1) {
-//                        curr_min = MIN(weight_path[p2], curr_min);
-//                    }
-//                    p2 = path[p2];
-//                }
-//                if (curr_min == global_min) {
-//                    flag = 1;
-//                }
-//            }
-//        }
-//    }
+    for (SHIPIT i=1; i<N+1; i++) { // check sorting sequence
+        if (array[i] != i){
+            p1 = i;
+            p2 = array[i];
+            while ((path[p1] !=0 || path[p2] != 0) && flag == 0) {
+                if (path[p1] != 0) {
+                    if (weight_path[p1] != -1) {
+                        curr_min = MIN(weight_path[p1], curr_min);
+                    }
+                    p1 = path[p1];
+                }
+                if (path[p2] != 0) {
+                    if (weight_path[p2] != -1) {
+                        curr_min = MIN(weight_path[p2], curr_min);
+                    }
+                    p2 = path[p2];
+                }
+                if (curr_min == global_min) {
+                    flag = 1;
+                }
+            }
+        }
+    }
 
     printf("%lld\n", curr_min);
 
