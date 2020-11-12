@@ -131,4 +131,6 @@ int main() {
         printf("%lld\n", max_price);
     }
 
+    return 0;
+
 }
