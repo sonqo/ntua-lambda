@@ -1,27 +1,27 @@
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 #define MIN(a,b) (((a)<(b))?(a):(b))
 
-typedef long long int SHIPIT;
+typedef long long int Long;
 
 struct edge {
-    SHIPIT base, destination, weight;
+    Long base, destination, weight;
 };
 
 struct node {
-    SHIPIT data;
+    Long data;
     struct node* next;
 };
 
-void swap(SHIPIT* n1, SHIPIT* n2) {
-    SHIPIT temp;
+void swap(Long* n1, Long* n2) {
+    Long temp;
     temp = *n1;
     *n1 = *n2;
     *n2 = temp;
 }
 
-void push(struct node** head, SHIPIT data) {
+void push(struct node** head, Long data) {
     struct node* curr;
     curr = (struct node*) malloc(sizeof(struct node));
     curr->data = data;
@@ -29,8 +29,8 @@ void push(struct node** head, SHIPIT data) {
     *head = curr;
 }
 
-SHIPIT pop(struct node** head) {
-    SHIPIT r;
+Long pop(struct node** head) {
+    Long r;
     if (*head != NULL) {
         r = (*head)->data;
         struct node* curr = *head;
@@ -42,10 +42,10 @@ SHIPIT pop(struct node** head) {
     }
 }
 
-void merge(struct edge** array, SHIPIT left, SHIPIT border, SHIPIT right) {
-    SHIPIT i, j, k;
-    SHIPIT p2 = right-border;
-    SHIPIT p1 = border-left+1;
+void merge(struct edge** array, Long left, Long border, Long right) {
+    Long i, j, k;
+    Long p2 = right-border;
+    Long p1 = border-left+1;
 
     struct edge* TempL[p1];
     struct edge* TempR[p2];
@@ -77,10 +77,10 @@ void merge(struct edge** array, SHIPIT left, SHIPIT border, SHIPIT right) {
     }
 }
 
-void merge_sort(struct edge** array, SHIPIT left, SHIPIT right) {
+void merge_sort(struct edge** array, Long left, Long right) {
     if (left<right) {
 
-        SHIPIT border = left + (right-left)/2;
+        Long border = left + (right-left)/2;
 
         merge_sort(array, left, border);
         merge_sort(array, border+1, right);
@@ -91,18 +91,18 @@ void merge_sort(struct edge** array, SHIPIT left, SHIPIT right) {
 
 int main() {
 
-    SHIPIT* NMs = malloc(2 * sizeof(SHIPIT));
-    for (SHIPIT i=0; i<2; i++) { // NMs[0]=N : numbers of universes | NMs[1]=M : number of portals
+    Long* NMs = malloc(2 * sizeof(Long));
+    for (Long i=0; i<2; i++) { // NMs[0]=N : numbers of universes | NMs[1]=M : number of portals
         scanf("%lld", &NMs[i]);
     }
 
-    SHIPIT N = NMs[0];
-    SHIPIT M = NMs[1];
+    Long N = NMs[0];
+    Long M = NMs[1];
 
-    SHIPIT* size = malloc((N+1) * sizeof(SHIPIT));
-    SHIPIT* array = malloc((N+1) * sizeof(SHIPIT));
+    Long* size = malloc((N+1) * sizeof(Long));
+    Long* array = malloc((N+1) * sizeof(Long));
     struct node** ancestors = malloc((N+1) * sizeof(struct node));
-    for (SHIPIT i=1; i<N+1; i++) { // read unordered array
+    for (Long i=1; i<N+1; i++) { // read unordered array
         size[i] = 0;
         scanf("%lld", &array[i]);
 
@@ -113,10 +113,10 @@ int main() {
     }
 
     struct edge** portals = malloc(M * sizeof(struct edge));
-    for (SHIPIT i=0; i<M; i++) { // read array of points to EDGE struct
-        SHIPIT acc[3];
+    for (Long i=0; i<M; i++) { // read array of points to EDGE struct
+        Long acc[3];
         portals[i] = malloc(sizeof(struct edge));
-        for (SHIPIT j=0; j<3; j++){
+        for (Long j=0; j<3; j++){
             scanf("%lld", &acc[j]);
         }
         if (acc[0] < acc[1]) {
@@ -129,28 +129,28 @@ int main() {
         portals[i]->weight = acc[2];
     }
 
-    SHIPIT* parent = malloc((N+1) * sizeof(SHIPIT)); // create parent array for union find implementation
-    for (SHIPIT i=1; i<N+1; i++) {
+    Long* parent = malloc((N+1) * sizeof(Long)); // create parent array for union find implementation
+    for (Long i=1; i<N+1; i++) {
         parent[i] = i;
     }
 
-    SHIPIT* path = malloc(((N+1) * sizeof(SHIPIT))); // immidiate ancestor array
-    SHIPIT* weight_path = malloc(((N+1) * sizeof(SHIPIT))); // weight-to-ancestor array
-    for (SHIPIT i=0; i<N+1; i++) {
+    Long* path = malloc(((N+1) * sizeof(Long))); // immidiate ancestor array
+    Long* weight_path = malloc(((N+1) * sizeof(Long))); // weight-to-ancestor array
+    for (Long i=0; i<N+1; i++) {
         path[i] = 0;
         weight_path[i] = -1;
     }
 
     merge_sort(portals, 0, M-1); //sort pointers of edges according to their weight
 
-    SHIPIT c1, c2;
-    SHIPIT global_min = 1000000000;
-    for (SHIPIT i=0; i<M; i++) { // Kruskal's algorithm
+    Long c1, c2;
+    Long global_min = 1000000000;
+    for (Long i=0; i<M; i++) { // Kruskal's algorithm
         c1 = parent[portals[i]->base];
         c2 = parent[portals[i]->destination];
 
-        SHIPIT base = portals[i]->base;
-        SHIPIT dest = portals[i]->destination;
+        Long base = portals[i]->base;
+        Long dest = portals[i]->destination;
         if (size[c2] > size[c1]) { // connect smaller to bigger tree
             swap(&c1, &c2);
             swap(&base, &dest);
@@ -161,7 +161,7 @@ int main() {
             global_min = MIN(global_min, portals[i]->weight);
             weight_path[dest] = portals[i]->weight;
             while (ancestors[c2]->data != 0) {
-                SHIPIT curr = pop(&ancestors[c2]);
+                Long curr = pop(&ancestors[c2]);
                 parent[curr] = c1;
                 if (path[curr] == 0) {
                     path[curr] = dest;
@@ -171,10 +171,10 @@ int main() {
         }
     }
 
-    SHIPIT p1, p2;
-    SHIPIT flag = 0;
-    SHIPIT curr_min = 1000000000;
-    for (SHIPIT i=1; i<(N+1/2); i++) { // check sorting sequence
+    Long p1, p2;
+    Long flag = 0;
+    Long curr_min = 1000000000;
+    for (Long i=1; i<(N+1/2); i++) { // check sorting sequence
         if (array[i] != i){
             p1 = i;
             p2 = array[i];
