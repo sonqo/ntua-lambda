@@ -40,7 +40,7 @@ TBox creation, conversion of available .csv data into RDF tuples, Turtle syntax,
 ### Algorithms and Complexity
 
 - **Portals & Roadtrip**  
-_Searching algorithms._ 
+_Searching algorithms._     
 Binary Search on the answer, Widest Path Problem(Kruskal's algorithm).
 
 :bulb: Technologies used: **C**
