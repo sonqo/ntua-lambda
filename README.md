@@ -38,3 +38,11 @@ TBox creation, conversion of available .csv data into RDF tuples, Turtle syntax,
 :bulb: Technologies used: **_Protégé, OpenLink Virtuoso, SparQL, Python_**
 
 ### Algorithms and Complexity
+
+_Exercises on algorithmic principles._
+
+-   **Portals & Roadtrip**  
+    _Searching algorithms._
+    Binary Search on the answer, Kruskal's algorithms, path finding.
+
+:bulb: Technologies used: **C**
