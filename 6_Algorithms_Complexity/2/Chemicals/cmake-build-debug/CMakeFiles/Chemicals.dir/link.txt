@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2020.2\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Chemicals.dir/objects.a
+C:\MinGW\bin\ar.exe cr CMakeFiles\Chemicals.dir/objects.a @CMakeFiles\Chemicals.dir\objects1.rsp
+C:\MinGW\bin\gcc.exe -g   -Wl,--whole-archive CMakeFiles\Chemicals.dir/objects.a -Wl,--no-whole-archive  -o Chemicals.exe -Wl,--out-implib,libChemicals.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Chemicals.dir\linklibs.rsp
