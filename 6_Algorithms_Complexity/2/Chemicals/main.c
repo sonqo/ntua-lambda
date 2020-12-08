@@ -1,9 +1,27 @@
 #include <stdio.h>
+#include <malloc.h>
+
+#define ROWS 2500
+#define COLUMNS 2500
 
 struct tuple {
     int value;
     int left[2], right[2];
 };
+
+int calculate_energy(int base, int dest, int key, int A[ROWS][COLUMNS]) {
+    int res = 0;
+    if (base == key) {
+        for (int i=base; i<=dest; i++) {
+            res += A[key][i];
+        }
+    } else {
+        for (int i=base; i<=dest; i++) {
+            res += A[i][key];
+        }
+    }
+    return res;
+}
 
 int main() {
 
@@ -12,8 +30,8 @@ int main() {
         scanf("%d", &NKs[i]);
     }
 
-    int A[NKs[0]][NKs[0]]; // fill A array
-    for (int i=0; i<NKs[0]; i++) {
+    int (*A)[COLUMNS] = malloc(sizeof(int[ROWS][COLUMNS]));
+    for (int i=0; i<NKs[0]; i++) { // read A array
         for (int j=0; j<NKs[0]; j++) {
             if (i > j) {
                 A[i][j] = -1;
@@ -25,8 +43,8 @@ int main() {
         }
     }
 
-    struct tuple B[NKs[0]][NKs[0]]; // initialize DP array
-    for (int i=0; i<NKs[0]; i++) {
+    struct tuple (*B)[COLUMNS] = malloc(sizeof(struct tuple[ROWS][COLUMNS]));
+    for (int i=0; i<NKs[0]; i++) { // initialize DP 2D-array
         for (int j=0; j<NKs[0]; j++) {
             if (i > j) {
                 B[i][j].value = -1;
@@ -43,28 +61,31 @@ int main() {
         }
     }
 
-//    for (int i=2; i<NKs[0]; i++) {
-//        for (int j=0, x=i; x<NKs[0]; j++, x++) {
-//            struct tuple currL = B[j][x-1];
-//            struct tuple currC = B[j+1][x];
-//            if (currL.value+A[currL.right][x] < currC.value+A[j][currC.left]) {
-//                B[j][x].left = currL.left;
-//                B[j][x].right = currL.right;
-//                B[j][x].value = currL.value + A[currL.right][x];
-//                for (int y=currL.right+1; y<x; y++){
-//                    B[j][x].value += A[y][x];
-//                }
-//            } else {
-//                int curr = B[j][x].left;
-//                B[j][x].left = j;
-//                B[j][x].right = currC.right;
-//                B[j][x].value = currC.value + A[j][currC.left];
-//                for (int y=currL.left+1; y<curr; y++){
-//                    B[j][x].value += A[y][x];
-//                }
-//            }
-//        }
-//    }
+    for (int i=NKs[1]; i<NKs[0]; i++) {
+        for (int j=0, x=i; x<NKs[0]; j++, x++) {
+            struct tuple currL = B[j][x-1];
+            struct tuple currC = B[j+1][x];
+            if (currL.value + calculate_energy(currL.right[0], x, x, A) < currC.value + calculate_energy(j, currC.left[1], j, A)) {
+
+                B[j][x].right[1] = x;
+                B[j][x].right[0] = currL.right[0];
+                B[j][x].left[0] = currL.left[0];
+                B[j][x].left[1] = currL.left[1];
+
+                B[j][x].value = currL.value + calculate_energy(currL.right[0], x, x, A);
+
+            } else {
+
+                B[j][x].left[0] = j;
+                B[j][x].left[1] = currC.left[1];
+                B[j][x].right[0] = currC.right[0];
+                B[j][x].right[1] = currC.right[1];
+
+                B[j][x].value = currC.value + calculate_energy(j, currC.left[1], j, A);
+
+            }
+        }
+    }
 
     for (int i=0; i<NKs[0]; i++) {
         for (int j=0, x=i; x<NKs[0]; j++, x++) {
