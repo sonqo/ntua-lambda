@@ -53,13 +53,6 @@ int main() {
         }
     }
 
-    for (int i=0; i<NKs[0]; i++) { // calculate energy for the (i-j) mixture
-        for (int j=0; j<NKs[0]; j++) {
-            std::cout << B[i][j] << " ";
-        }
-        std::cout << std::endl;
-    }
-
     if (NKs[1] == 1) {
         std::cout << B[0][NKs[0]-1] << std::endl;
     } else {
