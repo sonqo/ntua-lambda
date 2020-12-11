@@ -29,11 +29,10 @@ int main() {
         scanf("%d", &NK);
     }
 
-    int *A[ROWS], *B[ROWS], KEYS[ROWS];
+    int *A[ROWS], *B[ROWS];
     for (int i=0; i<ROWS; i++) {
         A[i] = (int *) malloc(COLUMNS * sizeof(int));
         B[i] = (int *) malloc(COLUMNS * sizeof(int));
-        KEYS[i] = (int) malloc(ROWS * sizeof(int));
     }
 
     for (int i=0; i<NKs[0]; i++) { // read A array
