@@ -21,14 +21,15 @@ int ware2int (char input) {
 
 int main() {
 
-    auto **acc = (struct ware **) malloc(10 * sizeof(struct ware *));
-    for (int i=1; i<10; i++) {
-        acc[i] = (struct ware *) malloc(COLUMNS * sizeof(struct ware));
-    }
-
     auto *pointers = (int *) malloc(10 * sizeof(int));
+
+    auto **value = (int **) malloc(10 * sizeof(int *));
+    auto **amount = (int **) malloc(10 * sizeof(int *));
+
     for (int i=1; i<10; i++) {
         pointers[i] = 0;
+        value[i] = (int *) malloc(COLUMNS * sizeof(int));
+        amount[i] = (int *) malloc(COLUMNS * sizeof(int));
     }
 
     int NMs[2];
@@ -41,8 +42,8 @@ int main() {
     for (int i=0; i<NMs[1]; i++) {
         scanf("%s", curr);
         curr_int = curr[0] - '0' - 1;
-        scanf("%d", &acc[3*curr_int+ware2int(curr[1])][pointers[3*curr_int+ware2int(curr[1])]].amount);
-        scanf("%d", &acc[3*curr_int+ware2int(curr[1])][pointers[3*curr_int+ware2int(curr[1])]++].value);
+        scanf("%d", &amount[3*curr_int+ware2int(curr[1])][pointers[3*curr_int+ware2int(curr[1])]]);
+        scanf("%d", &value[3*curr_int+ware2int(curr[1])][pointers[3*curr_int+ware2int(curr[1])]++]);
     }
 
     return 0;
