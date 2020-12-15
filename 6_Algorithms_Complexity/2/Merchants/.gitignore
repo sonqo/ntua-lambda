@@ -2,4 +2,4 @@
 /input
 CMakeLists.txt
 *.exe
-./idea
+/.idea
