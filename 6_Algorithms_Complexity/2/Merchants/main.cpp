@@ -2,6 +2,8 @@
 
 #define COLUMNS 1500
 
+using namespace std;
+
 void merge(int* array, int* indices, int left, int border, int right) {
 
     int i, j, k;
@@ -60,7 +62,6 @@ void merge_sort(int* array, int* indices, int left, int right) {
     merge(array, indices, left, border, right);
 }
 
-
 int ware2int (char input) {
     switch(input) {
         case 'A':
@@ -76,13 +77,16 @@ int ware2int (char input) {
 
 int main() {
 
+    auto *average = (int *) malloc(4* sizeof(int));
     auto *pointers = (int *) malloc(10 * sizeof(int));
+    auto *buying_pointers = (int *) malloc(10* sizeof(int));
 
     auto **value = (int **) malloc(10 * sizeof(int *));
     auto **amount = (int **) malloc(10 * sizeof(int *));
 
     for (int i=1; i<10; i++) {
         pointers[i] = 0;
+        buying_pointers[i] = 0;
         value[i] = (int *) malloc(COLUMNS * sizeof(int));
         amount[i] = (int *) malloc(COLUMNS * sizeof(int));
     }
@@ -104,6 +108,33 @@ int main() {
     for (int i=1; i<10; i++) { // sort value of wares, keep amount indices intact
         merge_sort(value[i], amount[i], 0, pointers[i]-1);
     }
+
+    for (int i=1; i<10; i++) {
+        for (int j=0; j<pointers[i]; j++) {
+            std::cout << amount[i][j] << " " << value[i][j] << " ";
+        }
+        std::cout << std::endl;
+        if (i == 3) {
+            std::cout << std::endl;
+        }
+    }
+
+    int sum_v, min_a;
+//    while ((count < NMs[0]) && (flag != 3)) {
+        for (int i=0; i<3; i++) {
+            sum_v = value[3*i+1][buying_pointers[3*i+1]] + value[3*i+2][buying_pointers[3*i+2]] + value[3*i+3][buying_pointers[3*i+3]];
+            min_a = min({amount[3*i+1][buying_pointers[3*i+1]], amount[3*i+2][buying_pointers[3*i+2]], amount[3*i+3][buying_pointers[3*i+3]]});
+            if (min_a == 0) {
+                average[i] = -1;
+            } else {
+                average[i] = sum_v / min_a;
+            }
+            cout << average[i] << endl;
+        }
+//    }
+
+    //TODO : which merchant has the minimum average
+    //TODO : buying handling
 
     return 0;
 }
