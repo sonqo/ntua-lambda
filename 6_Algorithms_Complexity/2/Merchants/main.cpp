@@ -101,5 +101,9 @@ int main() {
         scanf("%d", &value[3*curr_int+ware2int(curr[1])][pointers[3*curr_int+ware2int(curr[1])]++]);
     }
 
+    for (int i=1; i<10; i++) { // sort value of wares, keep amount indices intact
+        merge_sort(value[i], amount[i], 0, pointers[i]-1);
+    }
+
     return 0;
 }
