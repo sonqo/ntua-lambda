@@ -101,7 +101,7 @@ int main() {
         scanf("%d", &value[3*curr_int+ware2int(curr[1])][pointers[3*curr_int+ware2int(curr[1])]++]);
     }
 
-    
+
 
     return 0;
 }
