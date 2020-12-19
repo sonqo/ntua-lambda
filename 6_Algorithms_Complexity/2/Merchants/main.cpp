@@ -21,9 +21,11 @@ int main() {
 
     auto *pointers = (int *) malloc(10 * sizeof(int));
     auto **final = (int **) malloc(3 * sizeof(int *));
+    auto **result = (int **) malloc(3 * sizeof(int *));
     auto **array = (int **) malloc(COLUMNS * sizeof(int *));
 
     for (int i=0; i<3; i++) {
+        result[i] = (int *) malloc(5000 * sizeof(int));
         final[i] = (int *) malloc(COLUMNS * sizeof(int));
     }
 
@@ -94,16 +96,42 @@ int main() {
             }
             for (int i=0; i<N; i++) {
                 if (pointers[3*m+z] == 0) {
-                    final[m][i] = -1;
+                    final[m][i] = numeric_limits<int>::max();
                 } else {
-                    if ((array[pointers[3*m+z]-1][i] > 0) && (final[m][i] != -1)) {
+                    if ((array[pointers[3*m+z]-1][i] > 0) && (final[m][i] != numeric_limits<int>::max())) {
                         final[m][i] += array[pointers[3*m+z]-1][i];
                     } else {
-                        final[m][i] = -1;
+                        final[m][i] = numeric_limits<int>::max();
                     }
                 }
             }
         }
+    }
+
+    int c, global_min;
+    for (int i=0; i<3; i++) {
+        result[i][0] = 0;
+    }
+    for (int i=1; i<N+1; i++) { // initialize first merchant
+        result[0][i] = final[0][i-1];
+    }
+    for (int i=1; i<3; i++) { // calculations for the other two merchants
+        for (int j=1; j<N+1; j++) { // for all sets
+            global_min = numeric_limits<int>::max();
+            for (int x=1; x<=j; x++) {
+                c = min({final[i][j-1], result[i-1][j], result[i-1][j-x]+final[i][x-1]});
+                if ((c < global_min) && (c > 0)){
+                    global_min = c;
+                }
+            }
+            result[i][j] = global_min;
+        }
+    }
+
+    if (result[2][N] == numeric_limits<int>::max()){
+        cout << -1 << endl;
+    } else {
+        cout << result[2][N] << endl;
     }
 
     return 0;
