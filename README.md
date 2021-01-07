@@ -43,4 +43,4 @@ TBox creation, conversion of available .csv data into RDF tuples, Turtle syntax,
 _Searching algorithms._     
 Binary Search used for reaching the answer.
 
-:bulb: Technologies used: **_C_**
+:bulb: Technologies used: **_C, C++_**
