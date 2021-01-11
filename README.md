@@ -39,7 +39,7 @@ TBox creation, conversion of available .csv data into RDF tuples, Turtle syntax,
 
 ### Algorithms and Complexity
 
--   **Portals & Roadtrip**  
+- **Portals & Roadtrip**  
 _Searching algorithms._     
 Binary Search used for reaching the answer.
 
