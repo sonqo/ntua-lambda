@@ -45,6 +45,6 @@ Binary Search used for reaching the answer.
 
 - **Chemicals & Merchants**  
 _Dynamic Programming._     
-DP problems with optimal complexity and clean data structure application
+DP problems with optimal complexity and clean data structure application.
 
 :bulb: Technologies used: **_C, C++_**
