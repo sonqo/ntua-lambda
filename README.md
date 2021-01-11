@@ -43,4 +43,8 @@ TBox creation, conversion of available .csv data into RDF tuples, Turtle syntax,
 _Searching algorithms._     
 Binary Search used for reaching the answer.
 
+- **Chemicals & Merchants**  
+_Dynamic Programming._     
+DP problems with optimal complexity and clean data structure application
+
 :bulb: Technologies used: **_C, C++_**
