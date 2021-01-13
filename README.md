@@ -9,7 +9,7 @@ Imperative programming, functional programming, object-oriented programming, log
 
 :bulb: Technologies used: **_C, Standard ML, Java, Python, Prolog_**
 
-### Internet Programming
+### Web Programming
 
 _Java applets, Javascript minigames._  
 Java Swing graphic applications, HTML/CSS/Bootstrap formatting, Javascript applications.
