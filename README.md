@@ -35,7 +35,7 @@ Entity-Relationship diagram, Relational diagram, insert/update/delete queries, s
 _Transport ontology for the Athenian bus network._  
 TBox creation, conversion of available .csv data into RDF tuples, Turtle syntax, ABox population, specialized ontology queries.
 
-:bulb: Technologies used: **_Protégé, OpenLink Virtuoso, SparQL, Python_**
+:bulb: Technologies used: **_Python, Protégé, OpenLink Virtuoso, SparQL_**
 
 ### Algorithms and Complexity
 
