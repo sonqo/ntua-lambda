@@ -41,10 +41,10 @@ TBox creation, conversion of available .csv data into RDF tuples, Turtle syntax,
 
 - **Portals & Roadtrip**  
 _Searching algorithms._     
-Binary Search used for reaching the answer.
+Binary Search used for reaching the answer, weighted Union-Find and path compression implementation. 
 
 - **Chemicals & Merchants**  
 _Dynamic Programming._     
-DP problems with optimal complexity and clean data structure application.
+DP problems with optimal complexity, Range-Sum-Queries data structures.
 
 :bulb: Technologies used: **_C, C++_**
