@@ -40,7 +40,7 @@ TBox creation, conversion of available .csv data into RDF tuples, Turtle syntax,
 ### 6. Algorithms and Complexity
 
 _Problems on various algorithmic principles._   
-Searching algorithms, Dynamic Programming, Graph algorithms. 
+Searching algorithms, Dynamic Programming, Graph algorithms.
 
 :bulb: Technologies used: **_C, C++_**
 
