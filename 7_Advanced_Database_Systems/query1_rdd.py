@@ -9,6 +9,12 @@ spark = SparkSession.builder.appName('query1_rdd').getOrCreate()
 
 sc = spark.sparkContext
 
+# read file
+# discard unwanted seperators
+# discard movies with NaN gross, costs and date, keep movies after 00s
+# create (key, values) tuples where key = year
+# reduce and calculate max income for every year 
+# format output
 res = sc.textFile('hdfs://master:9000/movies/movies.csv') \
 	.map(lambda x : split_complex(x)) \
 	.filter(lambda x : x if x[3] != "" and x[5] != '0' and x[6] != '0' and int(x[3].split('-')[0]) >= 2000 else None) \
