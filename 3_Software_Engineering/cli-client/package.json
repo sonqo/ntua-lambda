@@ -16,7 +16,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"await-exec": "^0.1.2",
-		"axios": "^0.19.2",
+		"axios": "^0.21.1",
 		"commander": "^4.1.0",
 		"json2csv": "^4.5.4",
 		"jsonwebtoken": "^8.5.1",
