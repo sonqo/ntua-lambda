@@ -6,7 +6,7 @@ from pyspark.sql import functions as F
 def split_complex(x):
 	return list(csv.reader(StringIO(x), delimiter=','))[0]
 
-spark = SparkSession.builder.appName('query3_rdd').getOrCreate()
+spark = SparkSession.builder.appName('query4_rdd').getOrCreate()
 
 sc = spark.sparkContext
 
