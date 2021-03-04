@@ -13,16 +13,16 @@ sc = spark.sparkContext
 # read file
 # discard empty dates and dates before 00s
 # create (key, value) pairs where key = movie, keeping summaries and years
-summaries = sc.textFile('hdfs://master:9000/movies/movies.csv') \
+summaries = sc.textFile('hdfs://master:9000/movies/data/movies.csv') \
 	.map(lambda x : split_complex(x)) \
 	.filter(lambda x : x[3] != "") \
 	.filter(lambda x : int(x[3].split('-')[0]) >= 2000) \
-	.map(lambda x : (x[0], (x[2], x[3].split('-')[0]))) \
+	.map(lambda x : (x[0], (x[2], x[3].split('-')[0])))
 
 # read file
 # discard movie genres that are not dramas
 # create (key, value) pairs where key = movie
-genres = sc.textFile('hdfs://master:9000/movies/movie_genres.csv') \
+genres = sc.textFile('hdfs://master:9000/movies/data/movie_genres.csv') \
 	.map(lambda x : split_complex(x)) \
 	.filter(lambda x : x[1] == 'Drama') \
 	.map(lambda x : (x[0], x[1]))
@@ -42,7 +42,7 @@ dates = ['2000-2004', '2005-2009', '2010-2014', '2015-2019']
 # calulcate sum of word count
 # caclucate average 5-year summary word count
 for d in dates:
-	incr = dramas.filter(lambda x : int(x[0]) < int(d.split('-')[1])+1) \
+	incr = dramas.filter(lambda x : int(x[0]) < int(d.split('-')[1])+1 and int(x[0]) > int(d.split('-')[0])-1) \
 		.map(lambda x : (d, x[1])) \
 		.aggregateByKey((0.0), (lambda x, y : (x+y)), (lambda a, b : (a+b))) \
 		.mapValues(lambda x : round(x/5, 2))
