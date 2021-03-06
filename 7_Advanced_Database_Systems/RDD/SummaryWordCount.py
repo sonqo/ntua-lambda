@@ -51,4 +51,4 @@ for d in dates:
 # unify resulting RDDs
 # write result
 res = sc.union(acc) \
-	.coalesce(1, True).saveAsTextFile('hdfs://master:9000/movies/output/query4_rdd.out')
+	.coalesce(1, True).sortBy(lambda x : x[0]).saveAsTextFile('hdfs://master:9000/movies/output/query4_rdd.out')

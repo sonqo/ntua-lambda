@@ -14,7 +14,7 @@ sc = spark.sparkContext
 # create (key, value) pairs where key = movie
 # calculate for every movie (number of reviews, sum of reviews)
 # calculate average rating
-movies = sc.textFile('hdfs://master:9000/movies/ratings.csv') \
+movies = sc.textFile('hdfs://master:9000/movies/data/ratings.csv') \
 	.map(lambda x : split_complex(x)) \
 	.map(lambda x : (x[1], (1, float(x[2])))) \
 	.aggregateByKey((0, 0.0), (lambda x, y : (x[0]+y[0], x[1]+y[1])), (lambda a, b : (a[0]+b[0], a[1]+b[1]))) \
@@ -22,7 +22,7 @@ movies = sc.textFile('hdfs://master:9000/movies/ratings.csv') \
 
 # read file
 # create (key, value) pairs where key = movie
-genres = sc.textFile('hdfs://master:9000/movies/movie_genres.csv') \
+genres = sc.textFile('hdfs://master:9000/movies/data/movie_genres.csv') \
 	.map(lambda x : split_complex(x)) \
 	.map(lambda x : (x[0], x[1]))
 
@@ -36,4 +36,4 @@ avrg = movies.join(genres) \
 
 # format and write result
 res = avrg.map(lambda x : (x[0], x[1][1], x[1][0])) \
-	.coalesce(1, True).saveAsTextFile('hdfs://master:9000/movies/output/query3_rdd.out')
+	.coalesce(1, True).sortBy(lambda x : x[0]).saveAsTextFile('hdfs://master:9000/movies/output/query3_rdd.out')
