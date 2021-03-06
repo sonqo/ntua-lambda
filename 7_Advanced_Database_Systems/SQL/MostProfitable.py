@@ -13,8 +13,8 @@ cleaned_movies = \
 	"FROM movies " + \
 	"WHERE YEAR(_c3) >= 2000 AND _c5 != 0 AND _c6 != 0"
 
-valid = spark.sql(cleaned_movies)
-valid.registerTempTable('cleaned_movies')
+temp1 = spark.sql(cleaned_movies)
+temp1.registerTempTable('cleaned_movies')
 
 sqlResult = \
 	"SELECT Date, Title, Profit " + \
