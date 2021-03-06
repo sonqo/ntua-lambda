@@ -31,7 +31,7 @@ genres = sc.textFile('hdfs://master:9000/movies/data/movie_genres.csv') \
 # aggregate on dates, calculating number of summaries and their respective word count
 # calculate average summary word count for every year
 dramas = summaries.join(genres) \
-	.map(lambda x : (x[1][0][1], (1, len(x[1][0][0].split(' '))))) \
+	.map(lambda x : (x[1][0][1], (1, len(x[1][0][0].split(" ")) if x[1][0][0] else 0))) \
 	.aggregateByKey((0, 0), (lambda x, y : (x[0]+y[0], x[1]+y[1])), (lambda a, b : (a[0]+b[0], a[1]+b[1]))) \
 	.mapValues(lambda x : x[1]/x[0])
 
@@ -43,9 +43,9 @@ dates = ['2000-2004', '2005-2009', '2010-2014', '2015-2019']
 # caclucate average 5-year summary word count
 for d in dates:
 	incr = dramas.filter(lambda x : int(x[0]) < int(d.split('-')[1])+1 and int(x[0]) > int(d.split('-')[0])-1) \
-		.map(lambda x : (d, x[1])) \
-		.aggregateByKey((0.0), (lambda x, y : (x+y)), (lambda a, b : (a+b))) \
-		.mapValues(lambda x : round(x/5, 2))
+		.map(lambda x : (d, (1, x[1]))) \
+		.aggregateByKey((0, 0.0), (lambda x, y : (x[0]+y[0], x[1]+y[1])), (lambda a, b : (a[0]+b[0], a[1]+b[1]))) \
+		.mapValues(lambda x : x[1]/x[0])
 	acc.append(incr)
 
 # unify resulting RDDs
