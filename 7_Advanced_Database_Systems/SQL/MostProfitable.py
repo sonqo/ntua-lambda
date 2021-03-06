@@ -22,6 +22,6 @@ sqlResult = \
 	"WHERE (Date, Profit) IN " + \
 	"(SELECT Date, MAX(Profit) " + \
 	"FROM  cleaned_movies " + \
-	"GROUP BY Date)"
+	"GROUP BY Date) ORDER BY Date"
 
 res = spark.sql(sqlResult).coalesce(1).write.json('hdfs://master:9000/movies/output/query1_sql.out')

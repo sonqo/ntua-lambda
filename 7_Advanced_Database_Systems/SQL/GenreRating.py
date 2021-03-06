@@ -45,8 +45,8 @@ temp4 = spark.sql(ratings_genres)
 temp4.registerTempTable('ratings_genres')
 
 sqlResult = \
-	"SELECT Genre, AVG(Rating) as Average_Rating, Count(Rating) AS Total_Count" + \
+	"SELECT Genre, AVG(Rating) as Average_Rating, Count(Rating) AS Total_Count " + \
 	"FROM ratings_genres " + \
-	"GROUP BY Genre"
+	"GROUP BY Genre ORDER BY Genre"
 
 res = spark.sql(sqlResult).coalesce(1).write.json('hdfs://master:9000/movies/output/query3_sql.out')

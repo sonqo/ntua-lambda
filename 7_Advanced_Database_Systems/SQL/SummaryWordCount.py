@@ -38,19 +38,27 @@ temp3 = spark.sql(cleaned_genres)
 temp3.registerTempTable('cleaned_genres')
 
 movies_genres = \
-	"SELECT word_count(M.Summary) AS Word_Count, M.Date " + \
+	"SELECT word_count(M.Summary) AS Word_Count, M.Date AS Date " + \
 	"FROM cleaned_movies AS M, cleaned_genres AS G " + \
 	"WHERE M.Movie == G.Movie"
 
 temp4 = spark.sql(movies_genres)
 temp4.registerTempTable('movies_genres')
 
+grouped_mg = \
+	"SELECT AVG(Word_Count) AS Word_Count, Date " + \
+	"FROM movies_genres " + \
+	"GROUP BY Date"
+
+temp5 = spark.sql(grouped_mg)
+temp5.registerTempTable('grouped_mg')
+
 sqlResult = \
 	"SELECT ( " + \
 	"CASE WHEN Date < 2005 THEN '2000-2004' WHEN Date Between 2005 AND 2009 THEN '2005-2009' " + \
 	"WHEN Date BETWEEN 2010 AND 2014 THEN '2010-2014' WHEN Date > 2014 THEN '2015-2019' END" + \
 	") AS Date_Group, AVG(Word_Count) AS Average_WC " + \
-	"FROM movies_genres " + \
-	"GROUP BY Date_Group"
+	"FROM grouped_mg " + \
+	"GROUP BY Date_Group ORDER BY Date_Group"
 
 res = spark.sql(sqlResult).coalesce(1).write.json('hdfs://master:9000/movies/output/query4_sql.out')
