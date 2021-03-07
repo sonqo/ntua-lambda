@@ -1,0 +1,21 @@
+{"Genre":"Action","User":"8659","Reviews":588,"Max_Movie":"Hulk","Max_Popularity":15.422638,"Max_Rating":"5.0","Min_Movie":"The Day After Tomorrow","Min_Popularity":15.049695,"Min_Rating":"2.0"}
+{"Genre":"Adventure","User":"8659","Reviews":369,"Max_Movie":"Mission: Impossible II","Max_Popularity":18.97178,"Max_Rating":"4.5","Min_Movie":"Harry Potter and the Order of the Phoenix","Min_Popularity":21.3643,"Min_Rating":"2.0"}
+{"Genre":"Animation","User":"45811","Reviews":117,"Max_Movie":"A Grand Day Out","Max_Popularity":7.617298,"Max_Rating":"5.0","Min_Movie":"Astérix et la surprise de César","Min_Popularity":7.174178,"Min_Rating":"0.5"}
+{"Genre":"Comedy","User":"45811","Reviews":1024,"Max_Movie":"Galaxy Quest","Max_Popularity":15.831374,"Max_Rating":"5.0","Min_Movie":"There's Something About Mary","Min_Popularity":11.688958,"Min_Rating":"0.5"}
+{"Genre":"Crime","User":"8659","Reviews":474,"Max_Movie":"The Thomas Crown Affair","Max_Popularity":9.444818,"Max_Rating":"5.0","Min_Movie":"Papillon","Min_Popularity":15.698433,"Min_Rating":"2.0"}
+{"Genre":"Documentary","User":"45811","Reviews":215,"Max_Movie":"Crumb","Max_Popularity":3.620388,"Max_Rating":"5.0","Min_Movie":"Paper Clips","Min_Popularity":0.224164,"Min_Rating":"0.5"}
+{"Genre":"Drama","User":"45811","Reviews":1815,"Max_Movie":"Exodus: Gods and Kings","Max_Popularity":16.32025,"Max_Rating":"5.0","Min_Movie":"The Great Escape","Min_Popularity":14.384114,"Min_Rating":"0.5"}
+{"Genre":"Family","User":"45811","Reviews":198,"Max_Movie":"Galaxy Quest","Max_Popularity":15.831374,"Max_Rating":"5.0","Min_Movie":"Astérix et la surprise de César","Min_Popularity":7.174178,"Min_Rating":"0.5"}
+{"Genre":"Fantasy","User":"8659","Reviews":249,"Max_Movie":"Blood: The Last Vampire","Max_Popularity":2.925291,"Max_Rating":"5.0","Min_Movie":"The Addams Family","Min_Popularity":12.962525,"Min_Rating":"0.5"}
+{"Genre":"Foreign","User":"45811","Reviews":134,"Max_Movie":"Dreams of a Life","Max_Popularity":0.834786,"Max_Rating":"5.0","Min_Movie":"Shekvarebuli kulinaris ataserti retsepti","Min_Popularity":0.631834,"Min_Rating":"1.0"}
+{"Genre":"History","User":"8659","Reviews":155,"Max_Movie":"Lawrence of Arabia","Max_Popularity":10.893332,"Max_Rating":"4.5","Min_Movie":"Anna and the King","Min_Popularity":17.65016,"Min_Rating":"2.0"}
+{"Genre":"History","User":"45811","Reviews":155,"Max_Movie":"The Last Emperor","Max_Popularity":11.076971,"Max_Rating":"5.0","Min_Movie":"The Great Escape","Min_Popularity":14.384114,"Min_Rating":"0.5"}
+{"Genre":"Horror","User":"45811","Reviews":350,"Max_Movie":"Dawn of the Dead","Max_Popularity":19.24201,"Max_Rating":"5.0","Min_Movie":"Outpost","Min_Popularity":5.004215,"Min_Rating":"0.5"}
+{"Genre":"Music","User":"45811","Reviews":130,"Max_Movie":"Nashville","Max_Popularity":9.042678,"Max_Rating":"5.0","Min_Movie":"A Hard Day's Night","Min_Popularity":5.719266,"Min_Rating":"0.5"}
+{"Genre":"Mystery","User":"8659","Reviews":239,"Max_Movie":"Trois couleurs : Rouge","Max_Popularity":7.832755,"Max_Rating":"5.0","Min_Movie":"Harry Potter and the Order of the Phoenix","Min_Popularity":21.3643,"Min_Rating":"2.0"}
+{"Genre":"Romance","User":"45811","Reviews":584,"Max_Movie":"Along Came Polly","Max_Popularity":15.725542,"Max_Rating":"5.0","Min_Movie":"There's Something About Mary","Min_Popularity":11.688958,"Min_Rating":"0.5"}
+{"Genre":"Science Fiction","User":"8659","Reviews":313,"Max_Movie":"Hulk","Max_Popularity":15.422638,"Max_Rating":"5.0","Min_Movie":"The Day After Tomorrow","Min_Popularity":15.049695,"Min_Rating":"2.0"}
+{"Genre":"TV Movie","User":"45811","Reviews":38,"Max_Movie":"Straight From the Heart","Max_Popularity":0.480985,"Max_Rating":"4.5","Min_Movie":"Buck Rogers in the 25th Century","Min_Popularity":0.91043,"Min_Rating":"1.5"}
+{"Genre":"Thriller","User":"8659","Reviews":725,"Max_Movie":"The Thomas Crown Affair","Max_Popularity":9.444818,"Max_Rating":"5.0","Min_Movie":"The Day After Tomorrow","Min_Popularity":15.049695,"Min_Rating":"2.0"}
+{"Genre":"War","User":"45811","Reviews":120,"Max_Movie":"Doctor Zhivago","Max_Popularity":8.489499,"Max_Rating":"5.0","Min_Movie":"The Great Escape","Min_Popularity":14.384114,"Min_Rating":"0.5"}
+{"Genre":"Western","User":"45811","Reviews":84,"Max_Movie":"Johnny Guitar","Max_Popularity":4.918293,"Max_Rating":"5.0","Min_Movie":"Firecreek","Min_Popularity":9.443289,"Min_Rating":"1.0"}
