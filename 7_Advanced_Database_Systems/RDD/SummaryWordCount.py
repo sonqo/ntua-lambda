@@ -1,7 +1,6 @@
 import csv
 from io import StringIO
 from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
 
 def split_complex(x):
 	return list(csv.reader(StringIO(x), delimiter=','))[0]
