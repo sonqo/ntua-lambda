@@ -87,4 +87,4 @@ sqlResult = \
 	"FROM fav_min AS A, fav_max AS B " + \
 	"WHERE A.Genre = B.Genre AND A.User = B.User ORDER BY A.Genre"
 
-spark.sql(sqlResult).coalesce(1).write.json('hdfs://master:9000/movies/output/query5_sql.out')
+res = spark.sql(sqlResult).coalesce(1).write.json('hdfs://master:9000/movies/output/query5_sql.out')
