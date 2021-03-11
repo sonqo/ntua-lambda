@@ -17,8 +17,7 @@ Right = sc.textFile('hdfs://master:9000/movies/data/reduced_movie_genres.csv') \
 	.map(lambda x : split_complex(x)) \
 	.map(lambda x : (x[0], x[1]))
 
-# Init() state
-acc = {}
+acc = {} # init() state
 listRight = Right.collect()
 for entry in listRight:
 	if entry[0] in acc.keys():
