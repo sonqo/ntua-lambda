@@ -54,10 +54,12 @@ temp5 = spark.sql(grouped_mg)
 temp5.registerTempTable('grouped_mg')
 
 sqlResult = \
-	"SELECT ( " + \
-	"CASE WHEN Date < 2005 THEN '2000-2004' WHEN Date Between 2005 AND 2009 THEN '2005-2009' " + \
-	"WHEN Date BETWEEN 2010 AND 2014 THEN '2010-2014' WHEN Date > 2014 THEN '2015-2019' END" + \
-	") AS Date_Group, AVG(Word_Count) AS Average_WC " + \
+	"SELECT " + \
+		"(CASE WHEN Date < 2005 THEN '2000-2004' " + \
+		"WHEN Date Between 2005 AND 2009 THEN '2005-2009' " + \
+		"WHEN Date BETWEEN 2010 AND 2014 THEN '2010-2014' " + \
+		"WHEN Date > 2014 THEN '2015-2019' END) AS Date_Group, " + \
+	"AVG(Word_Count) AS Average_WC " + \
 	"FROM grouped_mg " + \
 	"GROUP BY Date_Group ORDER BY Date_Group"
 
