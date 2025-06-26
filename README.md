@@ -1,6 +1,6 @@
 ## NTUA - Electrical and Computer Engineering - Lambda Flow
 
-This repository contains my personal academic projects while following the Computer Software flow at the National Technical University of Athens.
+Personal academic projects from the Computer Software flow at the National Technical University of Athens.
 
 ### 1. Programming Languages I
 
