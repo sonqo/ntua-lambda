@@ -46,6 +46,6 @@ Searching algorithms, Dynamic Programming, Graph algorithms.
 
 ### 7. Advanced Topics in Database Systems
 
-Data handling and computation in distributed
+Data handling and computation in distributed systems.
 
 :bulb: Technologies used: **Python, Spark, Hadoop**
